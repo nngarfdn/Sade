@@ -19,23 +19,29 @@ class KotlinTest : AppCompatActivity() {
 
         produkViewModel = ViewModelProviders.of(this).get(ProdukViewModel::class.java)
 
-        val produk1 = Produk(nama = "Bebek")
-        val produk2 = Produk(nama = "Kudanil")
+        val produk1 = Produk(nama = "Kase" , kategori = "produk", wa = "083498524232")
+        val produk2 = Produk(nama = "Dompet" , kategori = "produk" )
+        val produk3 = Produk(nama = "Jagung" , kategori = "produk")
+        val produk4 = Produk(nama= "Telur")
+        val produk5 = Produk(nama = "Apel")
 
-        val delete = Produk(id="qmRqDjgy2xcYLWZw60yE")
 
-//        val update = Produk(id = "dO5s4MDS2AuWRCpgmiXh" , nama = "Bebek Baru Update")
-
-//        produkViewModel.updateProduk(update)
-//        dadi
-
-//        deleteData(delete)
-//        harusnya kudanil nggak ada (oke dadi)
+//        val list = arrayListOf<Produk>(produk1,produk2,produk3,produk4,produk5)
+//        for (produk in list) {
+//            insertData(produk)
+//        }
 
         getData()
+        produkViewModel.loadResultByKategory("produk")
+        getDataByKategory()
 
     }
 
+    private fun getDataByKategory() {
+        produkViewModel.getResultByKategori().observe(this, Observer<List<Produk>> { result ->
+            Log.d(TAG, "onCreate: $result")
+        })
+    }
 
     private fun insertData(produk: Produk) {
         produkViewModel.insertProduk(produk)

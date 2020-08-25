@@ -8,7 +8,7 @@ data class Produk(
         val kecamatan : String? = "",
         val kabupaten : String? = "",
         val provinsi : String? = "",
-        val wa : Int? = 0,
+        val wa : String? = "",
         val deskripsi : String? = "",
         val photo : String?=""
         )

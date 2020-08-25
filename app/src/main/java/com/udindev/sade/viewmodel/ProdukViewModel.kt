@@ -11,6 +11,9 @@ class ProdukViewModel : ViewModel() {
     fun getResult() =  produkRepository.getResults()
     fun loadResult() = produkRepository.getData()
 
+    fun getResultByKategori() = produkRepository.getResultsByKategory()
+    fun loadResultByKategory(kategori : String) = produkRepository.getDataByKategori(kategori)
+
     fun insertProduk(produk: Produk) {
         produkRepository.saveProduk(produk)
     }
