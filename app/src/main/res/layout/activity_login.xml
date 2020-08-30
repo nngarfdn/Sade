@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.LoginActivity"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:id="@+id/activity_login">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MASUK DENGAN EMAIL"/>
+
+    <EditText
+        android:id="@+id/edt_email_log"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email" />
+
+    <EditText
+        android:id="@+id/edt_password_log"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Kata sandi" />
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="MASUK"/>
+
+    <Button
+        android:id="@+id/btn_password_reset"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="LUPA KATA SANDI"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DAFTAR DENGAN EMAIL"/>
+
+    <EditText
+        android:id="@+id/edt_name_reg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nama lengkap" />
+
+    <EditText
+        android:id="@+id/edt_email_reg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email" />
+
+    <EditText
+        android:id="@+id/edt_password_reg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Kata sandi" />
+
+    <Button
+        android:id="@+id/btn_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="DAFTAR"/>
+
+    <Button
+        android:id="@+id/btn_google"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="MASUK/DAFTAR MELALUI GOOGLE"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BERHASIL MASUK:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nama"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_done" />
+
+        <TextView
+            android:id="@+id/tv_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Email"
+            app:layout_constraintStart_toEndOf="@+id/tv_name"
+            app:layout_constraintTop_toTopOf="@+id/tv_name" />
+
+        <Button
+            android:id="@+id/btn_check_verify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CEK VERIFIKASI"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+        <Button
+            android:id="@+id/btn_send_verify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="KIRIM VERIFIKASI"
+            app:layout_constraintStart_toEndOf="@+id/btn_check_verify"
+            app:layout_constraintTop_toTopOf="@+id/btn_check_verify" />
+
+        <Button
+            android:id="@+id/btn_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="KELUAR"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_check_verify" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
