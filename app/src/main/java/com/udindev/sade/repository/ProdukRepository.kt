@@ -3,12 +3,16 @@ package com.udindev.sade.repository
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.udindev.sade.model.Produk
 
 class ProdukRepository {
 
     private var resultData: MutableLiveData<List<Produk>> = MutableLiveData()
+    private var resultDataShort: MutableLiveData<List<Produk>> = MutableLiveData()
     private var resultDataByKategory: MutableLiveData<List<Produk>> = MutableLiveData()
 
     companion object {
@@ -18,7 +22,33 @@ class ProdukRepository {
     private val db = FirebaseFirestore.getInstance()
 
     fun getResults(): LiveData<List<Produk>> = resultData
+    fun getResultsShort(): LiveData<List<Produk>> = resultDataShort
     fun getResultsByKategory(): LiveData<List<Produk>> = resultDataByKategory
+
+
+    fun getDataSort() {
+        val produkData: MutableList<Produk> = ArrayList()
+        val db = FirebaseFirestore.getInstance()
+        val savedProdukList = ArrayList<Produk>()
+        db.collection("produk").orderBy("nama", Query.Direction.ASCENDING)
+                .get()
+                .addOnSuccessListener { result ->
+                    for (document in result) {
+                        val pp = document.toObject(Produk::class.java)
+                        pp.id = document.id
+                        savedProdukList.add(pp)
+                        produkData.add(pp)
+                        Log.d(TAG, "readProduk savedProdukList size : ${savedProdukList.size}")
+                        Log.d(TAG, "readProduk: $pp ")
+                    }
+                    resultData.value = produkData
+                    Log.d(TAG, "readProduk size final savedProdukList : ${savedProdukList.size}")
+                }
+                .addOnFailureListener { exception ->
+                    Log.e(TAG, "Error getting documents.", exception)
+                }
+    }
+
 
     fun getDataByKategori(kategoriii: String) {
         val produkData: MutableList<Produk> = ArrayList()
@@ -30,22 +60,12 @@ class ProdukRepository {
                     for (document in result) {
                         val kategoriDocument = document.data["kategori"] as String
                         if (kategoriDocument == kategoriii) {
-                            // todo add ke list
-                            val id = document.id
-                            val nama = document.data["nama"] as String
-                            val kategori = document.data["kategori"] as String
-                            val alamat = document.data["alamat"] as String
-                            val kecamatan = document.data["kecamatan"] as String
-                            val kabupaten = document.data["kecamatan"] as String
-                            val provinsi = document.data["provinsi"] as String
-                            val wa = document.data["wa"] as String
-                            val deskripso = document.data["deskripsi"] as String
-                            val photo = document.data["photo"] as String
-                            val produkItem = Produk(id, nama, kategori, alamat, kecamatan, kabupaten, provinsi, wa, deskripso, photo)
-                            savedProdukList.add(produkItem)
-                            produkData.add(produkItem)
-                            Log.d(TAG, "Jumlah data $kategoriDocument : ${savedProdukList.size}")
-                            Log.d(TAG, "readProdukByKategori $kategoriDocument: $produkItem ")
+                            val pp = document.toObject(Produk::class.java)
+                            pp.id = document.id
+                            savedProdukList.add(pp)
+                            produkData.add(pp)
+                            Log.d(TAG, "readProduk by kategori size : ${savedProdukList.size}")
+                            Log.d(TAG, "readProduk by kategori: $pp ")
                         }
                     }
                     resultData.value = produkData
@@ -65,21 +85,12 @@ class ProdukRepository {
                 .get()
                 .addOnSuccessListener { result ->
                     for (document in result) {
-                        val id = document.id
-                        val nama = document.data["nama"] as String
-                        val kategori = document.data["kategori"] as String
-                        val alamat = document.data["alamat"] as String
-                        val kecamatan = document.data["kecamatan"] as String
-                        val kabupaten = document.data["kecamatan"] as String
-                        val provinsi = document.data["provinsi"] as String
-                        val wa = document.data["wa"] as String
-                        val deskripso = document.data["deskripsi"] as String
-                        val photo = document.data["photo"] as String
-                        val produkItem = Produk(id, nama, kategori, alamat, kecamatan, kabupaten, provinsi, wa, deskripso, photo)
-                        savedProdukList.add(produkItem)
-                        produkData.add(produkItem)
+                        val pp = document.toObject(Produk::class.java)
+                        pp.id = document.id
+                        savedProdukList.add(pp)
+                        produkData.add(pp)
                         Log.d(TAG, "readProduk savedProdukList size : ${savedProdukList.size}")
-                        Log.d(TAG, "readProduk: $produkItem ")
+                        Log.d(TAG, "readProduk: $pp ")
                     }
                     resultData.value = produkData
                     Log.d(TAG, "readProduk size final savedProdukList : ${savedProdukList.size}")
@@ -140,6 +151,7 @@ class ProdukRepository {
                 "kecamatan" to produk.kecamatan,
                 "kabupaten" to produk.kabupaten,
                 "provinsi" to produk.provinsi,
+                "harga" to produk.harga,
                 "wa" to produk.wa,
                 "deskripsi" to produk.deskripsi,
                 "photo" to produk.photo

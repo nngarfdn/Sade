@@ -4,12 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.udindev.sade.R;
+import com.udindev.sade.model.Produk;
 
 public class MainActivity extends AppCompatActivity {
+
+    String TAG = MainActivity.class.getSimpleName() ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,5 +37,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Produk produk = new  Produk("1", "Java",null,null,null,null,null,null,null,null, null);
+        Log.d(TAG, "onCreate: " + produk.toString());
+
+        Log.d(TAG, "onCreate: " + produk.component2());
     }
 }
