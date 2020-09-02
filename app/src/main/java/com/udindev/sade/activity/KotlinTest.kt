@@ -31,43 +31,57 @@ class KotlinTest : AppCompatActivity() {
         val produk4 = Produk(nama = "Telur", harga = 2500, alamat = "bantul")
         val produk5 = Produk(nama = "Apel", harga = 1500)
 
-        // delete produknya harus punya id dulu
-        val delete = Produk(id = "")
-//        deleteData(delete)
-
-        val list = arrayListOf<Produk>(produk1, produk2, produk3, produk4, produk5)
+        val list = arrayListOf(produk1, produk2, produk3, produk4, produk5)
 
         btnAddAll.setOnClickListener {
-            for (produk in list) { insertData(produk) }
+//            for (produk in list) { insertData(produk) }
         }
 
-
-        produkViewModel.loadResult()
-        produkViewModel.getResult().observe(this, Observer<List<Produk>> { result ->
-            Log.d(TAG, "onCreate: $result")
-            // urut data berdasar harga tertinggi
-            val short = result.sortedWith(compareByDescending { it.harga })
-            short.forEach {
-                Log.d(TAG, "onCreate tinggi - rendah : ${it.nama} harganya ${it.harga}")
-            }
-
-            //urut data harga terenda
-            val terendahKeTinggi = result.sortedWith(compareBy{ it.harga })
-            terendahKeTinggi.forEach {
-                Log.d(TAG, "onCreate rendah - tinggi : ${it.nama} harganya ${it.harga}")
-            }
-//            deleteAll(result)
-            btnDeleteAll.setOnClickListener {
-            }
-
-            btnShowAll.setOnClickListener {
-            }
-//            val a = result.sortedBy {  it.harga}
-//            Log.d(TAG, "shortedBy : $a")
+        produkViewModel.loadResultRendahKeTinggi()
+        produkViewModel.getHargaRendahKeTinggi().observe(this, Observer<List<Produk>> { result ->
+           result.forEach {
+               Log.d(TAG, "onCreate rendah - tinggi : ${it.nama} harganya ${it.harga}")
+           }
 
         })
-        produkViewModel.loadResultByKategory("jasa")
-        getDataByKategory()
+
+//        produkViewModel.loadResult()
+//        produkViewModel.getResult().observe(this, Observer<List<Produk>> { result ->
+//            Log.d(TAG, "onCreate: $result")
+//            // urut data berdasar harga tertinggi
+//            val short = result.sortedWith(compareByDescending { it.harga })
+//            short.forEach {
+//                Log.d(TAG, "onCreate tinggi - rendah : ${it.nama} harganya ${it.harga}")
+//            }
+//
+//            //urut data harga terenda
+//            val terendahKeTinggi = result.sortedWith(compareBy{ it.harga })
+//            terendahKeTinggi.forEach {
+//                Log.d(TAG, "onCreate rendah - tinggi : ${it.nama} harganya ${it.harga}")
+//            }
+//
+//            val list = arrayListOf<Produk>()
+//
+//            terendahKeTinggi.forEach {
+//                if (it.alamat == "bantul" || it.kategori == "jasa") { list.add(it) }
+//            }
+//
+//            list.forEach {
+//                 Log.d(TAG, "onCreate list jasa bantul : ${it.nama} kategori ${it.kategori} alamat ${it.alamat}")
+//            }
+//
+////            deleteAll(result)
+//            btnDeleteAll.setOnClickListener {
+//            }
+//
+//            btnShowAll.setOnClickListener {
+//            }
+////            val a = result.sortedBy {  it.harga}
+////            Log.d(TAG, "shortedBy : $a")
+//
+//        })
+//        produkViewModel.loadResultByKategory("jasa")
+//        getDataByKategory()
 
 //        produkViewModel.loadResultSearchName("Dompet")
 //        produkViewModel.getResultSearch()
@@ -76,29 +90,24 @@ class KotlinTest : AppCompatActivity() {
 
     }
 
-    private fun shortData() {
-        Log.d(TAG, "shortData: shorting data....")
-        produkViewModel.loadResultShort()
-        produkViewModel.getShortResult()
-    }
 
-    private fun getDataByKategory() {
-        produkViewModel.getResultByKategori().observe(this, Observer<List<Produk>> { result ->
-            Log.d(TAG, "By Kategori : $result")
-        })
-    }
-
-    private fun insertData(produk: Produk) {
-        produkViewModel.insertProduk(produk)
-    }
-
-    private fun deleteData(produk: Produk) {
-        produkViewModel.deteteProduk(produk)
-    }
-
-    private fun deleteAll(list: List<Produk>) {
-        for (data in list) {
-            deleteData(data)
-        }
-    }
+//    private fun getDataByKategory() {
+//        produkViewModel.getResultByKategori().observe(this, Observer<List<Produk>> { result ->
+//            Log.d(TAG, "By Kategori : $result")
+//        })
+//    }
+//
+//    private fun insertData(produk: Produk) {
+//        produkViewModel.insertProduk(produk)
+//    }
+//
+//    private fun deleteData(produk: Produk) {
+//        produkViewModel.deteteProduk(produk)
+//    }
+//
+//    private fun deleteAll(list: List<Produk>) {
+//        for (data in list) {
+//            deleteData(data)
+//        }
+//    }
 }
