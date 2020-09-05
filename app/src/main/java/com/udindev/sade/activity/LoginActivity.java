@@ -93,15 +93,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_google:
-                signInWithGoogle();
+                loginWithGoogle();
                 break;
 
             case R.id.btn_login:
-                signInWithEmail(edtEmailLog.getText().toString(), edtPasswordLog.getText().toString());
+                loginWithEmail(edtEmailLog.getText().toString(), edtPasswordLog.getText().toString());
                 break;
 
             case R.id.btn_register:
-                createAccount(edtNameReg.getText().toString(), edtEmailReg.getText().toString(), edtPasswordReg.getText().toString());
+                registerWithEmail(edtNameReg.getText().toString(), edtEmailReg.getText().toString(), edtPasswordReg.getText().toString());
                 break;
 
             case R.id.btn_password_reset:
@@ -178,7 +178,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 });
     }
 
-    private void signInWithGoogle(){
+    private void loginWithGoogle(){
         Intent signInIntent = googleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
@@ -186,7 +186,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     /*
      * Email
      * */
-    private void createAccount(final String fullname, String email, String password){
+    private void registerWithEmail(final String fullname, String email, String password){
         Log.d(TAG, "createAccount: " + email);
         if (!validateForm(true)) return;
 
@@ -224,7 +224,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 });
     }
 
-    private void signInWithEmail(String email, String password){
+    private void loginWithEmail(String email, String password){
         Log.d(TAG, "signIn: " + email);
         if (!validateForm(false)) return;
 
@@ -306,8 +306,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     /*
     *
     * */
-    private void updateUI(boolean isSignIn){
-        if (isSignIn){
+    private void updateUI(boolean isLoginSuccess){
+        if (isLoginSuccess){
             FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
             tvName.setText(firebaseUser.getDisplayName());

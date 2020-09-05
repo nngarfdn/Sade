@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         tesKotlin();
         tesLoginRegister();
+        tesLocation();
         tesDataClass();
     }
 
@@ -170,6 +171,14 @@ public class MainActivity extends AppCompatActivity {
         Button nanangTest = findViewById(R.id.tesDataNanang);
         nanangTest.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, KotlinTest.class);
+            startActivity(intent);
+        });
+    }
+
+    private void tesLocation() {
+        Button btnLocation = findViewById(R.id.tesLocation);
+        btnLocation.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, WilayahTest.class);
             startActivity(intent);
         });
     }

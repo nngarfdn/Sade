@@ -45,4 +45,17 @@
         android:textSize="25sp"
         app:layout_constraintTop_toBottomOf="@+id/tesDataNanang"
         tools:layout_editor_absoluteX="23dp" />
+
+    <Button
+        android:id="@+id/tesLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="23dp"
+        android:layout_marginTop="24dp"
+        android:background="@color/colorPrimary"
+        android:text="Ngetes WILAYAH"
+        android:textColor="@android:color/white"
+        android:textSize="25sp"
+        app:layout_constraintTop_toBottomOf="@+id/tesLogin"
+        tools:layout_editor_absoluteX="23dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
