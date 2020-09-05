@@ -13,7 +13,7 @@
         android:id="@+id/cb_provinces"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pilih provinsi:"/>
+        android:text="Provinsi"/>
 
     <Spinner
         android:id="@+id/spin_provinces"
@@ -27,7 +27,7 @@
         android:id="@+id/cb_regencies"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pilih kabupaten:"/>
+        android:text="Kabupaten"/>
 
     <Spinner
         android:id="@+id/spin_regencies"
@@ -41,7 +41,7 @@
         android:id="@+id/cb_districts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pilih kecamatan:"/>
+        android:text="Kecamatan"/>
 
     <Spinner
         android:id="@+id/spin_districts"

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.RegisterFragment"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="48dp">
+
+    <EditText
+        android:id="@+id/edt_name_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nama lengkap"
+        android:inputType="textPersonName"
+        android:imeOptions="actionNext"
+        android:layout_marginBottom="4dp"
+        android:layout_marginTop="64dp"/>
+
+    <EditText
+        android:id="@+id/edt_email_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        android:imeOptions="actionNext"
+        android:layout_marginBottom="4dp"/>
+
+    <EditText
+        android:id="@+id/edt_password_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Kata sandi"
+        android:inputType="textPassword"
+        android:imeOptions="actionDone"
+        android:layout_marginBottom="4dp"/>
+
+    <Button
+        android:id="@+id/btn_email_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Daftar"/>
+</LinearLayout>
