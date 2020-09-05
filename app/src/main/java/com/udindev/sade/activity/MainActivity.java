@@ -1,20 +1,40 @@
 package com.udindev.sade.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
+import android.view.MenuItem;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.mindorks.editdrawabletext.DrawablePosition;
+import com.mindorks.editdrawabletext.EditDrawableText;
+import com.mindorks.editdrawabletext.onDrawableClickListener;
 import com.udindev.sade.R;
+import com.udindev.sade.fragment.DashboardFragment;
+import com.udindev.sade.fragment.FavoriteFragment;
+import com.udindev.sade.fragment.ProfileFragment;
 import com.udindev.sade.model.Produk;
 import com.udindev.sade.viewmodel.ProdukViewModel;
 
+import org.jetbrains.annotations.NotNull;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     String TAG = MainActivity.class.getSimpleName();
     ProdukViewModel produkViewModel;
+    BottomNavigationView bottomNavigationView;
+    List<Produk> listRendahKeTinggi = new ArrayList<Produk>();
+    List<Produk> listKecamatan = new ArrayList<Produk>();
+    List<Produk> listShow = new ArrayList<Produk>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,42 +42,30 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         produkViewModel = ViewModelProviders.of(this).get(ProdukViewModel.class);
 
-        Produk keyboard = new Produk(null, "Keyboard", "produk", "kukap", "Srandakan",
-                "Bantul", "Yogyakarta", "081234567890", 100000, "Keyboard terbaik", null);
+        loadFragment(new DashboardFragment());
+        setBottomNavigationView();
 
-        Produk mouse = new Produk(null, "Mouse", "produk", "Koripan", "Srandakan",
-                "Sleman", "Yogyakarta", "081234567890", 50000, "Keyboard terbaik", null);
 
-        Produk potonRambut = new Produk(null, "Postong Rambut", "jasa", "Jopaten", "Sanden",
-                "Bantul", "Jakarta", "081234567890", 7000, "Keyboard terbaik", null);
-
-        Produk updateMouse = new Produk("COFgOY4NO5LIsWilHy49", "Mouse Logitech", "produk", "Koripan", "Srandakan",
-                "Sleman", "Yogyakarta", "081234567890", 50000, "Mouse terbaik", null);
-
-        String search = "Keyboard";
-        String kategoriSearch = "jasa";
-        String provinsiSearch = "Yogyakarta";
-        String kabupatenSearch = "o";
-        String kecamatanSearch = "Srandakan";
-
-//        insertProduk(keyboard);
-//        insertProduk(mouse);
-//        insertProduk(potonRambut);
-
-//        updateProduk(updateMouse);
-        getAllResult();
-        getResultTinggiKeRendah();
-        getResultRendahKeTinggi();
-        getResultSearch(search);
-        getResultKategori(kategoriSearch);
-        getResultProvinsi(provinsiSearch);
-        getResultKabupaten(kabupatenSearch);
-        getResultKecamatan(kecamatanSearch);
-
-        tesKotlin();
-        tesLoginRegister();
         tesDataClass();
     }
+
+    private void setBottomNavigationView() {
+        bottomNavigationView = findViewById(R.id.bn_main);
+        bottomNavigationView.setOnNavigationItemSelectedListener(this);
+
+    }
+
+    private boolean loadFragment(Fragment fragment) {
+        if (fragment != null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fl_container, fragment)
+                    .addToBackStack(null)
+                    .commit();
+            return true;
+        }
+        return false;
+    }
+
 
     private void insertProduk(Produk produk) {
         produkViewModel.insertProduk(produk);
@@ -102,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
         produkViewModel.loadResultRendahKeTinggi();
         produkViewModel.getHargaRendahKeTinggi().observe(this, result -> {
             for (Produk produk : result) {
+                listRendahKeTinggi.add(produk);
                 Log.d(TAG, "onCreate: rendah ke tinggi" + produk.component2() + " harganya " + produk.component9());
             }
         });
@@ -129,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
         produkViewModel.loadResultKecamatan(kecamatan);
         produkViewModel.getResultKecamatan().observe(this, result -> {
             for (Produk produk : result) {
+                listKecamatan.add(produk);
                 Log.d(TAG, "onCreate: getResultKecamatan" + produk.component2() + " kecamatan " + produk.component5());
             }
         });
@@ -138,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
         produkViewModel.loadResultSearch(nama);
         produkViewModel.getResultSearch().observe(this, result -> {
             for (Produk produk : result) {
-                Log.d(TAG, "onCreate: getResultSearch" + produk.component2() );
+                Log.d(TAG, "onCreate: getResultSearch" + produk.component2());
             }
         });
     }
@@ -158,19 +168,37 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: " + produk.component2());
     }
 
-    private void tesLoginRegister() {
-        Button btnLogin = findViewById(R.id.tesLogin);
-        btnLogin.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(intent);
-        });
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        Fragment fragment = null;
+        switch (menuItem.getItemId()) {
+            case R.id.dashboard_menu:
+                fragment = new DashboardFragment();
+                break;
+            case R.id.favorite_menu:
+                fragment = new FavoriteFragment();
+                break;
+            case R.id.profile_menu:
+                fragment = new ProfileFragment();
+                break;
+        }
+        return loadFragment(fragment);
     }
 
-    private void tesKotlin() {
-        Button nanangTest = findViewById(R.id.tesDataNanang);
-        nanangTest.setOnClickListener(view -> {
-            Intent intent = new Intent(MainActivity.this, KotlinTest.class);
-            startActivity(intent);
-        });
-    }
+
+//    private void tesLoginRegister() {
+//        Button btnLogin = findViewById(R.id.tesLogin);
+//        btnLogin.setOnClickListener(view -> {
+//            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+//            startActivity(intent);
+//        });
+//    }
+//
+//    private void tesKotlin() {
+//        Button nanangTest = findViewById(R.id.tesDataNanang);
+//        nanangTest.setOnClickListener(view -> {
+//            Intent intent = new Intent(MainActivity.this, KotlinTest.class);
+//            startActivity(intent);
+//        });
+//    }
 }
