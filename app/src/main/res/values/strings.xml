@@ -9,4 +9,14 @@
     <string name="hint_select_province">Pilih provinsi</string>
     <string name="hint_select_regency">Pilih kabupaten</string>
     <string name="hint_select_district">Pilih kecamatan</string>
+    <string name="favorite">Favorite</string>
+
+    <string-array name="kategori">
+        <item>Pilih Kategori</item>
+        <item>Semua</item>
+        <item>Usaha</item>
+        <item>Jasa</item>
+        <item>Produk</item>
+        <item>Lainnya</item>
+    </string-array>
 </resources>

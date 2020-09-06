@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimary"
     tools:context=".fragment.DashboardFragment">
 
@@ -20,10 +20,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="24dp"
+        android:background="@color/colorPrimary"
         android:src="@drawable/ic_toko_saya"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView" />
@@ -47,15 +48,106 @@
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Kategori"
         android:fontFamily="@font/mont_medium"
-        android:textSize="18sp"
+        android:text="Kategori"
         android:textColor="@android:color/white"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relative" />
+
+    <ImageButton
+        android:id="@+id/imgbtn_semua"
+        style="@style/ImageButtonMenu"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_menu_semua"
+        app:layout_constraintEnd_toStartOf="@+id/imgbtn_usaha"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <ImageButton
+        android:id="@+id/imgbtn_usaha"
+        style="@style/ImageButtonMenu"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_menu_usaha"
+        app:layout_constraintEnd_toStartOf="@+id/imgbtn_jasa"
+        app:layout_constraintTop_toTopOf="@+id/imgbtn_semua" />
+
+    <ImageButton
+        android:id="@+id/imgbtn_jasa"
+        style="@style/ImageButtonMenu"
+        android:src="@drawable/ic_menu_jasa"
+        app:layout_constraintBottom_toBottomOf="@+id/imgbtn_usaha"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imgbtn_usaha" />
+
+    <ImageButton
+        android:id="@+id/imgbtn_produk"
+        style="@style/ImageButtonMenu"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/ic_menu_produk"
+        app:layout_constraintBottom_toBottomOf="@+id/imgbtn_jasa"
+        app:layout_constraintStart_toEndOf="@+id/imgbtn_jasa"
+        app:layout_constraintTop_toTopOf="@+id/imgbtn_jasa" />
+
+    <ImageButton
+        android:id="@+id/imgbtn_lainnya"
+        style="@style/ImageButtonMenu"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/ic_menu_lainnya"
+        app:layout_constraintBottom_toBottomOf="@+id/imgbtn_produk"
+        app:layout_constraintStart_toEndOf="@+id/imgbtn_produk"
+        app:layout_constraintTop_toTopOf="@+id/imgbtn_produk" />
+
+    <TextView
+        style="@style/TextMenu"
+        android:text="semua"
+        app:layout_constraintEnd_toEndOf="@+id/imgbtn_semua"
+        app:layout_constraintStart_toStartOf="@+id/imgbtn_semua"
+        app:layout_constraintTop_toBottomOf="@+id/imgbtn_semua" />
+
+    <TextView
+        style="@style/TextMenu"
+        android:text="usaha"
+        app:layout_constraintEnd_toEndOf="@+id/imgbtn_usaha"
+        app:layout_constraintStart_toStartOf="@+id/imgbtn_usaha"
+        app:layout_constraintTop_toBottomOf="@+id/imgbtn_usaha" />
+
+    <TextView
+        android:id="@+id/textView3"
+        style="@style/TextMenu"
+        android:text="jasa"
+        app:layout_constraintEnd_toEndOf="@+id/imgbtn_jasa"
+        app:layout_constraintStart_toStartOf="@+id/imgbtn_jasa"
+        app:layout_constraintTop_toBottomOf="@+id/imgbtn_jasa" />
+
+    <TextView
+        style="@style/TextMenu"
+        android:text="produk"
+        app:layout_constraintEnd_toEndOf="@+id/imgbtn_produk"
+        app:layout_constraintStart_toStartOf="@+id/imgbtn_produk"
+        app:layout_constraintTop_toBottomOf="@+id/imgbtn_produk" />
+
+    <TextView
+        style="@style/TextMenu"
+        android:text="lainnya"
+        app:layout_constraintEnd_toEndOf="@+id/imgbtn_lainnya"
+        app:layout_constraintStart_toStartOf="@+id/imgbtn_lainnya"
+        app:layout_constraintTop_toBottomOf="@+id/imgbtn_lainnya" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="1000dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/background_white_rounded"
+        app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
