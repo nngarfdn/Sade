@@ -48,11 +48,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
     public LoginFragment() {}
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_login, container, false);
     }
@@ -128,7 +123,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount account){
         Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
-        loadingDialog.showDialog();
+        loadingDialog.show();
 
         AuthCredential authCredential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
         firebaseAuth.signInWithCredential(authCredential)
@@ -145,7 +140,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                             showSnackbar(getActivity().findViewById(R.id.activity_login), "Email gagal diautentikasi.");
                         }
 
-                        loadingDialog.dismissDialog();
+                        loadingDialog.dismiss();
                     }
                 });
     }
@@ -154,7 +149,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         if (!validateForm(email, password)) return;
         Log.d(TAG, "signIn: " + email);
 
-        loadingDialog.showDialog();
+        loadingDialog.show();
 
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
@@ -170,7 +165,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                             showSnackbar(getActivity().findViewById(R.id.activity_login), "Kata sandi salah atau koneksi sedang bermasalah.");
                         }
 
-                        loadingDialog.dismissDialog();
+                        loadingDialog.dismiss();
                     }
                 });
     }

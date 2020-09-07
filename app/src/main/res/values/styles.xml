@@ -13,13 +13,13 @@
         <item name="android:layout_marginHorizontal" tools:ignore="NewApi">8dp</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="android:drawableRight">@drawable/ic_icon_search</item>
-        <item name="android:outlineAmbientShadowColor" tools:ignore="NewApi">@android:color/white</item>
-        <item name="android:outlineSpotShadowColor" tools:ignore="NewApi">@android:color/white</item>
-        <item name="android:shadowColor">@android:color/white</item>
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:textColorHighlight">@android:color/white</item>
-        <item name="android:textColorHint">@android:color/white</item>
-        <item name="android:textColorLink">@android:color/white</item>
+        <item name="android:outlineAmbientShadowColor" tools:ignore="NewApi">@color/white</item>
+        <item name="android:outlineSpotShadowColor" tools:ignore="NewApi">@color/white</item>
+        <item name="android:shadowColor">@color/white</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorHighlight">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:textColorLink">@color/white</item>
     </style>
 
     <style name="ImageButtonMenu">
@@ -32,9 +32,28 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">8dp</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:textSize">10sp</item>
         <item name="android:fontFamily">@font/mont_medium</item>
     </style>
 
+    <style name="Button">
+        <item name="android:fontFamily">@font/mont_medium</item>
+    </style>
+
+    <style name="Button.Primary">
+        <item name="android:background">@drawable/background_button_round_8dp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Button.Outline">
+        <item name="android:background">@drawable/background_button_outline_8dp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="EditText">
+        <item name="android:background">@drawable/background_edit_text</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:fontFamily">@font/mont_regular</item>
+    </style>
 </resources>

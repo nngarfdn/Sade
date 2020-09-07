@@ -14,18 +14,21 @@
         android:orientation="vertical"
         android:gravity="center">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="50dp"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:src="@drawable/ic_menu_usaha"/>
+            android:fontFamily="@font/mont_semibold"
+            android:text="@string/sad"
+            android:textSize="32sp"
+            android:textColor="@color/colorPrimary"/>
     </LinearLayout>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabIndicatorColor="@color/colorPrimary"/>
+        app:tabIndicatorColor="@color/colorPrimary"
+        android:fontFamily="@font/mont_bold"/>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager_login"

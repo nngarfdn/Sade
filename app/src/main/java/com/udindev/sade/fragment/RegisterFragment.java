@@ -73,7 +73,7 @@ public class RegisterFragment extends Fragment {
         if (!validateForm(name, email, password)) return;
         Log.d(TAG, "createAccount: " + email);
 
-        loadingDialog.showDialog();
+        loadingDialog.show();
 
         // Start create user with email
         firebaseAuth.createUserWithEmailAndPassword(email, password)
@@ -102,7 +102,7 @@ public class RegisterFragment extends Fragment {
                             showSnackbar(getActivity().findViewById(R.id.activity_login), "Email sudah terdaftar atau koneksi sedang bermasalah.");
                         }
 
-                        loadingDialog.dismissDialog();
+                        loadingDialog.dismiss();
                     }
                 });
     }

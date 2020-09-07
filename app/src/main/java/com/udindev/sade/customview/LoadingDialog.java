@@ -7,24 +7,20 @@ import android.view.LayoutInflater;
 import com.udindev.sade.R;
 
 public class LoadingDialog {
-    private Activity activity;
     private AlertDialog dialog;
 
     public LoadingDialog(Activity activity){
-        this.activity = activity;
-    }
-
-    public void showDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-
         LayoutInflater inflater = activity.getLayoutInflater();
         builder.setView(inflater.inflate(R.layout.dialog_loading, null));
-
         dialog = builder.create();
+    }
+
+    public void show(){
         dialog.show();
     }
 
-    public void dismissDialog(){
+    public void dismiss(){
         dialog.dismiss();
     }
 }
