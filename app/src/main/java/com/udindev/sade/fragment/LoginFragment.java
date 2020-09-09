@@ -33,7 +33,7 @@ import com.udindev.sade.activity.MainActivity;
 import com.udindev.sade.customview.LoadingDialog;
 import com.udindev.sade.dialogfragment.ResetPasswordDialog;
 
-import static com.udindev.sade.AppUtils.showSnackbar;
+import static com.udindev.sade.utils.AppUtils.showSnackbar;
 
 public class LoginFragment extends Fragment implements View.OnClickListener{
     private final String TAG = getClass().getSimpleName();

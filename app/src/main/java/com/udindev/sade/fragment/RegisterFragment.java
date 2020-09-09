@@ -26,7 +26,7 @@ import com.udindev.sade.R;
 import com.udindev.sade.activity.MainActivity;
 import com.udindev.sade.customview.LoadingDialog;
 
-import static com.udindev.sade.AppUtils.showSnackbar;
+import static com.udindev.sade.utils.AppUtils.showSnackbar;
 
 public class RegisterFragment extends Fragment {
     private final String TAG = getClass().getSimpleName();

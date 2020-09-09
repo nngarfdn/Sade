@@ -9,6 +9,11 @@
     <string name="hint_select_regency">Pilih kabupaten</string>
     <string name="hint_select_district">Pilih kecamatan</string>
     <string name="favorite">Favorit</string>
+    <string name="alamat_lengkap">Alamat lengkap</string>
+    <string name="contoh_alamat">Murtigading, Sanden, Bantul</string>
+    <string name="harga">Rp 10.000</string>
+    <string name="descripsi">Melayani potong rambut sesuai keinginan Anda, dijamin</string>
+    <string name="selengkapnya">selengkapnya</string>
 
     <string-array name="kategori">
         <item>Pilih kategori</item>

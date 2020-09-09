@@ -21,7 +21,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.udindev.sade.R;
 
-import static com.udindev.sade.AppUtils.showSnackbar;
+import static com.udindev.sade.utils.AppUtils.showSnackbar;
 
 public class ResetPasswordDialog extends DialogFragment {
     private final String TAG = getClass().getSimpleName();
