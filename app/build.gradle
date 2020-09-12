@@ -61,4 +61,7 @@ dependencies {
     //drawable search click
     implementation 'com.github.MindorksOpenSource:EditDrawableText:1.1.0'
 
+    // Facebook shimmer effect dependency
+    implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
+
 }

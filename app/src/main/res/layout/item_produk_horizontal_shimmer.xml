@@ -14,60 +14,51 @@
         <ImageView
             android:id="@+id/img_item"
             android:layout_width="150dp"
+            android:background="@color/shimmer"
             android:layout_height="150dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:src="@drawable/image_empty"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/txt_nama_produk"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginHorizontal="8dp"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/mont_semibold"
             android:text="Dose Juice"
-            android:textColor="@android:color/black"
+            android:background="@color/shimmer"
+            android:textColor="@color/shimmer"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/img_item" />
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="8dp"
+        <TextView
+            android:id="@+id/txt_alamat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
             android:layout_marginTop="4dp"
-            android:src="@drawable/ic_baseline_location_on_24"
+            android:background="@color/shimmer"
+            android:fontFamily="@font/mont_semibold"
+            android:text="Dose Juice"
+            android:textColor="@color/shimmer"
+            android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_nama_produk" />
-
-        <TextView
-            android:id="@+id/txt_alamatproduk"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/mont_italic"
-            android:maxWidth="115dp"
-            android:maxLines="2"
-            android:text="@string/contoh_alamat"
-            android:textColor="@android:color/black"
-            android:textSize="10sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toTopOf="@+id/imageView"
-            tools:ignore="SmallSp" />
 
         <TextView
             android:id="@+id/txt_hargaproduk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/shimmer"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/mont_regular"
             android:text="@string/harga"
             android:textSize="12sp"
-            android:textColor="@android:color/black"
+            android:textColor="@color/shimmer"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

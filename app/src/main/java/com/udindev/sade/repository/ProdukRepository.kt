@@ -16,6 +16,7 @@ class ProdukRepository {
     private var resultDataProvinsi: MutableLiveData<List<Produk>> = MutableLiveData()
     private var resultDataKabupaten: MutableLiveData<List<Produk>> = MutableLiveData()
     private var resultDataKecamatan: MutableLiveData<List<Produk>> = MutableLiveData()
+    private var resultKategoriJasa : MutableLiveData<List<Produk>> = MutableLiveData()
 
     companion object {
         private val TAG: String = ProdukRepository::class.java.simpleName
@@ -24,6 +25,7 @@ class ProdukRepository {
     private val db = FirebaseFirestore.getInstance()
 
     fun getResults(): LiveData<List<Produk>> = resultData
+    fun getResultsKategoriJasa(): LiveData<List<Produk>> = resultKategoriJasa
     fun getResultsByKategory(): LiveData<List<Produk>> = resultDataByKategory
     fun getResultsSearch(): LiveData<List<Produk>> = resultDataSearch
     fun getResultsProvinsi(): LiveData<List<Produk>> = resultDataProvinsi
@@ -32,6 +34,32 @@ class ProdukRepository {
     fun getResultHargaRendahKeTinggi(): LiveData<List<Produk>> = resultDataHargaRendahKeTinggi
     fun getResultHargaTinggiKeRendah(): LiveData<List<Produk>> = resultDataHargaTinggiKeRendah
 
+
+    fun getDataKetegoriJasa() {
+        val produkData: MutableList<Produk> = ArrayList()
+        val db = FirebaseFirestore.getInstance()
+        val savedProdukList = ArrayList<Produk>()
+        db.collection("produk")
+                .get()
+                .addOnSuccessListener { result ->
+                    for (document in result) {
+                        val kategoriDocument = document.data["kategori"] as String
+                        if (kategoriDocument == "produk") {
+                            val pp = document.toObject(Produk::class.java)
+                            pp.id = document.id
+                            savedProdukList.add(pp)
+                            produkData.add(pp)
+                            Log.d(TAG, "getDataByKategori size : ${savedProdukList.size}")
+                            Log.d(TAG, "getDataByKategori: $pp ")
+                        }
+                    }
+                    resultDataByKategory.value = produkData
+                    Log.d(TAG, "readProduk size final getDataByKategori : ${savedProdukList.size}")
+                }
+                .addOnFailureListener { exception ->
+                    Log.e(TAG, "Error getting documents.", exception)
+                }
+    }
 
     fun getDataProvinsi(provinsi: String) {
         val produkData: MutableList<Produk> = ArrayList()

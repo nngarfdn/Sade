@@ -6,4 +6,5 @@
 
     <color name="black">#2A3132</color>
     <color name="white">#FCFDFE</color>
+    <color name="shimmer">#dddddd</color>
 </resources>

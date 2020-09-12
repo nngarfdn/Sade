@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_margin="4dp"
+    android:layout_marginVertical="4dp"
     android:layout_height="120dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,18 +15,18 @@
             android:id="@+id/img_item"
             android:layout_width="120dp"
             android:layout_height="120dp"
+            android:background="@color/shimmer"
             app:layout_constraintStart_toStartOf="parent"
-            android:src="@drawable/image_empty"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/txt_nama_produk"
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
+            android:background="@color/shimmer"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/mont_semibold"
-            android:text="Dose Juice"
             android:textColor="@android:color/black"
             android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/img_item"
@@ -36,8 +36,8 @@
             android:id="@+id/imageView"
             android:layout_width="20dp"
             android:layout_height="20dp"
+            android:background="@color/shimmer"
             android:layout_marginTop="4dp"
-            android:src="@drawable/ic_baseline_location_on_24"
             app:layout_constraintStart_toStartOf="@+id/txt_nama_produk"
             app:layout_constraintTop_toBottomOf="@+id/txt_nama_produk" />
 
@@ -46,10 +46,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/mont_italic"
-            android:maxWidth="150dp"
+            android:maxWidth="200dp"
+            android:background="@color/shimmer"
             android:maxLines="2"
+            android:layout_marginStart="8dp"
             android:text="@string/contoh_alamat"
-            android:textColor="@android:color/black"
+            android:textColor="@color/shimmer"
             android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="@+id/imageView"
             app:layout_constraintStart_toEndOf="@+id/imageView"
@@ -60,25 +62,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:background="@color/shimmer"
             android:text="@string/descripsi"
-            android:maxWidth="150dp"
+            android:maxWidth="200dp"
             android:maxLines="2"
             android:fontFamily="@font/mont_regular"
-            android:textColor="@android:color/black"
+            android:textColor="@color/shimmer"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="@+id/txt_nama_produk"
             app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
         <TextView
-            android:id="@+id/txt_harga"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/mont_regular"
             android:text="@string/harga"
+            android:background="@color/shimmer"
             android:textSize="12sp"
-            android:textColor="@android:color/black"
+            android:textColor="@color/shimmer"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
