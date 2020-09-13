@@ -6,37 +6,37 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.udindev.sade.R;
 import com.udindev.sade.activity.LoginActivity;
+import com.udindev.sade.model.Profile;
+import com.udindev.sade.viewmodel.ProfileViewModel;
+
+import static com.udindev.sade.utils.AppUtils.loadImageFromUrl;
 
 public class ProfileFragment extends Fragment {
 
-    public ProfileFragment() {
-        // Required empty public constructor
-    }
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
+    private ImageView imgPhoto;
+    private TextView tvName, tvEmail, tvAddress, tvPhoneNumber, tvWaNumber;
+    private ProfileViewModel profileViewModel;
 
-    public static ProfileFragment newInstance(String param1, String param2) {
-        ProfileFragment fragment = new ProfileFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
-    }
+    public ProfileFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,6 +47,30 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+        Log.d(getClass().getSimpleName(), "userId: " + firebaseUser.getUid());
+
+        imgPhoto = view.findViewById(R.id.img_photo_profile);
+        tvName = view.findViewById(R.id.tv_name_profile);
+        tvEmail = view.findViewById(R.id.tv_email_profile);
+        tvAddress = view.findViewById(R.id.tv_address_profile);
+        tvPhoneNumber = view.findViewById(R.id.tv_phone_number_profile);
+        tvWaNumber = view.findViewById(R.id.tv_wa_number_profile);
+
+        profileViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ProfileViewModel.class);
+        profileViewModel.getData().observe(getViewLifecycleOwner(), new Observer<Profile>() {
+            @Override
+            public void onChanged(Profile profile) {
+                loadImageFromUrl(getContext(), imgPhoto, firebaseUser.getPhotoUrl().toString());
+                tvName.setText(firebaseUser.getDisplayName());
+                tvEmail.setText(firebaseUser.getEmail());
+                tvAddress.setText(profile.getAddress());
+                tvPhoneNumber.setText(profile.getPhoneNumber());
+                tvWaNumber.setText(profile.getWaNumber());
+            }
+        });
+
         Button btnLogoutTest = view.findViewById(R.id.btn_logout_test_profile);
         btnLogoutTest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,11 +80,17 @@ public class ProfileFragment extends Fragment {
                         .requestEmail()
                         .build();
                 GoogleSignIn.getClient(getActivity(), gso).signOut();
-                FirebaseAuth.getInstance().signOut();
+                firebaseAuth.signOut();
 
                 startActivity(new Intent(getActivity(), LoginActivity.class));
                 getActivity().finish();
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        profileViewModel.loadData(firebaseUser.getUid());
     }
 }

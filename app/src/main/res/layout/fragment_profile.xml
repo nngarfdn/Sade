@@ -1,13 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.ProfileFragment">
+    tools:context=".fragment.ProfileFragment"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/img_photo_profile"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@color/black"/>
+
+    <TextView
+        android:id="@+id/tv_name_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Memuat"/>
+
+    <TextView
+        android:id="@+id/tv_email_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Memuat"/>
+
+    <TextView
+        android:id="@+id/tv_address_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Memuat"/>
+
+    <TextView
+        android:id="@+id/tv_phone_number_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Memuat"/>
+
+    <TextView
+        android:id="@+id/tv_wa_number_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Memuat"/>
 
     <Button
         android:id="@+id/btn_logout_test_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Keluar"/>
-</FrameLayout>
+</LinearLayout>
