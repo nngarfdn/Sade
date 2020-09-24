@@ -16,6 +16,7 @@
     <string name="selengkapnya">selengkapnya</string>
     <string name="semua">Semua</string>
 
+
     <string-array name="kategori">
         <item>Pilih kategori</item>
         <item>Semua</item>

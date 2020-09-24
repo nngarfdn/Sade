@@ -3,7 +3,6 @@ package com.udindev.sade.activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,17 +10,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.mindorks.editdrawabletext.DrawablePosition;
-import com.mindorks.editdrawabletext.EditDrawableText;
-import com.mindorks.editdrawabletext.onDrawableClickListener;
 import com.udindev.sade.R;
 import com.udindev.sade.fragment.DashboardFragment;
 import com.udindev.sade.fragment.FavoriteFragment;
 import com.udindev.sade.fragment.ProfileFragment;
 import com.udindev.sade.model.Produk;
 import com.udindev.sade.viewmodel.ProdukViewModel;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         setBottomNavigationView();
 
 
-        tesDataClass();
+//        tesDataClass();
     }
 
     private void setBottomNavigationView() {

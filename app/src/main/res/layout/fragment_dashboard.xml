@@ -27,6 +27,7 @@
 
 
         <ImageButton
+            android:id="@+id/btn_tokosaya"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
@@ -164,6 +165,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
+                android:id="@+id/btn_produk_selengkapnya"
                 style="@style/ButtonSelengkapnya"
                 android:text="@string/selengkapnya"
                 app:layout_constraintBottom_toBottomOf="@+id/textView7"
@@ -177,7 +179,7 @@
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="@dimen/margin_32dp"
                 android:orientation="vertical"
-                app:layout_constraintTop_toTopOf="@+id/rv_produk_dasbor">
+                app:layout_constraintTop_toTopOf="@+id/rv_semua_item">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -194,7 +196,7 @@
             </com.facebook.shimmer.ShimmerFrameLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_produk_dasbor"
+                android:id="@+id/rv_semua_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_32dp"
@@ -210,7 +212,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/shimmerFrameLayoutProduk" />
 
             <Button
-                android:id="@+id/btn_more_jasa"
+                android:id="@+id/btn_semua_selengkapnya"
                 style="@style/ButtonSelengkapnya"
                 android:text="@string/selengkapnya"
                 app:layout_constraintEnd_toEndOf="parent"
