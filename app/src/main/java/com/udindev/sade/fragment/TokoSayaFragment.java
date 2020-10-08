@@ -46,12 +46,7 @@ public class TokoSayaFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         btnTambah = view.findViewById(R.id.btn_tambah_produk);
 
-        btnTambah.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadFragment(new TambahProdukFragment());
-            }
-        });
+        btnTambah.setOnClickListener(v -> loadFragment(new TambahProdukFragment()));
     }
 
     private boolean loadFragment(Fragment fragment) {

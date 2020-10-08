@@ -56,7 +56,7 @@
         </RelativeLayout>
 
         <Button
-            android:id="@+id/img_tampilkan_favorite"
+            android:id="@+id/btn_tampilkan_favorite"
             style="@style/Button.Primary"
             android:layout_width="100dp"
             android:layout_height="30dp"

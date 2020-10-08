@@ -11,5 +11,5 @@ data class Produk(
         val wa : String? = "",
         var harga : Int? = 0,
         val deskripsi : String? = "",
-        val photo : List<String?> = emptyList()
+        val photo : String? = ""
         )

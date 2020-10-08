@@ -1,11 +1,13 @@
 package com.udindev.sade.adapter
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.udindev.sade.R
+import com.udindev.sade.activity.DetailActivity
 import com.udindev.sade.model.Produk
 import kotlinx.android.synthetic.main.item_produk_vertical.view.*
 
@@ -29,22 +31,9 @@ class JasaMenuAdapter (private val list: List<Produk>?) :
         holder.itemView.txt_alamatproduk.text = list?.get(position)?.alamat
         holder.itemView.txt_harga.text = "Rp ${list?.get(position)?.harga}"
 
-//        holder.itemView.setOnClickListener {
-//            val bundle = Bundle()
-//            bundle.putString(DetailNewsFragment.EXTRA_URL, list.get(position)?.url)
-//            val fragment = DetailNewsFragment()
-//            fragment.arguments = bundle
-//
-//            setFragment(fragment, holder.itemView.context)
+        holder.itemView.setOnClickListener {
+            val intent = Intent(holder.itemView.context, DetailActivity::class.java)
+            holder.itemView.context.startActivity(intent)
         }
     }
-
-//    private fun setFragment(fragment: DetailNewsFragment, context: Context?) {
-//        (context as AppCompatActivity).supportFragmentManager
-//                .beginTransaction()
-//                .replace(R.id.framelayout, fragment, "Adapter")
-//                .addToBackStack(null)
-//                .commit()
-//    }
-
-//}
+}

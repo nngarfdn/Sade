@@ -74,6 +74,14 @@
         <item name="android:textColorHighlight">#CCC</item>
     </style>
 
+    <style name="EditTextTambah">
+        <item name="android:background">@drawable/background_edit_text</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:fontFamily">@font/mont_regular</item>
+        <item name="android:textCursorDrawable">@drawable/cursor</item>
+        <item name="android:textColorHighlight">#CCC</item>
+    </style>
+
     <style name="TextKategori">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

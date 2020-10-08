@@ -7,4 +7,7 @@
     <color name="black">#2A3132</color>
     <color name="white">#FCFDFE</color>
     <color name="shimmer">#dddddd</color>
+
+    <color name="green">#29A71A</color>
+    <color name="green_click">#207D15</color>
 </resources>
