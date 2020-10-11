@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import com.udindev.sade.R
 import com.udindev.sade.activity.DetailActivity
 import com.udindev.sade.model.Produk
@@ -23,17 +24,23 @@ class JasaMenuAdapter (private val list: List<Produk>?) :
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//        Picasso.get()
-//                .load(list?.get(position)?.urlToImage)
-//                .placeholder(R.drawable.ic_baseline_image_24)
-//                .into(holder.itemView.image_news)
+        Picasso.get()
+                .load(list?.get(position)?.photo)
+                .resize(120, 120) // resizes the image to these dimensions (in pixel)
+                .centerCrop()
+                .placeholder(R.drawable.image_empty)
+                .into(holder.itemView.img_item)
         holder.itemView.txt_nama_produk.text = list?.get(position)?.nama
         holder.itemView.txt_alamatproduk.text = list?.get(position)?.alamat
+        holder.itemView.txt_deskripsi_produk.text = list?.get(position)?.deskripsi
         holder.itemView.txt_harga.text = "Rp ${list?.get(position)?.harga}"
 
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, DetailActivity::class.java)
+            intent.putExtra(DetailActivity.EXTRA_PRODUK, list?.get(position))
             holder.itemView.context.startActivity(intent)
+
+
         }
     }
 }

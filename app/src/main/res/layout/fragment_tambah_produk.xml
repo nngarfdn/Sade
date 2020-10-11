@@ -68,7 +68,7 @@
             <RelativeLayout
                 android:id="@+id/relativeSpinner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginHorizontal="@dimen/margin_32dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/background_edit_text"
@@ -98,64 +98,92 @@
                 app:layout_constraintTop_toBottomOf="@+id/relativeSpinner"
                 />
 
+            <CheckBox
+                android:id="@+id/cb_provinces"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Provinsi"
+                app:layout_constraintStart_toStartOf="@+id/edt_alamat_produk"
+                app:layout_constraintTop_toBottomOf="@+id/edt_alamat_produk" />
+
             <RelativeLayout
                 android:id="@+id/relativeSpinnerProvinsi"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginHorizontal="@dimen/margin_32dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/background_edit_text"
                 android:padding="12dp"
-                android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="@+id/edt_nama_produk"
-                app:layout_constraintTop_toBottomOf="@+id/edt_alamat_produk">
+                app:layout_constraintTop_toBottomOf="@+id/cb_provinces">
 
                 <Spinner
-                    android:id="@+id/spinner_provinsi"
+                    android:id="@+id/spin_provinces"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:entries="@array/kategori"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:minHeight="50dp"
+                    android:prompt="@string/hint_select_province"
+                    android:spinnerMode="dialog" />
+
             </RelativeLayout>
+
+            <CheckBox
+                android:id="@+id/cb_regencies"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Kabupaten"
+                app:layout_constraintStart_toStartOf="@+id/relativeSpinnerProvinsi"
+                app:layout_constraintTop_toBottomOf="@+id/relativeSpinnerProvinsi" />
 
             <RelativeLayout
                 android:id="@+id/relativeSpinnerKabupaten"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginHorizontal="@dimen/margin_32dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/background_edit_text"
                 android:padding="12dp"
                 app:layout_constraintStart_toStartOf="@+id/edt_nama_produk"
-                app:layout_constraintTop_toBottomOf="@+id/relativeSpinnerProvinsi">
+                app:layout_constraintTop_toBottomOf="@+id/cb_regencies">
 
                 <Spinner
-                    android:id="@+id/spinner_kabupaten"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/kategori"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                android:id="@+id/spin_regencies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="50dp"
+                android:prompt="@string/hint_select_regency"
+                android:spinnerMode="dialog"/>
             </RelativeLayout>
+
+            <CheckBox
+                android:id="@+id/cb_districts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Kecamatan"
+                app:layout_constraintStart_toStartOf="@+id/relativeSpinnerKabupaten"
+                app:layout_constraintTop_toBottomOf="@+id/relativeSpinnerKabupaten" />
 
             <RelativeLayout
                 android:id="@+id/relativeSpinnerKecamatan"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginHorizontal="@dimen/margin_32dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/background_edit_text"
                 android:padding="12dp"
                 app:layout_constraintStart_toStartOf="@+id/edt_nama_produk"
-                app:layout_constraintTop_toBottomOf="@+id/relativeSpinnerKabupaten">
+                app:layout_constraintTop_toBottomOf="@+id/cb_districts">
 
                 <Spinner
-                    android:id="@+id/spinner_kecamatann"
+                    android:id="@+id/spin_districts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:entries="@array/kategori"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:minHeight="50dp"
+                    android:prompt="@string/hint_select_district"
+                    android:spinnerMode="dialog"/>
             </RelativeLayout>
 
             <EditText
@@ -167,7 +195,7 @@
                 android:layout_marginTop="16dp"
                 android:hint="Nomor WhatsApp"
                 android:imeOptions="actionNext"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 app:layout_constraintTop_toBottomOf="@+id/relativeSpinnerKecamatan"
                 tools:layout_editor_absoluteX="32dp" />
 
@@ -198,12 +226,13 @@
                 tools:layout_editor_absoluteX="32dp" />
 
             <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_marginHorizontal="@dimen/margin_32dp"
                 android:layout_marginTop="16dp"
-                android:orientation="horizontal"
                 android:background="@drawable/background_edit_text"
+                android:orientation="horizontal"
                 app:layout_constraintTop_toBottomOf="@+id/edt_alamat_deskripsi"
                 tools:layout_editor_absoluteX="32dp">
 
@@ -213,10 +242,9 @@
                     android:layout_height="60dp"
                     android:layout_marginVertical="5dp"
                     android:layout_marginStart="5dp"
-                    android:text="Tambah Foto"
-                    android:textSize="10sp"
                     android:background="@drawable/background_button_outline_8dp"
-                    />
+                    android:text="Tambah Foto"
+                    android:textSize="10sp" />
 
                 <ImageView
                     android:id="@+id/img_upload_result"
@@ -224,11 +252,19 @@
                     android:layout_height="60dp"
                     android:layout_marginVertical="5dp"
                     android:layout_marginStart="16dp"
-                    android:src="@drawable/image_empty"
-                    />
-
+                    android:src="@drawable/image_empty" />
 
             </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_tambah_produk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Tambah Produk"
+                app:layout_constraintEnd_toEndOf="@+id/edt_alamat_deskripsi"
+                app:layout_constraintStart_toStartOf="@+id/linearLayout"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 
 

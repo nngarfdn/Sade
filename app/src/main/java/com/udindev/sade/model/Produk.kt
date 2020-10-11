@@ -1,7 +1,12 @@
 package com.udindev.sade.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class Produk(
         var id : String? = "",
+        var email : String = "",
         val nama : String? = "",
         val kategori : String? = "",
         val alamat  : String? = "",
@@ -12,4 +17,4 @@ data class Produk(
         var harga : Int? = 0,
         val deskripsi : String? = "",
         val photo : String? = ""
-        )
+        ) : Parcelable

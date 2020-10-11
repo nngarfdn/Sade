@@ -11,10 +11,6 @@
     android:background="@android:color/white"
     tools:context=".activity.DetailActivity">
 
-
-
-
-
     <ImageView
         android:id="@+id/img_detailproduk"
         android:layout_width="match_parent"

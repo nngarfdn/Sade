@@ -156,11 +156,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         });
     }
 
-    private void tesDataClass() {
-        Produk produk = new Produk("1", "Java", null, null, null, null, null, null, null, null, null);
-        Log.d(TAG, "onCreate: " + produk.toString());
-        Log.d(TAG, "onCreate: " + produk.component2());
-    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
