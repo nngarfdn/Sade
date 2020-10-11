@@ -1,6 +1,7 @@
 package com.udindev.sade.fragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -35,7 +36,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
     private RoundedImageView imgPhoto;
-    private TextView tvName, tvAddress, tvFullname, tvEmail, tvFulladdress, tvPhoneNumber, tvWaNumber, tvAbout, tvHelpCenter, tvLogout;
+    private TextView tvName, tvAddress, tvFullname, tvEmail, tvFulladdress, tvPhoneNumber, tvWaNumber;
     private ProfileViewModel profileViewModel;
 
     public ProfileFragment() {}
@@ -62,18 +63,21 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         tvPhoneNumber = view.findViewById(R.id.tv_phone_number_profile);
         tvWaNumber = view.findViewById(R.id.tv_wa_number_profile);
 
-        tvAbout = view.findViewById(R.id.tv_about_profile);
-        tvHelpCenter = view.findViewById(R.id.tv_help_center_profile);
-        tvLogout = view.findViewById(R.id.tv_logout_profile);
-        tvAbout.setOnClickListener(this::onClick);
-        tvHelpCenter.setOnClickListener(this::onClick);
-        tvLogout.setOnClickListener(this::onClick);
+        TextView tvAbout = view.findViewById(R.id.tv_about_profile);
+        TextView tvHelpCenter = view.findViewById(R.id.tv_help_center_profile);
+        TextView tvLogout = view.findViewById(R.id.tv_logout_profile);
+        tvAbout.setOnClickListener(this);
+        tvHelpCenter.setOnClickListener(this);
+        tvLogout.setOnClickListener(this);
 
         profileViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ProfileViewModel.class);
         profileViewModel.getData().observe(getViewLifecycleOwner(), new Observer<Profile>() {
             @Override
             public void onChanged(Profile profile) {
-                loadImageFromUrl(getContext(), imgPhoto, firebaseUser.getPhotoUrl().toString());
+                // Daftar pakai email+pass tidak ada foto
+                Uri photoUrl = firebaseUser.getPhotoUrl();
+                if (photoUrl != null) loadImageFromUrl(getContext(), imgPhoto, photoUrl.toString());
+
                 tvName.setText(firebaseUser.getDisplayName());
                 tvAddress.setText(profile.getAddress());
                 tvFullname.setText(firebaseUser.getDisplayName());
