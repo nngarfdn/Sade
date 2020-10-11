@@ -2,13 +2,6 @@ package com.udindev.sade.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,12 +10,19 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.udindev.sade.R;
 import com.udindev.sade.activity.LoginActivity;
+import com.udindev.sade.activity.PusatBantuanActivity;
 import com.udindev.sade.model.Profile;
 import com.udindev.sade.viewmodel.ProfileViewModel;
 
@@ -85,6 +85,13 @@ public class ProfileFragment extends Fragment {
                 startActivity(new Intent(getActivity(), LoginActivity.class));
                 getActivity().finish();
             }
+        });
+
+        Button btnPusatBantuan;
+        btnPusatBantuan = view.findViewById(R.id.btn_pusat_bantuan);
+        btnPusatBantuan.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), PusatBantuanActivity.class);
+            startActivity(intent);
         });
     }
 

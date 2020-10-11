@@ -48,4 +48,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Keluar"/>
+
+    <Button
+        android:id="@+id/btn_pusat_bantuan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pusat Bantuan"/>
 </LinearLayout>
