@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.rishabhharit.roundedimageview.RoundedImageView;
 import com.udindev.sade.R;
 import com.udindev.sade.activity.LoginActivity;
+import com.udindev.sade.activity.PusatBantuanActivity;
 import com.udindev.sade.model.Profile;
 import com.udindev.sade.viewmodel.ProfileViewModel;
 
@@ -98,7 +99,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.tv_help_center_profile:
-                //startActivity(new Intent(getActivity(), ));
+                startActivity(new Intent(getActivity(), PusatBantuanActivity.class));
                 break;
 
             case R.id.tv_logout_profile:
