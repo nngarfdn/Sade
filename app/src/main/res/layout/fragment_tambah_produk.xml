@@ -4,237 +4,235 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    tools:context=".fragment.TambahProdukFragment">
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_24dp"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/mont_semibold"
-        android:text="@string/edit_produk"
-        android:textColor="@android:color/white"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/imgbtn_delete_produk"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:background="@color/colorPrimary"
-        android:src="@drawable/ic_baseline_delete_24"
-        app:layout_constraintBottom_toBottomOf="@+id/textView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView" />
-
-    <ImageButton
-        android:id="@+id/imgbtn_archive_produk"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:background="@color/colorPrimary"
-        android:src="@drawable/ic_icon_archive"
-        app:layout_constraintBottom_toBottomOf="@+id/imgbtn_delete_produk"
-        app:layout_constraintEnd_toStartOf="@+id/imgbtn_delete_produk"
-        app:layout_constraintTop_toTopOf="@+id/textView" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="1000dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/background_white_rounded"
-        app:layout_constraintTop_toBottomOf="@+id/textView" >
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        tools:context=".fragment.TambahProdukFragment">
 
-        <EditText
-            android:id="@+id/edt_nama_produk"
-            style="@style/EditTextTambah"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_32dp"
+            android:layout_marginStart="@dimen/margin_24dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/mont_semibold"
+            android:text="@string/edit_produk"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/imgbtn_delete_produk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:background="@color/colorPrimary"
+            android:src="@drawable/ic_baseline_delete_24"
+            app:layout_constraintBottom_toBottomOf="@+id/textView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView" />
+
+        <ImageButton
+            android:id="@+id/imgbtn_archive_produk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:background="@color/colorPrimary"
+            android:src="@drawable/ic_icon_archive"
+            app:layout_constraintBottom_toBottomOf="@+id/imgbtn_delete_produk"
+            app:layout_constraintEnd_toStartOf="@+id/imgbtn_delete_produk"
+            app:layout_constraintTop_toTopOf="@+id/textView" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="1000dp"
             android:layout_marginTop="24dp"
-            android:hint="Nama usaha/jasa/produk"
-            android:imeOptions="actionNext"
-            android:inputType="textPersonName"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="32dp" />
+            android:background="@drawable/background_white_rounded"
+            app:layout_constraintTop_toBottomOf="@+id/textView" >
 
-        <RelativeLayout
-            android:id="@+id/relativeSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_32dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/background_edit_text"
-            android:padding="12dp"
-            app:layout_constraintStart_toStartOf="@+id/edt_nama_produk"
-            app:layout_constraintTop_toBottomOf="@+id/edt_nama_produk">
-
-            <Spinner
-                android:id="@+id/spinner_kategori"
+            <EditText
+                android:id="@+id/edt_nama_produk"
+                style="@style/EditTextTambah"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:entries="@array/kategori"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </RelativeLayout>
+                android:layout_marginHorizontal="@dimen/margin_32dp"
+                android:layout_marginTop="24dp"
+                android:hint="Nama usaha/jasa/produk"
+                android:imeOptions="actionNext"
+                android:inputType="textPersonName"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="32dp" />
 
-        <EditText
-            android:id="@+id/edt_alamat_produk"
-            style="@style/EditTextTambah"
-            android:layout_marginTop="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_32dp"
-            android:hint="Alamat usaha/jasa/produk"
-            android:imeOptions="actionNext"
-            android:inputType="textPersonName"
-            app:layout_constraintTop_toBottomOf="@+id/relativeSpinner"
-            />
-
-        <RelativeLayout
-            android:id="@+id/relativeSpinnerProvinsi"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_32dp"
-            android:background="@drawable/background_edit_text"
-            android:padding="12dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="@+id/edt_nama_produk"
-            app:layout_constraintTop_toBottomOf="@+id/edt_alamat_produk">
-
-            <Spinner
-                android:id="@+id/spinner_provinsi"
+            <RelativeLayout
+                android:id="@+id/relativeSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:entries="@array/kategori"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </RelativeLayout>
+                android:layout_marginHorizontal="@dimen/margin_32dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/background_edit_text"
+                android:padding="12dp"
+                app:layout_constraintStart_toStartOf="@+id/edt_nama_produk"
+                app:layout_constraintTop_toBottomOf="@+id/edt_nama_produk">
 
-        <RelativeLayout
-            android:id="@+id/relativeSpinnerKabupaten"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_32dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/background_edit_text"
-            android:padding="12dp"
-            app:layout_constraintStart_toStartOf="@+id/edt_nama_produk"
-            app:layout_constraintTop_toBottomOf="@+id/relativeSpinnerProvinsi">
+                <Spinner
+                    android:id="@+id/spinner_kategori"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/kategori"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </RelativeLayout>
 
-            <Spinner
-                android:id="@+id/spinner_kabupaten"
+            <EditText
+                android:id="@+id/edt_alamat_produk"
+                style="@style/EditTextTambah"
+                android:layout_marginTop="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:entries="@array/kategori"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/relativeSpinnerKecamatan"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_32dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/background_edit_text"
-            android:padding="12dp"
-            app:layout_constraintStart_toStartOf="@+id/edt_nama_produk"
-            app:layout_constraintTop_toBottomOf="@+id/relativeSpinnerKabupaten">
-
-            <Spinner
-                android:id="@+id/spinner_kecamatann"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:entries="@array/kategori"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </RelativeLayout>
-
-        <EditText
-            android:id="@+id/edt_alamat_nowa"
-            style="@style/EditTextTambah"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_32dp"
-            android:layout_marginTop="16dp"
-            android:hint="Nomor WhatsApp"
-            android:imeOptions="actionNext"
-            android:inputType="textPersonName"
-            app:layout_constraintTop_toBottomOf="@+id/relativeSpinnerKecamatan"
-            tools:layout_editor_absoluteX="32dp" />
-
-        <EditText
-            android:id="@+id/edt_alamat_harga"
-            style="@style/EditTextTambah"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_32dp"
-            android:layout_marginTop="16dp"
-            android:hint="Harga(opsional)"
-            android:imeOptions="actionNext"
-            android:inputType="textPersonName"
-            app:layout_constraintTop_toBottomOf="@+id/edt_alamat_nowa"
-            tools:layout_editor_absoluteX="32dp" />
-
-        <EditText
-            android:id="@+id/edt_alamat_deskripsi"
-            style="@style/EditTextTambah"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_marginHorizontal="@dimen/margin_32dp"
-            android:layout_marginTop="16dp"
-            android:hint="Deskripsi"
-            android:imeOptions="actionNext"
-            android:inputType="textPersonName"
-            app:layout_constraintTop_toBottomOf="@+id/edt_alamat_harga"
-            tools:layout_editor_absoluteX="32dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_marginHorizontal="@dimen/margin_32dp"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal"
-            android:background="@drawable/background_edit_text"
-            app:layout_constraintTop_toBottomOf="@+id/edt_alamat_deskripsi"
-            tools:layout_editor_absoluteX="32dp">
-
-            <Button
-                android:id="@+id/btn_upload_image"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginVertical="5dp"
-                android:layout_marginStart="5dp"
-                android:text="Tambah Foto"
-                android:textSize="10sp"
-                android:background="@drawable/background_button_outline_8dp"
+                android:layout_marginHorizontal="@dimen/margin_32dp"
+                android:hint="Alamat usaha/jasa/produk"
+                android:imeOptions="actionNext"
+                android:inputType="textPersonName"
+                app:layout_constraintTop_toBottomOf="@+id/relativeSpinner"
                 />
 
-            <ImageView
-                android:id="@+id/img_upload_result"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginVertical="5dp"
-                android:layout_marginStart="16dp"
-                android:src="@drawable/image_empty"
-                 />
+            <RelativeLayout
+                android:id="@+id/relativeSpinnerProvinsi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_32dp"
+                android:background="@drawable/background_edit_text"
+                android:padding="12dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="@+id/edt_nama_produk"
+                app:layout_constraintTop_toBottomOf="@+id/edt_alamat_produk">
+
+                <Spinner
+                    android:id="@+id/spinner_provinsi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/kategori"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeSpinnerKabupaten"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_32dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/background_edit_text"
+                android:padding="12dp"
+                app:layout_constraintStart_toStartOf="@+id/edt_nama_produk"
+                app:layout_constraintTop_toBottomOf="@+id/relativeSpinnerProvinsi">
+
+                <Spinner
+                    android:id="@+id/spinner_kabupaten"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/kategori"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeSpinnerKecamatan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_32dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/background_edit_text"
+                android:padding="12dp"
+                app:layout_constraintStart_toStartOf="@+id/edt_nama_produk"
+                app:layout_constraintTop_toBottomOf="@+id/relativeSpinnerKabupaten">
+
+                <Spinner
+                    android:id="@+id/spinner_kecamatann"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/kategori"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </RelativeLayout>
+
+            <EditText
+                android:id="@+id/edt_alamat_nowa"
+                style="@style/EditTextTambah"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_32dp"
+                android:layout_marginTop="16dp"
+                android:hint="Nomor WhatsApp"
+                android:imeOptions="actionNext"
+                android:inputType="textPersonName"
+                app:layout_constraintTop_toBottomOf="@+id/relativeSpinnerKecamatan"
+                tools:layout_editor_absoluteX="32dp" />
+
+            <EditText
+                android:id="@+id/edt_alamat_harga"
+                style="@style/EditTextTambah"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_32dp"
+                android:layout_marginTop="16dp"
+                android:hint="Harga(opsional)"
+                android:imeOptions="actionNext"
+                android:inputType="textPersonName"
+                app:layout_constraintTop_toBottomOf="@+id/edt_alamat_nowa"
+                tools:layout_editor_absoluteX="32dp" />
+
+            <EditText
+                android:id="@+id/edt_alamat_deskripsi"
+                style="@style/EditTextTambah"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginHorizontal="@dimen/margin_32dp"
+                android:layout_marginTop="16dp"
+                android:hint="Deskripsi"
+                android:imeOptions="actionNext"
+                android:inputType="textPersonName"
+                app:layout_constraintTop_toBottomOf="@+id/edt_alamat_harga"
+                tools:layout_editor_absoluteX="32dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginHorizontal="@dimen/margin_32dp"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:background="@drawable/background_edit_text"
+                app:layout_constraintTop_toBottomOf="@+id/edt_alamat_deskripsi"
+                tools:layout_editor_absoluteX="32dp">
+
+                <Button
+                    android:id="@+id/btn_upload_image"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginStart="5dp"
+                    android:text="Tambah Foto"
+                    android:textSize="10sp"
+                    android:background="@drawable/background_button_outline_8dp"
+                    />
+
+                <ImageView
+                    android:id="@+id/img_upload_result"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/image_empty"
+                    />
 
 
-        </LinearLayout>
+            </LinearLayout>
 
 
 
-
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
