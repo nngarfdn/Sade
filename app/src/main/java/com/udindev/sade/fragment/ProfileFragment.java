@@ -21,6 +21,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.rishabhharit.roundedimageview.RoundedImageView;
 import com.udindev.sade.R;
 import com.udindev.sade.activity.LoginActivity;
 import com.udindev.sade.model.Profile;
@@ -28,12 +29,12 @@ import com.udindev.sade.viewmodel.ProfileViewModel;
 
 import static com.udindev.sade.utils.AppUtils.loadImageFromUrl;
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements View.OnClickListener{
 
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
-    private ImageView imgPhoto;
-    private TextView tvName, tvEmail, tvAddress, tvPhoneNumber, tvWaNumber;
+    private RoundedImageView imgPhoto;
+    private TextView tvName, tvAddress, tvFullname, tvEmail, tvFulladdress, tvPhoneNumber, tvWaNumber, tvAbout, tvHelpCenter, tvLogout;
     private ProfileViewModel profileViewModel;
 
     public ProfileFragment() {}
@@ -53,10 +54,19 @@ public class ProfileFragment extends Fragment {
 
         imgPhoto = view.findViewById(R.id.img_photo_profile);
         tvName = view.findViewById(R.id.tv_name_profile);
-        tvEmail = view.findViewById(R.id.tv_email_profile);
         tvAddress = view.findViewById(R.id.tv_address_profile);
+        tvFullname = view.findViewById(R.id.tv_fullname_profile);
+        tvEmail = view.findViewById(R.id.tv_email_profile);
+        tvFulladdress = view.findViewById(R.id.tv_fulladdress_profile);
         tvPhoneNumber = view.findViewById(R.id.tv_phone_number_profile);
         tvWaNumber = view.findViewById(R.id.tv_wa_number_profile);
+
+        tvAbout = view.findViewById(R.id.tv_about_profile);
+        tvHelpCenter = view.findViewById(R.id.tv_help_center_profile);
+        tvLogout = view.findViewById(R.id.tv_logout_profile);
+        tvAbout.setOnClickListener(this::onClick);
+        tvHelpCenter.setOnClickListener(this::onClick);
+        tvLogout.setOnClickListener(this::onClick);
 
         profileViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ProfileViewModel.class);
         profileViewModel.getData().observe(getViewLifecycleOwner(), new Observer<Profile>() {
@@ -64,17 +74,34 @@ public class ProfileFragment extends Fragment {
             public void onChanged(Profile profile) {
                 loadImageFromUrl(getContext(), imgPhoto, firebaseUser.getPhotoUrl().toString());
                 tvName.setText(firebaseUser.getDisplayName());
-                tvEmail.setText(firebaseUser.getEmail());
                 tvAddress.setText(profile.getAddress());
+                tvFullname.setText(firebaseUser.getDisplayName());
+                tvEmail.setText(firebaseUser.getEmail());
+                tvFulladdress.setText(profile.getAddress());
                 tvPhoneNumber.setText(profile.getPhoneNumber());
                 tvWaNumber.setText(profile.getWaNumber());
             }
         });
+    }
 
-        Button btnLogoutTest = view.findViewById(R.id.btn_logout_test_profile);
-        btnLogoutTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+    @Override
+    public void onStart() {
+        super.onStart();
+        profileViewModel.loadData(firebaseUser.getUid());
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.tv_about_profile:
+                //startActivity(new Intent(getActivity(), ));
+                break;
+
+            case R.id.tv_help_center_profile:
+                //startActivity(new Intent(getActivity(), ));
+                break;
+
+            case R.id.tv_logout_profile:
                 GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                         .requestIdToken(getString(R.string.default_web_client_id))
                         .requestEmail()
@@ -84,13 +111,7 @@ public class ProfileFragment extends Fragment {
 
                 startActivity(new Intent(getActivity(), LoginActivity.class));
                 getActivity().finish();
-            }
-        });
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        profileViewModel.loadData(firebaseUser.getUid());
+                break;
+        }
     }
 }
