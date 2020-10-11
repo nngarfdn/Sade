@@ -70,6 +70,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         tvHelpCenter.setOnClickListener(this);
         tvLogout.setOnClickListener(this);
 
+        Button btnEdit = view.findViewById(R.id.btn_edit_profile);
+        btnEdit.setOnClickListener(this);
+
         profileViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ProfileViewModel.class);
         profileViewModel.getData().observe(getViewLifecycleOwner(), new Observer<Profile>() {
             @Override
@@ -98,6 +101,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View view) {
         switch (view.getId()){
+            case R.id.btn_edit_profile:
+                Fragment fragment = new EditProfileFragment();
+                if (getActivity() != null) {
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fl_container, fragment)
+                            .addToBackStack(null)
+                            .commit();
+                }
+                break;
+
             case R.id.tv_about_profile:
                 //startActivity(new Intent(getActivity(), ));
                 break;
