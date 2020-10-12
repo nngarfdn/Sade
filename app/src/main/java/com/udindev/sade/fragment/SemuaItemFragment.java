@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,6 +22,7 @@ import com.mindorks.editdrawabletext.DrawablePosition;
 import com.mindorks.editdrawabletext.EditDrawableText;
 import com.udindev.sade.R;
 import com.udindev.sade.adapter.ProdukMenuAdapter;
+import com.udindev.sade.dialogfragment.FilterDialog;
 import com.udindev.sade.model.Produk;
 import com.udindev.sade.viewmodel.ProdukViewModel;
 
@@ -32,6 +35,8 @@ public class SemuaItemFragment extends Fragment {
     private RecyclerView rvSemuaItem;
     private EditDrawableText search;
     private ProdukViewModel produkViewModel;
+
+    private FilterDialog filterDialog;
 
     public SemuaItemFragment() {
         // Required empty public constructor
@@ -66,6 +71,15 @@ public class SemuaItemFragment extends Fragment {
 
         shimmerFrameLayoutSemuaItem.startShimmerAnimation();
         getAllResult();
+
+        filterDialog = new FilterDialog(getActivity());
+        ImageButton btnFilter = view.findViewById(R.id.imgbtn_filter_semua);
+        btnFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                filterDialog.show(getActivity().getSupportFragmentManager(), FilterDialog.class.getSimpleName());
+            }
+        });
     }
 
     @Override
