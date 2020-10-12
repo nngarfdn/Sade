@@ -181,15 +181,12 @@ public class TambahProdukFragment extends Fragment implements CompoundButton.OnC
                             Log.d(TAG, "onSuccess: "+imgaUrl);
 
 
-                            Toast.makeText(getContext(), "imgaUrl : "+ imgaUrl, Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
             });
 
-
-
-
+            loadFragment(new TokoSayaFragment());
 
         });
     }
@@ -410,4 +407,16 @@ public class TambahProdukFragment extends Fragment implements CompoundButton.OnC
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
+    private boolean loadFragment(Fragment fragment) {
+        if (fragment != null) {
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fl_container, fragment)
+                    .addToBackStack(null)
+                    .commit();
+            return true;
+        }
+        return false;
+    }
+
 }

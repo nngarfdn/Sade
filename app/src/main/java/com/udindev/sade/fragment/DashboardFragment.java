@@ -99,7 +99,7 @@ public class DashboardFragment extends Fragment  {
         shimmerFrameLayoutProduk.startShimmerAnimation();
         shimmerFrameLayoutJasa.startShimmerAnimation();
 
-        getResultProduk("produk");
+        getResultProduk("Produk");
         getAllResult();
 
     }

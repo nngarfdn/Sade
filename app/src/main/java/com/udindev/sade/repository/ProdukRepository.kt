@@ -17,6 +17,7 @@ class ProdukRepository {
     private var resultDataKabupaten: MutableLiveData<List<Produk>> = MutableLiveData()
     private var resultDataKecamatan: MutableLiveData<List<Produk>> = MutableLiveData()
     private var resultKategoriJasa : MutableLiveData<List<Produk>> = MutableLiveData()
+    private var resultDataEmail : MutableLiveData<List<Produk>> = MutableLiveData()
 
     companion object {
         private val TAG: String = ProdukRepository::class.java.simpleName
@@ -33,6 +34,7 @@ class ProdukRepository {
     fun getResultsKecamatan(): LiveData<List<Produk>> = resultDataKecamatan
     fun getResultHargaRendahKeTinggi(): LiveData<List<Produk>> = resultDataHargaRendahKeTinggi
     fun getResultHargaTinggiKeRendah(): LiveData<List<Produk>> = resultDataHargaTinggiKeRendah
+    fun getResultsEmail(): LiveData<List<Produk>> = resultDataEmail
 
 
     fun getDataKetegoriJasa() {
@@ -60,6 +62,33 @@ class ProdukRepository {
                     Log.e(TAG, "Error getting documents.", exception)
                 }
     }
+
+    fun getDataEmail(email: String) {
+        val produkData: MutableList<Produk> = ArrayList()
+        val db = FirebaseFirestore.getInstance()
+        val savedProdukList = ArrayList<Produk>()
+        db.collection("produk")
+                .get()
+                .addOnSuccessListener { result ->
+                    for (document in result) {
+                        val namaDocument = document.data["email"] as String
+                        if (namaDocument == email) {
+                            val pp = document.toObject(Produk::class.java)
+                            pp.id = document.id
+                            savedProdukList.add(pp)
+                            produkData.add(pp)
+                            Log.d(TAG, "getDataEmail size : ${savedProdukList.size}")
+                            Log.d(TAG, "getDataEmail: $pp ")
+                        }
+                    }
+                    resultDataEmail.value = produkData
+                    Log.d(TAG, "readProduk size final getDataEmail : ${savedProdukList.size}")
+                }
+                .addOnFailureListener { exception ->
+                    Log.e(TAG, "Error getting documents.", exception)
+                }
+    }
+
 
     fun getDataProvinsi(provinsi: String) {
         val produkData: MutableList<Produk> = ArrayList()

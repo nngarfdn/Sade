@@ -35,6 +35,9 @@ class ProdukViewModel : ViewModel() {
     fun getHargaTinggiKeRendah() = produkRepository.getResultHargaTinggiKeRendah()
     fun loadResultTinggiKeRendah() = produkRepository.getTinggiKeRendah()
 
+    fun getDataEmail() = produkRepository.getResultsEmail()
+    fun loadResultDataEmail(email : String) = produkRepository.getDataEmail(email)
+
     fun insertProduk(produk: Produk) { produkRepository.saveProduk(produk) }
     fun deteteProduk(produk: Produk) { produkRepository.delete(produk) }
     fun updateProduk(produk: Produk) { produkRepository.update(produk) }
