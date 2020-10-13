@@ -73,4 +73,6 @@ dependencies {
 
     // Rounded image view
     implementation 'com.rishabhharit.roundedimageview:RoundedImageView:0.8.4'
+
+
 }

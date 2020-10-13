@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -41,6 +43,9 @@ import com.udindev.sade.viewmodel.LocationViewModel;
 import com.udindev.sade.viewmodel.ProdukViewModel;
 import com.udindev.sade.viewmodel.ProfileViewModel;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -139,8 +144,7 @@ public class TambahProdukFragment extends Fragment implements CompoundButton.OnC
 
         btnChose.setOnClickListener(v -> selectImage());
         List<String> spinnerKategori = new ArrayList<>();
-        List<String> spinnerProvinsi = new ArrayList<>();
-        List<Integer> idProvinsi = new ArrayList<>();
+
         addAdapterKategoriSpinner(spinnerKategori);
 
         ArrayAdapter<String> adapterKategori = new ArrayAdapter<>(
@@ -148,47 +152,53 @@ public class TambahProdukFragment extends Fragment implements CompoundButton.OnC
         kategoriSpinner.setAdapter(adapterKategori);
 
         btnTambahProduk.setOnClickListener(v -> {
-            StorageReference ref
-                    = storageReference
-                    .child("images/");
-
-            ref.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            imgaUrl = String.valueOf(uri);
-
-                            String id = "";
-                            String email = firebaseUser.getEmail();
-                            String nama = edtNamaProduk.getText().toString();
-                            String kategori = kategoriSpinner.getSelectedItem().toString();
-                            String alamat = edtAlamatProduk.getText().toString();
-                            String kecamatan = spinDistricts.getSelectedItem().toString();
-                            String kabupaten = spinRegencies.getSelectedItem().toString();
-                            String prov = spinProvinces.getSelectedItem().toString();
-                            String wa = edtNoWA.getText().toString();
-                            String harga = edtHarga.getText().toString();
-                            int hargaInt = Integer.parseInt(harga);
-                            String deskripsi = edtDeskripsi.getText().toString();
-                            String photo = imgaUrl;
-                            Produk produk = new Produk(id,email, nama, kategori, alamat, kecamatan,
-                                    kabupaten, prov, wa ,hargaInt, deskripsi,photo);
-
-                            produkViewModel.insertProduk(produk);
-
-                            Log.d(TAG, "onSuccess: "+imgaUrl);
-
-
-                        }
-                    });
-                }
-            });
+            StorageReference ref = getSR("images/");
+            addData(kategoriSpinner, ref);
 
             loadFragment(new TokoSayaFragment());
 
         });
+    }
+
+    private void addData(Spinner kategoriSpinner, StorageReference ref) {
+        ref.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        imgaUrl = String.valueOf(uri);
+                        String id = "";
+                        String email = firebaseUser.getEmail();
+                        String nama = edtNamaProduk.getText().toString();
+                        String kategori = kategoriSpinner.getSelectedItem().toString();
+                        String alamat = edtAlamatProduk.getText().toString();
+                        String kecamatan = spinDistricts.getSelectedItem().toString();
+                        String kabupaten = spinRegencies.getSelectedItem().toString();
+                        String prov = spinProvinces.getSelectedItem().toString();
+                        String wa = edtNoWA.getText().toString();
+                        String harga = edtHarga.getText().toString();
+                        int hargaInt = Integer.parseInt(harga);
+                        String deskripsi = edtDeskripsi.getText().toString();
+                        String photo = imgaUrl;
+                        Produk produk = new Produk(id,email, nama, kategori, alamat, kecamatan,
+                                kabupaten, prov, wa ,hargaInt, deskripsi,null, false);
+
+                        produkViewModel.insertProduk(produk);
+
+                        Log.d(TAG, "onSuccess: "+imgaUrl);
+
+
+                    }
+                });
+            }
+        });
+    }
+
+    @NotNull
+    private StorageReference getSR(String s) {
+        return storageReference
+                .child(s);
     }
 
     private void loadProvinces() {
@@ -311,9 +321,8 @@ public class TambahProdukFragment extends Fragment implements CompoundButton.OnC
 
             // Defining the child of storageReference
             String uuid = UUID.randomUUID().toString();
-            StorageReference ref
-                    = storageReference
-                    .child("images/");
+            StorageReference ref = getSR("images/" +
+                    UUID.randomUUID().toString());
 
             // adding listeners on upload
             // or failure of image
@@ -417,6 +426,29 @@ public class TambahProdukFragment extends Fragment implements CompoundButton.OnC
             return true;
         }
         return false;
+    }
+
+    // bitmap ke byte array
+    public static byte[] getBytes(Bitmap bitmap){
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream);
+
+        try {
+            stream.close();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return stream.toByteArray();
+    }
+    // byte array ke bitmap
+    public static Bitmap getImage(byte[] image) {
+       return BitmapFactory.decodeByteArray(image, 0 , image.length);
+    }
+
+    //ambil bitmap dari imageview
+    public static Bitmap getBitmap(ImageView imageView){
+        return ((BitmapDrawable) imageView.getDrawable()).getBitmap();
     }
 
 }

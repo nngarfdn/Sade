@@ -109,4 +109,11 @@
         <item name="android:background">@drawable/background_icon</item>
         <item name="android:padding">8dp</item>
     </style>
+
+    <style name="CardViewPusatBantuan">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">100dp</item>
+        <item name="android:layout_marginHorizontal" tools:ignore="NewApi">@dimen/margin_24dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+    </style>
 </resources>

@@ -108,7 +108,7 @@ class ProdukRepository {
                             Log.d(TAG, "getDataProvinsi: $pp ")
                         }
                     }
-                    resultDataByKategory.value = produkData
+                    resultDataProvinsi.value = produkData
                     Log.d(TAG, "readProduk size final getDataByKategori : ${savedProdukList.size}")
                 }
                 .addOnFailureListener { exception ->
@@ -134,7 +134,7 @@ class ProdukRepository {
                             Log.d(TAG, "getDataSearch: $pp ")
                         }
                     }
-                    resultDataByKategory.value = produkData
+                    resultDataKabupaten.value = produkData
                     Log.d(TAG, "readProduk size final getDataByKategori : ${savedProdukList.size}")
                 }
                 .addOnFailureListener { exception ->
@@ -160,7 +160,7 @@ class ProdukRepository {
                             Log.d(TAG, "getDataSearch: $pp ")
                         }
                     }
-                    resultDataByKategory.value = produkData
+                    resultDataKecamatan.value = produkData
                     Log.d(TAG, "readProduk size final getDataByKategori : ${savedProdukList.size}")
                 }
                 .addOnFailureListener { exception ->

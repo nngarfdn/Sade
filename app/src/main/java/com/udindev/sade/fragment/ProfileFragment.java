@@ -3,13 +3,6 @@ package com.udindev.sade.fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +10,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -26,6 +25,7 @@ import com.rishabhharit.roundedimageview.RoundedImageView;
 import com.udindev.sade.R;
 import com.udindev.sade.activity.LoginActivity;
 import com.udindev.sade.activity.PusatBantuanActivity;
+import com.udindev.sade.activity.TentangAplikasi;
 import com.udindev.sade.model.Profile;
 import com.udindev.sade.viewmodel.ProfileViewModel;
 
@@ -38,6 +38,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     private RoundedImageView imgPhoto;
     private TextView tvName, tvAddress, tvFullname, tvEmail, tvFulladdress, tvPhoneNumber, tvWaNumber;
     private ProfileViewModel profileViewModel;
+    private ImageView imgTentangClick ;
 
     public ProfileFragment() {}
 
@@ -62,6 +63,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         tvFulladdress = view.findViewById(R.id.tv_fulladdress_profile);
         tvPhoneNumber = view.findViewById(R.id.tv_phone_number_profile);
         tvWaNumber = view.findViewById(R.id.tv_wa_number_profile);
+        imgTentangClick = view.findViewById(R.id.img_tentang_click);
 
         TextView tvAbout = view.findViewById(R.id.tv_about_profile);
         TextView tvHelpCenter = view.findViewById(R.id.tv_help_center_profile);
@@ -69,6 +71,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         tvAbout.setOnClickListener(this);
         tvHelpCenter.setOnClickListener(this);
         tvLogout.setOnClickListener(this);
+
+        imgTentangClick.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), TentangAplikasi.class);
+            startActivity(intent);
+        });
 
         Button btnEdit = view.findViewById(R.id.btn_edit_profile);
         btnEdit.setOnClickListener(this);

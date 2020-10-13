@@ -16,5 +16,6 @@ data class Produk(
         val wa : String? = "",
         var harga : Int? = 0,
         val deskripsi : String? = "",
-        val photo : String? = ""
+        val photo : ByteArray? = null,
+        val isFavorite : Boolean? = false
         ) : Parcelable

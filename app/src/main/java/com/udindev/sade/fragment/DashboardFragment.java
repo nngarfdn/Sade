@@ -40,12 +40,6 @@ public class DashboardFragment extends Fragment  {
 
     }
 
-    public static DashboardFragment newInstance(String param1, String param2) {
-        DashboardFragment fragment = new DashboardFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

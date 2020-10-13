@@ -18,6 +18,7 @@
     <string name="edit_produk">Edit Produk</string>
     <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi lorem malesuada interdum sit faucibus donec suspendisse. Adipiscing ac eu ac enim. Nisi diam nunc in laoreet. Vel sagittis eget molestie.</string>
     <string name="alamat_contoh">Jl.Laskar Jaya, Poncosari, Srandakan, Bantul</string>
+    <string name="tentang_aplikasi">Tentang Aplikasi</string>
 
 
     <string-array name="kategori">
