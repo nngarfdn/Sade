@@ -52,6 +52,15 @@
                 style="@style/search"
                 android:hint="@string/cari"
                 tools:ignore="RtlHardcoded,UnusedAttribute" />
+
+            <ImageButton
+                android:id="@+id/btn_search"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_icon_search"
+                android:background="@android:color/transparent"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="8dp"/>
         </RelativeLayout>
 
         <TextView

@@ -12,7 +12,6 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_marginHorizontal" tools:ignore="NewApi">8dp</item>
         <item name="android:background">@android:color/transparent</item>
-        <item name="android:drawableRight">@drawable/ic_icon_search</item>
         <item name="android:outlineAmbientShadowColor" tools:ignore="NewApi">@color/white</item>
         <item name="android:outlineSpotShadowColor" tools:ignore="NewApi">@color/white</item>
         <item name="android:shadowColor">@color/white</item>

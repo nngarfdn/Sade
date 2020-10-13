@@ -1,5 +1,6 @@
 package com.udindev.sade.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +21,8 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 import com.mindorks.editdrawabletext.DrawablePosition;
 import com.mindorks.editdrawabletext.EditDrawableText;
 import com.udindev.sade.R;
+import com.udindev.sade.activity.MainActivity;
+import com.udindev.sade.activity.SearchActivity;
 import com.udindev.sade.adapter.JasaMenuAdapter;
 import com.udindev.sade.adapter.ProdukMenuAdapter;
 import com.udindev.sade.model.Produk;
@@ -96,6 +99,14 @@ public class DashboardFragment extends Fragment  {
         getResultProduk("Produk");
         getAllResult();
 
+        // Tambah
+        ImageButton btnSearch = view.findViewById(R.id.btn_search);
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), SearchActivity.class));
+            }
+        });
     }
 
     private void getResultProduk(String kategori) {
