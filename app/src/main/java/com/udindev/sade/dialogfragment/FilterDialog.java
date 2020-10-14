@@ -3,6 +3,7 @@ package com.udindev.sade.dialogfragment;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
@@ -20,6 +22,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.udindev.sade.R;
+import com.udindev.sade.cobacoba.Filter;
 import com.udindev.sade.model.Location;
 import com.udindev.sade.reponse.Attributes;
 import com.udindev.sade.reponse.Districts;
@@ -35,15 +38,31 @@ public class FilterDialog extends DialogFragment implements View.OnClickListener
 
     private Activity activity;
     private AlertDialog dialog;
+    private Filter filter;
+    private FilterDialogListener listener;
     private LocationViewModel lvm;
 
     private ArrayList<Location> listProvinces, listRegencies, listDistricts;
     private int idProvince, idRegency, idDistrict = 0;
     private Spinner spinProvince, spinRegency, spinDistrict;
-    private CheckBox cbProvince, cbRegency, cbDistrict;
+    private CheckBox cbProduk, cbJasa, cbUsaha, cbLainnya, cbProvince, cbRegency, cbDistrict;
+    private RadioButton rbMurah, rbMahal;
+
+    private boolean isFirstResult = true;
 
     public FilterDialog(Activity activity){
         this.activity = activity;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            listener = (FilterDialogListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() +
+                    "must implement " + FilterDialogListener.class.getSimpleName());
+        }
     }
 
     @NonNull
@@ -56,6 +75,13 @@ public class FilterDialog extends DialogFragment implements View.OnClickListener
         Button btnCancel = view.findViewById(R.id.btn_cancel_filter);
         btnApply.setOnClickListener(this);
         btnCancel.setOnClickListener(this);
+
+        cbProduk = view.findViewById(R.id.cb_produk_filter);
+        cbJasa = view.findViewById(R.id.cb_jasa_filter);
+        cbUsaha = view.findViewById(R.id.cb_usaha_filter);
+        cbLainnya = view.findViewById(R.id.cb_lainnya_filter);
+        rbMurah = view.findViewById(R.id.rb_murah_filter);
+        rbMahal = view.findViewById(R.id.rb_mahal_filter);
 
         cbProvince = view.findViewById(R.id.cb_province_filter);
         cbRegency = view.findViewById(R.id.cb_regency_filter);
@@ -81,6 +107,21 @@ public class FilterDialog extends DialogFragment implements View.OnClickListener
         lvm = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(LocationViewModel.class);
         loadProvinces();
 
+        // Receive bundle from activity
+        Bundle bundle = getArguments();
+        if (bundle != null){
+            filter = bundle.getParcelable("extra_filter");
+            cbProduk.setChecked(filter.isProduk());
+            cbJasa.setChecked(filter.isJasa());
+            cbUsaha.setChecked(filter.isUsaha());
+            cbLainnya.setChecked(filter.isLainnya());
+            cbProvince.setChecked(filter.isProvinsi());
+            cbRegency.setChecked(filter.isKabupaten());
+            cbDistrict.setChecked(filter.isKecamatan());
+            rbMurah.setChecked(filter.isMurah());
+            rbMahal.setChecked(!filter.isMurah());
+        }
+
         // Create alert dialog instance
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setView(view);
@@ -105,6 +146,7 @@ public class FilterDialog extends DialogFragment implements View.OnClickListener
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(activity, android.R.layout.simple_spinner_item, itemList);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinProvince.setAdapter(adapter);
+                    spinProvince.setSelection(filter.getPosisiProvinsi());
                 }
             }
         });
@@ -123,6 +165,7 @@ public class FilterDialog extends DialogFragment implements View.OnClickListener
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(activity, android.R.layout.simple_spinner_item, itemList);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinRegency.setAdapter(adapter);
+                    spinRegency.setSelection(filter.getPosisiKabupaten());
                 }
             }
         });
@@ -141,6 +184,7 @@ public class FilterDialog extends DialogFragment implements View.OnClickListener
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(activity, android.R.layout.simple_spinner_item, itemList);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinDistrict.setAdapter(adapter);
+                    spinDistrict.setSelection(filter.getPosisiKecamatan());
                 }
             }
         });
@@ -196,6 +240,14 @@ public class FilterDialog extends DialogFragment implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_apply_filter:
+                filter = new Filter("",
+                        cbProduk.isChecked(), cbJasa.isChecked(), cbUsaha.isChecked(), cbLainnya.isChecked(),
+                        cbProvince.isChecked(), cbRegency.isChecked(), cbDistrict.isChecked(),
+                        rbMurah.isChecked(),
+                        spinProvince.getSelectedItem().toString(), spinRegency.getSelectedItem().toString(), spinDistrict.getSelectedItem().toString(),
+                        spinProvince.getSelectedItemPosition(), spinRegency.getSelectedItemPosition(), spinDistrict.getSelectedItemPosition()
+                );
+                listener.receiveFilter(filter);
                 dialog.dismiss();
                 break;
 
@@ -203,5 +255,9 @@ public class FilterDialog extends DialogFragment implements View.OnClickListener
                 dialog.dismiss();
                 break;
         }
+    }
+
+    public interface FilterDialogListener{
+        void receiveFilter(Filter filter);
     }
 }

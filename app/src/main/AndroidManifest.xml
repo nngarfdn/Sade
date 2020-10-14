@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.SearchActivity"></activity>
+        <activity android:name=".cobacoba.SearchActivity"></activity>
         <activity android:name=".activity.TentangAplikasi" />
         <activity android:name=".activity.PusatBantuanActivity" />
         <activity android:name=".activity.DetailActivity" />

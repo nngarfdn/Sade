@@ -51,7 +51,10 @@
                 android:id="@+id/search"
                 style="@style/search"
                 android:hint="@string/cari"
-                tools:ignore="RtlHardcoded,UnusedAttribute" />
+                android:layout_toStartOf="@+id/btn_search"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:imeOptions="actionSearch"/>
 
             <ImageButton
                 android:id="@+id/btn_search"

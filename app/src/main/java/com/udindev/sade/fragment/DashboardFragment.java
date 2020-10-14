@@ -3,11 +3,14 @@ package com.udindev.sade.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,12 +24,14 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 import com.mindorks.editdrawabletext.DrawablePosition;
 import com.mindorks.editdrawabletext.EditDrawableText;
 import com.udindev.sade.R;
-import com.udindev.sade.activity.MainActivity;
-import com.udindev.sade.activity.SearchActivity;
+import com.udindev.sade.cobacoba.Filter;
+import com.udindev.sade.cobacoba.SearchActivity;
 import com.udindev.sade.adapter.JasaMenuAdapter;
 import com.udindev.sade.adapter.ProdukMenuAdapter;
 import com.udindev.sade.model.Produk;
 import com.udindev.sade.viewmodel.ProdukViewModel;
+
+import static com.udindev.sade.cobacoba.SearchActivity.getDefaultFilter;
 
 public class DashboardFragment extends Fragment  {
 
@@ -74,11 +79,11 @@ public class DashboardFragment extends Fragment  {
         imgBtnTokoSaya = view.findViewById(R.id.btn_tokosaya);
 
         imgBtnTokoSaya.setOnClickListener(v -> loadFragment(new TokoSayaFragment()));
-        imgbtnSemua.setOnClickListener(v -> loadFragment(new SemuaItemFragment()));
-        imgBtnUsaha.setOnClickListener(v -> loadFragment(new UsahaFragment()));
-        imgBtnJasa.setOnClickListener(v -> loadFragment(new JasaFragment()));
-        imgBtnProduk.setOnClickListener(v -> loadFragment(new ProdukFragment()));
-        imgBtnLainnya.setOnClickListener(v -> loadFragment(new LainnyaFragment()));
+        imgbtnSemua.setOnClickListener(v -> performSearch("Semua"));
+        imgBtnUsaha.setOnClickListener(v -> performSearch("Usaha"));
+        imgBtnJasa.setOnClickListener(v -> performSearch("Jasa"));
+        imgBtnProduk.setOnClickListener(v -> performSearch("Produk"));
+        imgBtnLainnya.setOnClickListener(v -> performSearch("Lainnya"));
 
         btnProdukSelengkapnya.setOnClickListener(v -> loadFragment(new ProdukFragment()));
         btnSemuaSelengkapnya.setOnClickListener(v -> loadFragment(new SemuaItemFragment()));
@@ -86,10 +91,14 @@ public class DashboardFragment extends Fragment  {
         shimmerFrameLayoutProduk = view.findViewById(R.id.shimmerFrameLayoutProduk);
         shimmerFrameLayoutJasa = view.findViewById(R.id.shimmerFrameLayoutJasa);
         search = view.findViewById(R.id.search);
-        search.setDrawableClickListener(target -> {
-            if (target == DrawablePosition.RIGHT) {
-                String text = search.getText().toString();
-                Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
+        search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_SEARCH) {
+                    performSearch("Kata kunci");
+                    return true;
+                }
+                return false;
             }
         });
 
@@ -104,9 +113,46 @@ public class DashboardFragment extends Fragment  {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), SearchActivity.class));
+                performSearch("Kata kunci");
             }
         });
+    }
+
+    private void performSearch(String kategori) {
+        Filter filter = getDefaultFilter();
+
+        switch (kategori) {
+            case "Produk":
+                filter.setProduk(true);
+                filter.setJasa(false);
+                filter.setUsaha(false);
+                filter.setLainnya(false);
+                break;
+            case "Jasa":
+                filter.setProduk(false);
+                filter.setJasa(true);
+                filter.setUsaha(false);
+                filter.setLainnya(false);
+                break;
+            case "Usaha":
+                filter.setProduk(false);
+                filter.setJasa(false);
+                filter.setUsaha(true);
+                filter.setLainnya(false);
+                break;
+            case "Lainnya":
+                filter.setProduk(false);
+                filter.setJasa(false);
+                filter.setUsaha(false);
+                filter.setLainnya(true);
+                break;
+            case "Kata kunci":
+                filter.setKataKunci(search.getText().toString());
+        }
+
+        Intent intent = new Intent(getActivity(), SearchActivity.class);
+        intent.putExtra("extra_filter", filter);
+        startActivity(intent);
     }
 
     private void getResultProduk(String kategori) {
