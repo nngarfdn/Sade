@@ -8,7 +8,7 @@ class FavoriteViewModel : ViewModel() {
 
     private var favoriteRepository = FavoriteRepository()
 
-    fun saveFavorite(produk: Produk) {favoriteRepository.saveFavorite(produk)}
+    fun saveFavorite(produk: Produk) {favoriteRepository.addFavorite(produk)}
     fun deleteFavorite(produk: Produk) {favoriteRepository.deleteFavorite(produk)}
 
     fun getDataEmail() = favoriteRepository.getResultsEmail()

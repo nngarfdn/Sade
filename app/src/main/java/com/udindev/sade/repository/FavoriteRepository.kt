@@ -27,6 +27,22 @@ class FavoriteRepository {
                 }
     }
 
+    fun addFavorite(produk: Produk) {
+        val idProduk = produk.id
+        val item = hashMapProduk(produk)
+
+        if (idProduk != null) {
+            db.collection("produk").document(idProduk)
+                    .set(item)
+                    .addOnSuccessListener {
+                        Log.d(TAG, "Succes tambah favorite")
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e(TAG, "Error adding document", e)
+                    }
+        }
+    }
+
     fun deleteFavorite(produk: Produk) {
         val idProduk: String? = produk.id
         hashMapProduk(produk)
@@ -46,12 +62,14 @@ class FavoriteRepository {
         val produkData: MutableList<Produk> = ArrayList()
         val db = FirebaseFirestore.getInstance()
         val savedProdukList = ArrayList<Produk>()
-        db.collection("favorite")
+        val isFavorite = 1
+        db.collection("produk")
                 .get()
                 .addOnSuccessListener { result ->
                     for (document in result) {
                         val namaDocument = document.data["email"] as String
-                        if (namaDocument == email) {
+//                        val fav = document.data["isFavorite"] as String
+                        if (namaDocument == email ) {
                             val pp = document.toObject(Produk::class.java)
                             pp.id = document.id
                             savedProdukList.add(pp)
@@ -82,6 +100,7 @@ class FavoriteRepository {
                 "wa" to produk.wa,
                 "deskripsi" to produk.deskripsi,
                 "photo" to produk.photo
+
         )
     }
 

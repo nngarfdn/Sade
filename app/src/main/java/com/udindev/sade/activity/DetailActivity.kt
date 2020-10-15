@@ -1,11 +1,11 @@
 package com.udindev.sade.activity
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.firebase.auth.FirebaseAuth
+import com.squareup.picasso.Picasso
 import com.udindev.sade.R
 import com.udindev.sade.model.Produk
 import com.udindev.sade.viewmodel.FavoriteViewModel
@@ -21,8 +21,8 @@ class DetailActivity : AppCompatActivity() {
         const val EXTRA_PRODUK = "extra_produk"
     }
 
-    private fun setIconFavorite(favorite: Boolean) {
-        if (favorite) {
+    private fun setIconFavorite(favorite: Int) {
+        if (favorite == 1) {
             img_favorite.setImageResource(R.drawable.ic_baseline_favorite_24_red)
         } else {
             img_favorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
@@ -48,16 +48,15 @@ class DetailActivity : AppCompatActivity() {
             for (a in it) {
                 listFavorite.add(a)
             }
-
         })
 
         val produk = intent.getParcelableExtra<Produk>(EXTRA_PRODUK)
 
-//        Picasso.get()
-//                .load(produk?.photo)
-//                .fit()
-//                .placeholder(R.drawable.image_empty)
-//                .into(img_detailproduk)
+        Picasso.get()
+                .load(produk?.photo)
+                .fit()
+                .placeholder(R.drawable.image_empty)
+                .into(img_detailproduk)
 
         txt_alamat_detail.text = produk?.alamat
         txt_deskripsi_detail.text = produk?.deskripsi
@@ -69,28 +68,33 @@ class DetailActivity : AppCompatActivity() {
 
         }
 
-        var isFavorite: Boolean
-        isFavorite = listFavorite.contains(produk)
-        setIconFavorite(isFavorite)
-
-        img_favorite.setOnClickListener {
-            if (isFavorite) {
-                isFavorite = false
-                setIconFavorite(isFavorite)
-                if (produk != null) {
-                    favoriteViewModel.deleteFavorite(produk)
-                    Toast.makeText(this, "Berhasil hapus favorit", Toast.LENGTH_SHORT).show()
-                }
-            } else {
-
-                if (produk != null) {
-                    favoriteViewModel.saveFavorite(produk)
-                    Toast.makeText(this, "Berhasil Menambahkan", Toast.LENGTH_SHORT).show()
-                }
-                isFavorite = true
-                setIconFavorite(isFavorite)
-            }
-        }
+//        var isFavorite = produk?.isFavorite
+//
+//        if (isFavorite != null) {
+//            setIconFavorite(isFavorite)
+//        }
+//
+//        img_favorite.setOnClickListener {
+//            if (isFavorite == 1) {
+//                isFavorite = 0
+//                produk?.isFavorite = 0
+//                setIconFavorite(isFavorite!!)
+//                if (produk != null) {
+//                    favoriteViewModel.saveFavorite(produk)
+//                    Toast.makeText(this, "Berhasil hapus favorit", Toast.LENGTH_SHORT).show()
+//                }
+//            } else {
+//                if (produk != null) {
+//                    isFavorite = 1
+//                    produk.isFavorite = 1
+//                    favoriteViewModel.saveFavorite(produk)
+//                    setIconFavorite(isFavorite!!)
+//                    Toast.makeText(this, "Berhasil Menambahkan", Toast.LENGTH_SHORT).show()
+//                }
+//                isFavorite = 1
+//                setIconFavorite(isFavorite!!)
+//            }
+//        }
 
     }
 

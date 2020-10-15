@@ -7,15 +7,14 @@ import kotlinx.android.parcel.Parcelize
 data class Produk(
         var id : String? = "",
         var email : String = "",
-        val nama : String? = "",
-        val kategori : String? = "",
-        val alamat  : String? = "",
-        val kecamatan : String? = "",
-        val kabupaten : String? = "",
-        val provinsi : String? = "",
-        val wa : String? = "",
+        var nama : String? = "",
+        var kategori : String? = "",
+        var alamat  : String? = "",
+        var kecamatan : String? = "",
+        var kabupaten : String? = "",
+        var provinsi : String? = "",
+        var wa : String? = "",
         var harga : Int? = 0,
-        val deskripsi : String? = "",
-        val photo : ByteArray? = null,
-        val isFavorite : Boolean? = false
+        var deskripsi : String? = "",
+        var photo : String? = ""
         ) : Parcelable

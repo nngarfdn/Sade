@@ -1,7 +1,7 @@
 package com.udindev.sade.fragment;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -29,9 +30,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -43,12 +44,12 @@ import com.udindev.sade.viewmodel.LocationViewModel;
 import com.udindev.sade.viewmodel.ProdukViewModel;
 import com.udindev.sade.viewmodel.ProfileViewModel;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -74,11 +75,19 @@ public class TambahProdukFragment extends Fragment implements CompoundButton.OnC
     private ProdukViewModel produkViewModel;
     private ProfileViewModel profileViewModel;
     private CheckBox cbRegencies;
+    Spinner kategoriSpinner;
     private CheckBox cbDistricts;
     private ArrayList<Location> listProvinces, listRegencies, listDistricts;
     private LocationViewModel lvm;
     private EditText edtNamaProduk, edtAlamatProduk, edtNoWA, edtHarga, edtDeskripsi ;
 
+
+
+    final int IMAGE_REQUEST = 71;
+    Uri imageLocationPath;
+
+    StorageReference objectStorageReference;
+    FirebaseFirestore objectFirebaseFirestore;
 
     public TambahProdukFragment() {
         // Required empty public constructor
@@ -95,6 +104,8 @@ public class TambahProdukFragment extends Fragment implements CompoundButton.OnC
         produkViewModel = ViewModelProviders.of(this).get(ProdukViewModel.class);
         profileViewModel = ViewModelProviders.of(this).get(ProfileViewModel.class);
 
+        objectStorageReference = FirebaseStorage.getInstance().getReference("imageFolder"); // Create folder to Firebase Storage
+        objectFirebaseFirestore = FirebaseFirestore.getInstance();
     }
 
     @Override
@@ -151,55 +162,9 @@ public class TambahProdukFragment extends Fragment implements CompoundButton.OnC
                 Objects.requireNonNull(getContext()), android.R.layout.simple_spinner_dropdown_item, spinnerKategori);
         kategoriSpinner.setAdapter(adapterKategori);
 
-        btnTambahProduk.setOnClickListener(v -> {
-            StorageReference ref = getSR("images/");
-            addData(kategoriSpinner, ref);
 
-            loadFragment(new TokoSayaFragment());
-
-        });
     }
 
-    private void addData(Spinner kategoriSpinner, StorageReference ref) {
-        ref.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        imgaUrl = String.valueOf(uri);
-                        String id = "";
-                        String email = firebaseUser.getEmail();
-                        String nama = edtNamaProduk.getText().toString();
-                        String kategori = kategoriSpinner.getSelectedItem().toString();
-                        String alamat = edtAlamatProduk.getText().toString();
-                        String kecamatan = spinDistricts.getSelectedItem().toString();
-                        String kabupaten = spinRegencies.getSelectedItem().toString();
-                        String prov = spinProvinces.getSelectedItem().toString();
-                        String wa = edtNoWA.getText().toString();
-                        String harga = edtHarga.getText().toString();
-                        int hargaInt = Integer.parseInt(harga);
-                        String deskripsi = edtDeskripsi.getText().toString();
-                        String photo = imgaUrl;
-                        Produk produk = new Produk(id,email, nama, kategori, alamat, kecamatan,
-                                kabupaten, prov, wa ,hargaInt, deskripsi,null, false);
-
-                        produkViewModel.insertProduk(produk);
-
-                        Log.d(TAG, "onSuccess: "+imgaUrl);
-
-
-                    }
-                });
-            }
-        });
-    }
-
-    @NotNull
-    private StorageReference getSR(String s) {
-        return storageReference
-                .child(s);
-    }
 
     private void loadProvinces() {
         lvm.loadProvinces();
@@ -283,12 +248,33 @@ public class TambahProdukFragment extends Fragment implements CompoundButton.OnC
                                 Objects.requireNonNull(getContext()).getContentResolver(),
                                 filePath);
                 imgUpload.setImageBitmap(bitmap);
+                byte [] imgBytes = getBytes(bitmap);
                 btnChose.setText("Upload");
-                btnChose.setOnClickListener(v -> uploadImage());
+                btnChose.setOnClickListener(v -> {
 
+                    uploadImage();
 
+//                    String id = "";
+//                    String email = "nanangarif404@gmail.com" ;
+//                    String nama = "Monitor";
+//                    String kategori = "Produk";
+//                    String alamat = "Kukap Poncosari";
+//                    String kecamatan = "Srandakan";
+//                    String kabupaten = "Bantul";
+//                    String prov = "Yogyakarta";
+//                    String wa = "6287838804270";
+//                    String harga = "70000";
+//                    int hargaInt = Integer.parseInt(harga);
+//                    String deskripsi = "Stik yang bagus";
+//
+//                    Produk produk = new Produk(id,email, nama, kategori, alamat, kecamatan,
+//                            kabupaten, prov, wa ,hargaInt, deskripsi,imgBytes );
+//
+//                    produkViewModel.insertProduk(produk);
+//
+//                    loadFragment(new TokoSayaFragment());
 
-
+                        });
 
             } catch (IOException e) {
                 // Log the exception
@@ -313,57 +299,55 @@ public class TambahProdukFragment extends Fragment implements CompoundButton.OnC
     private void uploadImage() {
         if (filePath != null) {
 
-            // Code for showing progressDialog while uploading
-            ProgressDialog progressDialog
-                    = new ProgressDialog(getContext());
-            progressDialog.setTitle("Uploading...");
-            progressDialog.show();
+            String namaImage = UUID.randomUUID().toString(); // diganti id produk di firebase
 
-            // Defining the child of storageReference
-            String uuid = UUID.randomUUID().toString();
-            StorageReference ref = getSR("images/" +
-                    UUID.randomUUID().toString());
+            String nameOfimage = namaImage + "." + getExtension(filePath);
 
-            // adding listeners on upload
-            // or failure of image
-            // Progress Listener for loading
-// percentage on the dialog box
-            ref.putFile(filePath)
-                    .addOnSuccessListener(
-                            taskSnapshot -> {
+            final StorageReference imageRef = objectStorageReference.child(nameOfimage);
 
-                                // Image uploaded successfully
-                                // Dismiss dialog
-                                progressDialog.dismiss();
-                                Toast
-                                        .makeText(getContext(),
-                                                "Image Uploaded!!",
-                                                Toast.LENGTH_SHORT)
-                                        .show();
-                            })
-
-                    .addOnFailureListener(e -> {
-
-                        // Error, Image not uploaded
-                        progressDialog.dismiss();
-                        Toast
-                                .makeText(getContext(),
-                                        "Failed " + e.getMessage(),
-                                        Toast.LENGTH_SHORT)
-                                .show();
-                    })
-                    .addOnProgressListener(
-                            taskSnapshot -> {
-                                double progress
-                                        = (100.0
-                                        * taskSnapshot.getBytesTransferred()
-                                        / taskSnapshot.getTotalByteCount());
-                                progressDialog.setMessage(
-                                        "Uploaded "
-                                                + (int) progress + "%");
-                            });
+            UploadTask objectUploadTask = imageRef.putFile(filePath);
 
 
+            objectUploadTask.continueWithTask(task -> {
+                if(!task.isSuccessful()){
+                    throw task.getException();
+                }
+                return imageRef.getDownloadUrl();
+            }).addOnCompleteListener(task -> {
+                if (task.isSuccessful()){
+                    Map<String,String> objectMap = new HashMap<>();
+                    objectMap.put("photo", task.getResult().toString());
+                    Toast.makeText(getContext(), "Image is uploaded",Toast.LENGTH_SHORT).show();
+
+                    btnTambahProduk.setOnClickListener( v-> {
+                        String photo = task.getResult().toString();
+
+                        Log.d(TAG, "uploadImage: photoUrl : " +photo);
+                        String id = "";
+                        String email = firebaseUser.getEmail() ;
+                        String nama = edtNamaProduk.getText().toString();
+                        String kategori = "Produk";
+                        String alamat = edtAlamatProduk.getText().toString();
+                        String kecamatan = spinDistricts.getSelectedItem().toString();
+                        String kabupaten = spinRegencies.getSelectedItem().toString();
+                        String prov = spinProvinces.getSelectedItem().toString();
+                        String wa = edtNoWA.getText().toString();
+                        String harga = edtHarga.getText().toString();
+                        int hargaInt = Integer.parseInt(harga);
+                        String deskripsi = edtDeskripsi.getText().toString();
+
+                        Produk produk = new Produk(id,email, nama, kategori, alamat, kecamatan,
+                                kabupaten, prov, wa ,hargaInt, deskripsi,photo);
+
+                        produkViewModel.insertProduk(produk);
+                        loadFragment(new DashboardFragment());
+                    });
+
+
+                } else if (!task.isSuccessful()){
+                    Toast.makeText(getContext(), task.getException().toString(), Toast.LENGTH_SHORT).show();
+                }
+            });
 
         }
     }
@@ -428,6 +412,9 @@ public class TambahProdukFragment extends Fragment implements CompoundButton.OnC
         return false;
     }
 
+
+
+
     // bitmap ke byte array
     public static byte[] getBytes(Bitmap bitmap){
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -449,6 +436,19 @@ public class TambahProdukFragment extends Fragment implements CompoundButton.OnC
     //ambil bitmap dari imageview
     public static Bitmap getBitmap(ImageView imageView){
         return ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+    }
+
+    private String getExtension(Uri uri){
+        try {
+            ContentResolver objectContentResolver = getContext().getContentResolver();
+            MimeTypeMap objectMimeTypeMap = MimeTypeMap.getSingleton();
+
+            return objectMimeTypeMap.getExtensionFromMimeType(objectContentResolver.getType(uri));
+
+        } catch (Exception e){
+            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+        return null;
     }
 
 }
