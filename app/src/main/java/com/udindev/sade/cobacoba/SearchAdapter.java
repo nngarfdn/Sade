@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.udindev.sade.activity.DetailActivity.EXTRA_PRODUK;
+import static com.udindev.sade.utils.AppUtils.loadImageFromUrl;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchViewHolder> implements Filterable {
     private Activity activity;
@@ -71,7 +73,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         return listItemFiltered.size();
     }
 
-    public static class SearchViewHolder extends RecyclerView.ViewHolder {
+    public class SearchViewHolder extends RecyclerView.ViewHolder {
+        private ImageView imgPhoto;
         private TextView tvName, tvAddress, tvPrice;
 
         public SearchViewHolder(@NonNull View itemView) {
@@ -79,12 +82,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
             tvName = itemView.findViewById(R.id.txt_nama_produk);
             tvAddress = itemView.findViewById(R.id.txt_alamatproduk);
             tvPrice = itemView.findViewById(R.id.txt_hargaproduk);
+            imgPhoto = itemView.findViewById(R.id.img_item);
         }
 
         public void bind(Produk item) {
             tvName.setText(item.getNama());
-            tvAddress.setText(item.getKecamatan() + ", " + item.getKabupaten() + ", " + item.getProvinsi());
+            tvAddress.setText(item.getKecamatan() + ", " + getSimpleKabupaten(item.getKabupaten()));
             tvPrice.setText("Rp" + item.getHarga());
+            loadImageFromUrl(imgPhoto, item.getPhoto());
         }
     }
 
@@ -122,4 +127,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
             notifyDataSetChanged();
         }
     };
+
+    private String getSimpleKabupaten(String namaKabupaten){
+        String[] arrayKabupaten = namaKabupaten.split(" ");
+        StringBuilder namaBaru = new StringBuilder(arrayKabupaten[1]);
+        for (int i = 2; i < arrayKabupaten.length; i++) namaBaru.append(" ").append(arrayKabupaten[i]);
+        return namaBaru.toString();
+    }
 }

@@ -86,7 +86,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
             public void onChanged(Profile profile) {
                 // Daftar pakai email+pass tidak ada foto
                 Uri photoUrl = firebaseUser.getPhotoUrl();
-                if (photoUrl != null) loadImageFromUrl(getContext(), imgPhoto, photoUrl.toString());
+                if (photoUrl != null) loadImageFromUrl(imgPhoto, photoUrl.toString());
 
                 tvName.setText(firebaseUser.getDisplayName());
                 tvAddress.setText(profile.getAddress());

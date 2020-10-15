@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="150dp"
     android:layout_margin="4dp"
-    android:layout_height="230dp">
+    android:layout_height="250dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -31,7 +31,8 @@
             android:textColor="@android:color/black"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/img_item" />
+            app:layout_constraintTop_toBottomOf="@+id/img_item"
+            android:maxLines="2"/>
 
         <ImageView
             android:id="@+id/imageView"
@@ -66,8 +67,8 @@
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/mont_regular"
             android:text="@string/harga"
-            android:textSize="12sp"
             android:textColor="@android:color/black"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

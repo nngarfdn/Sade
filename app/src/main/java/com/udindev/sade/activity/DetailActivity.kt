@@ -55,6 +55,7 @@ class DetailActivity : AppCompatActivity() {
         Picasso.get()
                 .load(produk?.photo)
                 .fit()
+                .centerCrop()
                 .placeholder(R.drawable.image_empty)
                 .into(img_detailproduk)
 

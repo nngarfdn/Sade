@@ -57,6 +57,7 @@ dependencies {
 
     //PICASSO
     implementation 'com.squareup.picasso:picasso:2.71828'
+
     // ViewModel
     def lifecycle_version = "2.0.0"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
@@ -66,10 +67,6 @@ dependencies {
 
     // Facebook shimmer effect dependency
     implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
-
-    // Glide
-    implementation 'com.github.bumptech.glide:glide:4.11.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
     // Rounded image view
     implementation 'com.rishabhharit.roundedimageview:RoundedImageView:0.8.4'
