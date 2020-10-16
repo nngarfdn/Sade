@@ -60,8 +60,8 @@ public class FavoriteFragment extends Fragment {
 
         String email = firebaseUser.getEmail();
 
-        favoriteViewModel.loadResultDataEmail(email);
-        favoriteViewModel.getDataEmail().observe(this, result -> {
+        favoriteViewModel.loadResultMyFavorite(email);
+        favoriteViewModel.getDataMyFavorite().observe(this, result -> {
 
             Log.d(TAG, "onViewCreated: "+ result);
 //            if (result.isEmpty()){

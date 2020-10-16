@@ -18,6 +18,7 @@ class ProdukRepository {
     private var resultDataKecamatan: MutableLiveData<List<Produk>> = MutableLiveData()
     private var resultKategoriJasa : MutableLiveData<List<Produk>> = MutableLiveData()
     private var resultDataEmail : MutableLiveData<List<Produk>> = MutableLiveData()
+    private var resultDataById : MutableLiveData<List<Produk>> = MutableLiveData()
 
     companion object {
         private val TAG: String = ProdukRepository::class.java.simpleName
@@ -35,6 +36,7 @@ class ProdukRepository {
     fun getResultHargaRendahKeTinggi(): LiveData<List<Produk>> = resultDataHargaRendahKeTinggi
     fun getResultHargaTinggiKeRendah(): LiveData<List<Produk>> = resultDataHargaTinggiKeRendah
     fun getResultsEmail(): LiveData<List<Produk>> = resultDataEmail
+    fun getResultsDataById(): LiveData<List<Produk>> = resultDataById
 
 
     fun getDataKetegoriJasa() {
@@ -77,8 +79,8 @@ class ProdukRepository {
                             pp.id = document.id
                             savedProdukList.add(pp)
                             produkData.add(pp)
-                            Log.d(TAG, "getDataEmail size : ${savedProdukList.size}")
-                            Log.d(TAG, "getDataEmail: $pp ")
+                            Log.d(TAG, "getDataEmail Favorite size : ${savedProdukList.size}")
+                            Log.d(TAG, "getDataEmail Favorite :  $pp ")
                         }
                     }
                     resultDataEmail.value = produkData
@@ -260,6 +262,31 @@ class ProdukRepository {
                     }
                     resultDataHargaRendahKeTinggi.value = produkData.sortedWith(compareBy { it.harga })
                     Log.d(TAG, "readProduk size final getRendahKeTinggi : ${savedProdukList.size}")
+                }
+                .addOnFailureListener { exception ->
+                    Log.e(TAG, "Error getting documents.", exception)
+                }
+    }
+
+    fun getDataByIdDocument(idDocument : String) {
+        val produkData: MutableList<Produk> = ArrayList()
+        val db = FirebaseFirestore.getInstance()
+        val savedProdukList = ArrayList<Produk>()
+        db.collection("produk").document(idDocument)
+                .get()
+                .addOnSuccessListener { result ->
+                        val pp = result.toObject(Produk::class.java)
+                        pp?.id = result.id
+                    if (pp != null) {
+                        savedProdukList.add(pp)
+                    }
+                    if (pp != null) {
+                        produkData.add(pp)
+                    }
+                        Log.d(TAG, "getData size : ${savedProdukList.size}")
+                        Log.d(TAG, "getData: $pp ")
+                    resultDataById.value = produkData
+                    Log.d(TAG, "readProduk size final getData : ${savedProdukList.size}")
                 }
                 .addOnFailureListener { exception ->
                     Log.e(TAG, "Error getting documents.", exception)

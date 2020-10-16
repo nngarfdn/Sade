@@ -19,6 +19,12 @@
     <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi lorem malesuada interdum sit faucibus donec suspendisse. Adipiscing ac eu ac enim. Nisi diam nunc in laoreet. Vel sagittis eget molestie.</string>
     <string name="alamat_contoh">Jl.Laskar Jaya, Poncosari, Srandakan, Bantul</string>
     <string name="tentang_aplikasi">Tentang Aplikasi</string>
+    <string name="tambah_produk">Tambah Produk</string>
+    <string name="nama_usaha_jasa_produk">Nama usaha/jasa/produk</string>
+    <string name="alamat_lengkap_usaha_jasa_produk">Alamat lengkap usaha/jasa/produk</string>
+    <string name="nomor_whatsapp">Nomor WhatsApp</string>
+    <string name="harga_text">Harga</string>
+
 
 
     <string-array name="kategori">

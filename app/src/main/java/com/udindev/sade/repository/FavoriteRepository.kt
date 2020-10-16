@@ -4,19 +4,45 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.FirebaseFirestore
-import com.udindev.sade.model.Produk
+import com.udindev.sade.model.Favorite
 
 class FavoriteRepository {
 
     private val db = FirebaseFirestore.getInstance()
 
-    private var resultDataEmail : MutableLiveData<List<Produk>> = MutableLiveData()
+    private var resultDataEmail : MutableLiveData<List<Favorite>> = MutableLiveData()
+    private var resultData: MutableLiveData<List<Favorite>> = MutableLiveData()
+    fun getResults(): LiveData<List<Favorite>> = resultData
 
-    fun getResultsEmail(): LiveData<List<Produk>> = resultDataEmail
-    
+    fun getResultsEmail(): LiveData<List<Favorite>> = resultDataEmail
 
-    fun saveFavorite(produk: Produk) {
-        val item = hashMapProduk(produk)
+    fun getData() {
+        val produkData: MutableList<Favorite> = ArrayList()
+        val db = FirebaseFirestore.getInstance()
+        val savedProdukList = ArrayList<Favorite>()
+        db.collection("favorite")
+                .get()
+                .addOnSuccessListener { result ->
+                    for (document in result) {
+                        val pp = document.toObject(Favorite::class.java)
+                        pp.id = document.id
+                        savedProdukList.add(pp)
+                        produkData.add(pp)
+                        Log.d(TAG, "getData size : ${savedProdukList.size}")
+                        Log.d(TAG, "getData: $pp ")
+                    }
+                    resultData.value = produkData
+                    Log.d(TAG, "readProduk size final getData : ${savedProdukList.size}")
+                }
+                .addOnFailureListener { exception ->
+                    Log.e(TAG, "Error getting documents.", exception)
+                }
+    }
+
+
+
+    fun addFavorite(favorite: Favorite) {
+        val item = hashMapProduk(favorite)
         db.collection("favorite")
                 .add(item)
                 .addOnSuccessListener { documentReference ->
@@ -27,25 +53,9 @@ class FavoriteRepository {
                 }
     }
 
-    fun addFavorite(produk: Produk) {
-        val idProduk = produk.id
-        val item = hashMapProduk(produk)
-
-        if (idProduk != null) {
-            db.collection("produk").document(idProduk)
-                    .set(item)
-                    .addOnSuccessListener {
-                        Log.d(TAG, "Succes tambah favorite")
-                    }
-                    .addOnFailureListener { e ->
-                        Log.e(TAG, "Error adding document", e)
-                    }
-        }
-    }
-
-    fun deleteFavorite(produk: Produk) {
-        val idProduk: String? = produk.id
-        hashMapProduk(produk)
+    fun deleteFavorite(favorite: Favorite) {
+        val idProduk: String? = favorite.id
+        hashMapProduk(favorite)
         if (idProduk != null) {
             db.collection("favorite").document(idProduk)
                     .delete()
@@ -59,27 +69,25 @@ class FavoriteRepository {
     }
 
     fun getDataEmail(email: String) {
-        val produkData: MutableList<Produk> = ArrayList()
+        val produkData: MutableList<Favorite> = ArrayList()
         val db = FirebaseFirestore.getInstance()
-        val savedProdukList = ArrayList<Produk>()
-        val isFavorite = 1
-        db.collection("produk")
+        val savedProdukList = ArrayList<Favorite>()
+        db.collection("favorite")
                 .get()
                 .addOnSuccessListener { result ->
                     for (document in result) {
                         val namaDocument = document.data["email"] as String
-//                        val fav = document.data["isFavorite"] as String
                         if (namaDocument == email ) {
-                            val pp = document.toObject(Produk::class.java)
+                            val pp = document.toObject(Favorite::class.java)
                             pp.id = document.id
                             savedProdukList.add(pp)
                             produkData.add(pp)
-                            Log.d(TAG, "getDataEmail size : ${savedProdukList.size}")
-                            Log.d(TAG, "getDataEmail: $pp ")
+                            Log.d(TAG, "getDataEmail Favorite size : ${savedProdukList.size}")
+                            Log.d(TAG, "getDataEmail Favorite: $pp ")
                         }
                     }
                     resultDataEmail.value = produkData
-                    Log.d(TAG, "readProduk size final getDataEmail : ${savedProdukList.size}")
+                    Log.d(TAG, "readProduk size final getDataEmail Favorite : ${savedProdukList.size}")
                 }
                 .addOnFailureListener { exception ->
                     Log.e(TAG, "Error getting documents.", exception)
@@ -87,20 +95,10 @@ class FavoriteRepository {
     }
 
 
-    private fun hashMapProduk(produk: Produk): HashMap<String, Any?> {
+    private fun hashMapProduk(favorite: Favorite): HashMap<String, Any?> {
         return hashMapOf(
-                "nama" to produk.nama,
-                "email" to produk.email,
-                "kategori" to produk.kategori,
-                "alamat" to produk.alamat,
-                "kecamatan" to produk.kecamatan,
-                "kabupaten" to produk.kabupaten,
-                "provinsi" to produk.provinsi,
-                "harga" to produk.harga,
-                "wa" to produk.wa,
-                "deskripsi" to produk.deskripsi,
-                "photo" to produk.photo
-
+                "idDocument" to favorite.idDocument,
+                "email" to favorite.email
         )
     }
 

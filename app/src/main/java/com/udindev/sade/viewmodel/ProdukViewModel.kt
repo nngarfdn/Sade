@@ -38,6 +38,9 @@ class ProdukViewModel : ViewModel() {
     fun getDataEmail() = produkRepository.getResultsEmail()
     fun loadResultDataEmail(email : String) = produkRepository.getDataEmail(email)
 
+    fun getDataById() = produkRepository.getResultsDataById()
+    fun loadResultById(idDokumen : String) = produkRepository.getDataByIdDocument(idDokumen)
+
     fun insertProduk(produk: Produk) { produkRepository.saveProduk(produk) }
     fun deteteProduk(produk: Produk) { produkRepository.delete(produk) }
     fun updateProduk(produk: Produk) { produkRepository.update(produk) }

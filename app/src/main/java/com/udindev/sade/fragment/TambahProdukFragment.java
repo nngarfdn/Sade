@@ -9,6 +9,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +18,10 @@ import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -56,31 +56,27 @@ import java.util.UUID;
 import static android.app.Activity.RESULT_OK;
 
 
-public class TambahProdukFragment extends Fragment implements CompoundButton.OnCheckedChangeListener, AdapterView.OnItemSelectedListener {
+public class TambahProdukFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
     private static final String TAG = "TambahProdukFragment";
     private int PICK_IMAGE_REQUEST = 22;
     private Uri filePath;
-    private StorageReference storageReference;
     private Button btnChose;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
     private Button btnTambahProduk;
     private ImageView imgUpload;
     private Spinner spinProvinces;
-    private String imgaUrl ;
     private Spinner spinRegencies;
     private Spinner spinDistricts;
     private LocationViewModel locationViewModel;
     private ProdukViewModel produkViewModel;
     private ProfileViewModel profileViewModel;
-    private CheckBox cbRegencies;
+    TextView txtUploading;
     Spinner kategoriSpinner;
-    private CheckBox cbDistricts;
     private ArrayList<Location> listProvinces, listRegencies, listDistricts;
     private LocationViewModel lvm;
-    private EditText edtNamaProduk, edtAlamatProduk, edtNoWA, edtHarga, edtDeskripsi ;
-
+    private EditText edtNamaProduk, edtAlamatProduk, edtNoWA, edtHarga, edtDeskripsi;
 
 
     final int IMAGE_REQUEST = 71;
@@ -97,7 +93,7 @@ public class TambahProdukFragment extends Fragment implements CompoundButton.OnC
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
+        StorageReference storageReference = storage.getReference();
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
         locationViewModel = ViewModelProviders.of(this).get(LocationViewModel.class);
@@ -120,7 +116,7 @@ public class TambahProdukFragment extends Fragment implements CompoundButton.OnC
         super.onViewCreated(view, savedInstanceState);
         btnChose = view.findViewById(R.id.btn_upload_image);
         imgUpload = view.findViewById(R.id.img_upload_result);
-        Spinner kategoriSpinner = view.findViewById(R.id.spinner_kategori);
+        kategoriSpinner = view.findViewById(R.id.spinner_kategori);
         spinProvinces = view.findViewById(R.id.spin_provinces);
         spinRegencies = view.findViewById(R.id.spin_regencies);
         spinDistricts = view.findViewById(R.id.spin_districts);
@@ -129,23 +125,14 @@ public class TambahProdukFragment extends Fragment implements CompoundButton.OnC
         edtDeskripsi = view.findViewById(R.id.edt_alamat_deskripsi);
         edtHarga = view.findViewById(R.id.edt_alamat_harga);
         edtNoWA = view.findViewById(R.id.edt_alamat_nowa);
+        txtUploading = view.findViewById(R.id.txt_uploading);
 
         btnTambahProduk = view.findViewById(R.id.btn_tambah_produk);
-        CheckBox cbProvinces = view.findViewById(R.id.cb_provinces);
-        cbRegencies = view.findViewById(R.id.cb_regencies);
-        cbDistricts = view.findViewById(R.id.cb_districts);
 
+        spinProvinces.setEnabled(true);
+        spinRegencies.setEnabled(true);
+        spinDistricts.setEnabled(true);
 
-        cbProvinces.setEnabled(true);
-        cbRegencies.setEnabled(false);
-        cbDistricts.setEnabled(false);
-        spinProvinces.setEnabled(false);
-        spinRegencies.setEnabled(false);
-        spinDistricts.setEnabled(false);
-
-        cbProvinces.setOnCheckedChangeListener(this);
-        cbRegencies.setOnCheckedChangeListener(this);
-        cbDistricts.setOnCheckedChangeListener(this);
         spinProvinces.setOnItemSelectedListener(this);
         spinRegencies.setOnItemSelectedListener(this);
         spinDistricts.setOnItemSelectedListener(this);
@@ -162,6 +149,40 @@ public class TambahProdukFragment extends Fragment implements CompoundButton.OnC
                 Objects.requireNonNull(getContext()), android.R.layout.simple_spinner_dropdown_item, spinnerKategori);
         kategoriSpinner.setAdapter(adapterKategori);
 
+        btnTambahProduk.setOnClickListener(v -> {
+            String nama = edtNamaProduk.getText().toString();
+            String alamat = edtAlamatProduk.getText().toString();
+            String wa = edtNoWA.getText().toString();
+            String harga = edtHarga.getText().toString();
+            String deskripsi = edtDeskripsi.getText().toString();
+            if (nama.length()<=0) {
+                edtNamaProduk.setError("Masukan nama produk/barang/jasa");
+                Toast.makeText(getContext(), "Masukan nama produk/barang/jasa", Toast.LENGTH_SHORT).show();
+            }
+
+            if (TextUtils.isEmpty(alamat)) {
+                edtAlamatProduk.setError("Masukan alamat produk/barang/jasa");
+            }
+
+            if (TextUtils.isEmpty(wa)) {
+                edtNoWA.setError("Masukan nomer Whatsapp");
+            }
+
+            if (!TextUtils.isEmpty(wa)){
+                if (wa.charAt(0) != '6' && wa.charAt(1) != '2'){
+                    edtNoWA.setError("Awali nomer dengan 628xxx");
+                }
+            }
+
+            if (TextUtils.isEmpty(harga)) {
+                edtHarga.setError("Masukan harga");
+            }
+
+            if (TextUtils.isEmpty(deskripsi)) {
+                edtDeskripsi.setError("Masukan deskripsi");
+            }
+
+        });
 
     }
 
@@ -230,16 +251,13 @@ public class TambahProdukFragment extends Fragment implements CompoundButton.OnC
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == PICK_IMAGE_REQUEST
                 && resultCode == RESULT_OK
                 && data != null
                 && data.getData() != null) {
-
             // Get the Uri of data
             filePath = data.getData();
             try {
-
                 // Setting image on image view using Bitmap
                 Bitmap bitmap = MediaStore
                         .Images
@@ -248,33 +266,11 @@ public class TambahProdukFragment extends Fragment implements CompoundButton.OnC
                                 Objects.requireNonNull(getContext()).getContentResolver(),
                                 filePath);
                 imgUpload.setImageBitmap(bitmap);
-                byte [] imgBytes = getBytes(bitmap);
+                byte[] imgBytes = getBytes(bitmap);
                 btnChose.setText("Upload");
                 btnChose.setOnClickListener(v -> {
-
                     uploadImage();
-
-//                    String id = "";
-//                    String email = "nanangarif404@gmail.com" ;
-//                    String nama = "Monitor";
-//                    String kategori = "Produk";
-//                    String alamat = "Kukap Poncosari";
-//                    String kecamatan = "Srandakan";
-//                    String kabupaten = "Bantul";
-//                    String prov = "Yogyakarta";
-//                    String wa = "6287838804270";
-//                    String harga = "70000";
-//                    int hargaInt = Integer.parseInt(harga);
-//                    String deskripsi = "Stik yang bagus";
-//
-//                    Produk produk = new Produk(id,email, nama, kategori, alamat, kecamatan,
-//                            kabupaten, prov, wa ,hargaInt, deskripsi,imgBytes );
-//
-//                    produkViewModel.insertProduk(produk);
-//
-//                    loadFragment(new TokoSayaFragment());
-
-                        });
+                });
 
             } catch (IOException e) {
                 // Log the exception
@@ -299,6 +295,7 @@ public class TambahProdukFragment extends Fragment implements CompoundButton.OnC
     private void uploadImage() {
         if (filePath != null) {
 
+            txtUploading.setVisibility(View.VISIBLE);
             String namaImage = UUID.randomUUID().toString(); // diganti id produk di firebase
 
             String nameOfimage = namaImage + "." + getExtension(filePath);
@@ -309,24 +306,25 @@ public class TambahProdukFragment extends Fragment implements CompoundButton.OnC
 
 
             objectUploadTask.continueWithTask(task -> {
-                if(!task.isSuccessful()){
+                if (!task.isSuccessful()) {
                     throw task.getException();
                 }
                 return imageRef.getDownloadUrl();
             }).addOnCompleteListener(task -> {
-                if (task.isSuccessful()){
-                    Map<String,String> objectMap = new HashMap<>();
+                if (task.isSuccessful()) {
+                    Map<String, String> objectMap = new HashMap<>();
                     objectMap.put("photo", task.getResult().toString());
-                    Toast.makeText(getContext(), "Image is uploaded",Toast.LENGTH_SHORT).show();
+                    txtUploading.setVisibility(View.INVISIBLE);
+                    Toast.makeText(getContext(), "Upload Gamabr Berhasil", Toast.LENGTH_SHORT).show();
 
-                    btnTambahProduk.setOnClickListener( v-> {
+                    btnTambahProduk.setOnClickListener(v -> {
                         String photo = task.getResult().toString();
 
-                        Log.d(TAG, "uploadImage: photoUrl : " +photo);
+                        Log.d(TAG, "uploadImage: photoUrl : " + photo);
                         String id = "";
-                        String email = firebaseUser.getEmail() ;
+                        String email = firebaseUser.getEmail();
                         String nama = edtNamaProduk.getText().toString();
-                        String kategori = "Produk";
+                        String kategori = kategoriSpinner.getSelectedItem().toString();
                         String alamat = edtAlamatProduk.getText().toString();
                         String kecamatan = spinDistricts.getSelectedItem().toString();
                         String kabupaten = spinRegencies.getSelectedItem().toString();
@@ -336,15 +334,50 @@ public class TambahProdukFragment extends Fragment implements CompoundButton.OnC
                         int hargaInt = Integer.parseInt(harga);
                         String deskripsi = edtDeskripsi.getText().toString();
 
-                        Produk produk = new Produk(id,email, nama, kategori, alamat, kecamatan,
-                                kabupaten, prov, wa ,hargaInt, deskripsi,photo);
+                        Boolean valid = true;
 
-                        produkViewModel.insertProduk(produk);
-                        loadFragment(new DashboardFragment());
+                        if (nama.length()<=0) {
+                            edtNamaProduk.setError("Masukan nama produk/barang/jasa");
+                            Toast.makeText(getContext(), "Masukan nama produk/barang/jasa", Toast.LENGTH_SHORT).show();
+                            valid = false;
+                        }
+
+                        if (TextUtils.isEmpty(alamat)) {
+                            edtAlamatProduk.setError("Masukan alamat produk/barang/jasa");
+                            valid = false;
+                        }
+
+                        if (TextUtils.isEmpty(wa)) {
+                            edtNoWA.setError("Masukan nomer Whatsapp");
+                            valid = false;
+                        }
+
+                        if (wa.charAt(0) != '6' && wa.charAt(1) != '2') {
+                            edtNoWA.setError("Awali nomer dengan 628xxx");
+                            valid = false;
+                        }
+
+                        if (TextUtils.isEmpty(harga)) {
+                            edtHarga.setError("Masukan harga");
+                            valid = false;
+                        }
+
+                        if (TextUtils.isEmpty(deskripsi)) {
+                            edtHarga.setError("Masukan deskripsi");
+                            valid = false;
+                        }
+
+                            Produk produk = new Produk(id, email, nama, kategori, alamat, kecamatan,
+                                    kabupaten, prov, wa, hargaInt, deskripsi, photo);
+
+                            produkViewModel.insertProduk(produk);
+                            loadFragment(new DashboardFragment());
+
                     });
 
 
-                } else if (!task.isSuccessful()){
+                } else if (!task.isSuccessful()) {
+
                     Toast.makeText(getContext(), task.getException().toString(), Toast.LENGTH_SHORT).show();
                 }
             });
@@ -352,31 +385,7 @@ public class TambahProdukFragment extends Fragment implements CompoundButton.OnC
         }
     }
 
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean b) {
 
-        switch (buttonView.getId()) {
-            case R.id.cb_provinces:
-                spinProvinces.setEnabled(b);
-                cbRegencies.setEnabled(b);
-                if (!b) {
-                    cbRegencies.setChecked(false);
-                    cbDistricts.setChecked(false);
-                }
-                break;
-
-            case R.id.cb_regencies:
-                spinRegencies.setEnabled(b);
-                cbDistricts.setEnabled(b);
-                if (!b) cbDistricts.setChecked(false);
-                break;
-
-            case R.id.cb_districts:
-                spinDistricts.setEnabled(b);
-                break;
-        }
-
-    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int i, long id) {
@@ -413,39 +422,38 @@ public class TambahProdukFragment extends Fragment implements CompoundButton.OnC
     }
 
 
-
-
     // bitmap ke byte array
-    public static byte[] getBytes(Bitmap bitmap){
+    public static byte[] getBytes(Bitmap bitmap) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream);
 
         try {
             stream.close();
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
         return stream.toByteArray();
     }
+
     // byte array ke bitmap
     public static Bitmap getImage(byte[] image) {
-       return BitmapFactory.decodeByteArray(image, 0 , image.length);
+        return BitmapFactory.decodeByteArray(image, 0, image.length);
     }
 
     //ambil bitmap dari imageview
-    public static Bitmap getBitmap(ImageView imageView){
+    public static Bitmap getBitmap(ImageView imageView) {
         return ((BitmapDrawable) imageView.getDrawable()).getBitmap();
     }
 
-    private String getExtension(Uri uri){
+    private String getExtension(Uri uri) {
         try {
             ContentResolver objectContentResolver = getContext().getContentResolver();
             MimeTypeMap objectMimeTypeMap = MimeTypeMap.getSingleton();
 
             return objectMimeTypeMap.getExtensionFromMimeType(objectContentResolver.getType(uri));
 
-        } catch (Exception e){
+        } catch (Exception e) {
             Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
         return null;
