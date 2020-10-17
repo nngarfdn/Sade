@@ -1,8 +1,10 @@
 package com.udindev.sade.activity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +32,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     List<Produk> listKecamatan = new ArrayList<Produk>();
     List<Produk> listShow = new ArrayList<Produk>();
 
+    private Toast exitToast;
+
+    @SuppressLint("ShowToast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +46,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
 
 //        tesDataClass();
+
+        exitToast = Toast.makeText(this, "Tekan sekali lagi untuk keluar", Toast.LENGTH_SHORT);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (exitToast.getView().isShown()) super.onBackPressed();
+        else exitToast.show();
     }
 
     private void setBottomNavigationView() {
@@ -53,7 +66,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         if (fragment != null) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fl_container, fragment)
-                    .addToBackStack(null)
                     .commit();
             return true;
         }

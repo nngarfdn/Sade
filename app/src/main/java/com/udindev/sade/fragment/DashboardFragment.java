@@ -31,6 +31,11 @@ import com.udindev.sade.adapter.ProdukMenuAdapter;
 import com.udindev.sade.model.Produk;
 import com.udindev.sade.viewmodel.ProdukViewModel;
 
+import co.mobiwise.materialintro.shape.Focus;
+import co.mobiwise.materialintro.shape.FocusGravity;
+import co.mobiwise.materialintro.shape.ShapeType;
+import co.mobiwise.materialintro.view.MaterialIntroView;
+
 import static com.udindev.sade.cobacoba.SearchActivity.getDefaultFilter;
 
 public class DashboardFragment extends Fragment  {
@@ -109,6 +114,8 @@ public class DashboardFragment extends Fragment  {
         getAllResult();
 
         // Tambah
+        showShowcaseView();
+
         ImageButton btnSearch = view.findViewById(R.id.btn_search);
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,6 +123,23 @@ public class DashboardFragment extends Fragment  {
                 performSearch("Kata kunci");
             }
         });
+    }
+
+    private void showShowcaseView() {
+        new MaterialIntroView.Builder(getActivity())
+                .enableDotAnimation(false)
+                .enableIcon(true)
+                .setFocusGravity(FocusGravity.CENTER)
+                .setFocusType(Focus.MINIMUM)
+                .setDelayMillis(500)
+                .enableFadeAnimation(true)
+                .performClick(false)
+                .setTargetPadding(32)
+                .setInfoText("Ketuk ikon ini untuk menuju tokomu")
+                .setShape(ShapeType.CIRCLE)
+                .setTarget(getView().findViewById(R.id.btn_tokosaya))
+                .setUsageId("btn_tokosaya")
+                .show();
     }
 
     private void performSearch(String kategori) {
