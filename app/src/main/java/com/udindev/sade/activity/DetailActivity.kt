@@ -1,7 +1,10 @@
 package com.udindev.sade.activity
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -99,8 +102,6 @@ class DetailActivity : AppCompatActivity() {
         }
 
 
-
-
         Picasso.get()
                 .load(produk?.photo)
                 .fit()
@@ -113,8 +114,18 @@ class DetailActivity : AppCompatActivity() {
         txt_nama_produk_detail.text = produk?.nama
         txt_harga_detail.text = "Rp ${produk?.harga}"
 
+        btn_chat_detail.setText( "Chat ${produk?.wa}")
+
         btn_chat_detail.setOnClickListener {
             val nomer = produk?.wa
+            val url = "http://wa.me/$nomer"
+            val webpage = Uri.parse(url)
+            val intent = Intent(Intent.ACTION_VIEW, webpage)
+            if (intent.resolveActivity(packageManager) != null) {
+                startActivity(intent)
+            } else{
+                Toast.makeText(this, "TIdak bisa membuka", Toast.LENGTH_SHORT).show()
+            }
 
         }
 
