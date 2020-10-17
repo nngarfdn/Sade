@@ -130,6 +130,8 @@ class DetailActivity : AppCompatActivity() {
         }
 
 
+
+
     }
 
 
