@@ -26,7 +26,7 @@ import static com.udindev.sade.utils.AppUtils.showSnackbar;
 public class ResetPasswordDialog extends DialogFragment {
     private final String TAG = getClass().getSimpleName();
 
-    private Activity activity;
+    private final Activity activity;
     private AlertDialog dialog;
     private FirebaseAuth firebaseAuth;
 
@@ -93,7 +93,7 @@ public class ResetPasswordDialog extends DialogFragment {
         boolean valid = true;
 
         if (TextUtils.isEmpty(email) || !Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            edtEmail.setError("Masukkan email yang valid.");
+            edtEmail.setError("Masukkan email yang valid");
             valid = false;
         }
 

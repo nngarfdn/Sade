@@ -24,8 +24,44 @@
     <string name="alamat_lengkap_usaha_jasa_produk">Alamat lengkap usaha/jasa/produk</string>
     <string name="nomor_whatsapp">Nomor WhatsApp</string>
     <string name="harga_text">Harga</string>
-
-
+    <string name="profile">Profil</string>
+    <string name="loading">Memuat…</string>
+    <string name="about">Tentang Aplikasi</string>
+    <string name="help_center">Pusat Bantuan</string>
+    <string name="logout">Keluar</string>
+    <string name="informasi_akun">Informasi Akun</string>
+    <string name="edit_profil">Edit Profil</string>
+    <string name="filter">Filter</string>
+    <string name="category">Kategori</string>
+    <string name="produk">Produk</string>
+    <string name="usaha">Usaha</string>
+    <string name="jasa">Jasa</string>
+    <string name="lainnya">Lainnya</string>
+    <string name="location">Lokasi</string>
+    <string name="province">Provinsi</string>
+    <string name="regency">Kabupaten</string>
+    <string name="district">Kecamatan</string>
+    <string name="sort">Urutkan Harga</string>
+    <string name="paling_murah">Paling murah</string>
+    <string name="harga_tertinggi">Harga tertinggi</string>
+    <string name="apply">Terapkan</string>
+    <string name="cancel">Batal</string>
+    <string name="address">Alamat</string>
+    <string name="phone_number">Nomor telepon</string>
+    <string name="wa_number">Nomor WhatsApp</string>
+    <string name="save">Simpan</string>
+    <string name="edit_profile">Edit Profil</string>
+    <string name="email">Email</string>
+    <string name="password">Kata sandi</string>
+    <string name="login">Masuk</string>
+    <string name="reset_password">Lupa Kata Sandi</string>
+    <string name="or">atau</string>
+    <string name="google_login">Masuk dengan Google</string>
+    <string name="fullname">Nama lengkap</string>
+    <string name="register">Daftar</string>
+    <string name="send">Kirim</string>
+    <string name="desc_rp">Silakan masukkan alamat email Anda.</string>
+    <string name="title_search">Pencarian</string>
 
     <string-array name="kategori">
         <item>Pilih kategori</item>

@@ -49,12 +49,8 @@
 
             <com.mindorks.editdrawabletext.EditDrawableText
                 android:id="@+id/search"
-                style="@style/search"
-                android:hint="@string/cari"
-                android:layout_toStartOf="@+id/btn_search"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:imeOptions="actionSearch"/>
+                style="@style/Search.White"
+                android:layout_toStartOf="@+id/btn_search"/>
 
             <ImageButton
                 android:id="@+id/btn_search"
@@ -63,7 +59,8 @@
                 android:src="@drawable/ic_icon_search"
                 android:background="@android:color/transparent"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="8dp"/>
+                android:layout_marginEnd="8dp"
+                tools:ignore="ContentDescription" />
         </RelativeLayout>
 
         <TextView
@@ -164,6 +161,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:paddingBottom="16dp"
             android:background="@drawable/background_white_rounded"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3">

@@ -20,8 +20,6 @@ public class Filter implements Parcelable {
     private int posisiKabupaten;
     private int posisiKecamatan;
 
-    public Filter(){}
-
     public Filter(String kataKunci, boolean produk, boolean jasa, boolean usaha, boolean lainnya, boolean provinsi, boolean kabupaten, boolean kecamatan, boolean murah, String namaProvinsi, String namaKabupaten, String namaKecamatan, int posisiProvinsi, int posisiKabupaten, int posisiKecamatan) {
         this.kataKunci = kataKunci;
         this.produk = produk;

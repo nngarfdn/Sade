@@ -1,5 +1,6 @@
 package com.udindev.sade.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -79,6 +80,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         tvPasswordReset.setOnClickListener(this);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -174,12 +176,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
         boolean valid = true;
 
         if (TextUtils.isEmpty(email) || !Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            edtEmail.setError("Masukkan email yang valid.");
+            edtEmail.setError("Masukkan email yang valid");
             valid = false;
         }
 
         if (TextUtils.isEmpty(password)) {
-            edtPassword.setError("Masukkan kata sandi.");
+            edtPassword.setError("Masukkan kata sandi");
             valid = false;
         }
 

@@ -40,17 +40,17 @@ public class SearchActivity extends AppCompatActivity implements FilterDialog.Fi
         else throw new ClassCastException(TAG + ": harus ada filter");
 
         // Initialize view
-        RecyclerView recyclerView = findViewById(R.id.rv_semua_item);
+        RecyclerView recyclerView = findViewById(R.id.rv_result_search);
         recyclerView.setLayoutManager(new GridLayoutManager(this,2));
         recyclerView.setHasFixedSize(true);
         adapter = new SearchAdapter(this);
         adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
 
-        shimmer = findViewById(R.id.shimmerFrameLayoutSemuaItem);
+        shimmer = findViewById(R.id.shimmer_result_search);
         shimmer.startShimmerAnimation();
 
-        edtSearch = findViewById(R.id.search);
+        edtSearch = findViewById(R.id.edt_search_search);
         edtSearch.setText(filter.getKataKunci());
         edtSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -63,7 +63,7 @@ public class SearchActivity extends AppCompatActivity implements FilterDialog.Fi
             }
         });
 
-        ImageButton btnSearch = findViewById(R.id.btn_search);
+        ImageButton btnSearch = findViewById(R.id.btn_search_search);
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,7 +84,7 @@ public class SearchActivity extends AppCompatActivity implements FilterDialog.Fi
 
         // Filter dialog
         filterDialog = new FilterDialog(this);
-        ImageButton btnFilter = findViewById(R.id.imgbtn_filter_semua);
+        ImageButton btnFilter = findViewById(R.id.btn_filter_search);
         btnFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

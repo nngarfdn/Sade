@@ -1,166 +1,224 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Filter"
-        android:textSize="18sp"
-        android:textColor="@color/black"
-        android:fontFamily="@font/mont_medium"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Kategori"
-        android:textColor="@color/black"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"/>
-
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:columnCount="2"
-        android:orientation="vertical"
-        android:useDefaultMargins="true">
-
-        <CheckBox
-            android:id="@+id/cb_produk_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Produk"
-            android:layout_columnWeight="1"/>
-
-        <CheckBox
-            android:id="@+id/cb_jasa_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Jasa"
-            android:layout_columnWeight="1"/>
-
-        <CheckBox
-            android:id="@+id/cb_usaha_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Usaha"
-            android:layout_columnWeight="1"/>
-
-        <CheckBox
-            android:id="@+id/cb_lainnya_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Lainnya"
-            android:layout_columnWeight="1"/>
-    </GridLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Lokasi"
-        android:textColor="@color/black"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"/>
+    android:padding="16dp"
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <CheckBox
-            android:id="@+id/cb_province_filter"
+        <TextView
+            style="@style/TextView.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Provinsi"/>
+            android:text="@string/filter"/>
 
-        <Spinner
-            android:id="@+id/spin_province_filter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="50dp"
-            android:prompt="@string/hint_select_province"
-            android:spinnerMode="dialog" />
-
-        <CheckBox
-            android:id="@+id/cb_regency_filter"
+        <TextView
+            style="@style/TextView.Regular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Kabupaten"/>
+            android:text="@string/category"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"/>
 
-        <Spinner
-            android:id="@+id/spin_regency_filter"
+        <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="50dp"
-            android:prompt="@string/hint_select_regency"
-            android:spinnerMode="dialog"/>
+            android:columnCount="2"
+            android:orientation="vertical"
+            android:useDefaultMargins="true">
 
-        <CheckBox
-            android:id="@+id/cb_district_filter"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <CheckBox
+                    android:id="@+id/cb_produk_filter"
+                    style="@style/TextView.Regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/produk"
+                    android:layout_weight="1"/>
+
+                <CheckBox
+                    android:id="@+id/cb_usaha_filter"
+                    style="@style/TextView.Regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/usaha"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <CheckBox
+                    android:id="@+id/cb_jasa_filter"
+                    style="@style/TextView.Regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/jasa"
+                    android:layout_weight="1"/>
+
+                <CheckBox
+                    android:id="@+id/cb_lainnya_filter"
+                    style="@style/TextView.Regular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lainnya"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+        </GridLayout>
+
+        <TextView
+            style="@style/TextView.Regular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Kecamatan"/>
+            android:text="@string/location"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"/>
 
-        <Spinner
-            android:id="@+id/spin_district_filter"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="50dp"
-            android:prompt="@string/hint_select_district"
-            android:spinnerMode="dialog"/>
+            android:orientation="vertical">
+
+            <CheckBox
+                android:id="@+id/cb_province_filter"
+                style="@style/TextView.Regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/province"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_edit_text"
+                android:orientation="vertical">
+
+                <Spinner
+                    android:id="@+id/spin_province_filter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="50dp"
+                    android:prompt="@string/hint_select_province"
+                    android:spinnerMode="dialog" />
+            </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/cb_regency_filter"
+                style="@style/TextView.Regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/regency"
+                android:layout_marginTop="8dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_edit_text"
+                android:orientation="vertical">
+
+                <Spinner
+                    android:id="@+id/spin_regency_filter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="50dp"
+                    android:prompt="@string/hint_select_regency"
+                    android:spinnerMode="dialog"/>
+            </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/cb_district_filter"
+                style="@style/TextView.Regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/district"
+                android:layout_marginTop="8dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_edit_text"
+                android:orientation="vertical">
+
+                <Spinner
+                    android:id="@+id/spin_district_filter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="50dp"
+                    android:prompt="@string/hint_select_district"
+                    android:spinnerMode="dialog"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            style="@style/TextView.Regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sort"
+            android:textColor="@color/black"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"/>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <RadioButton
+                android:id="@+id/rb_murah_filter"
+                style="@style/TextView.Regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/paling_murah"
+                android:checked="true"
+                android:layout_weight="1"/>
+
+            <RadioButton
+                android:id="@+id/rb_mahal_filter"
+                style="@style/TextView.Regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/harga_tertinggi"
+                android:layout_weight="1"/>
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/btn_apply_filter"
+                style="@style/Button.Primary"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:text="@string/apply"
+                android:textAllCaps="false"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/btn_cancel_filter"
+                style="@style/Button.Outline"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:text="@string/cancel"
+                android:textAllCaps="false"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"/>
+        </LinearLayout>
     </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Urutkan Harga"
-        android:textColor="@color/black"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"/>
-
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <RadioButton
-            android:id="@+id/rb_murah_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Paling murah"
-            android:checked="true"/>
-
-        <RadioButton
-            android:id="@+id/rb_mahal_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Harga tertinggi"/>
-    </RadioGroup>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btn_apply_filter"
-            style="@style/Button.Primary"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:text="Terapkan"
-            android:textAllCaps="false"/>
-
-        <Button
-            android:id="@+id/btn_cancel_filter"
-            style="@style/Button.Outline"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:text="Batal"
-            android:textAllCaps="false"
-            android:layout_marginStart="16dp"/>
-    </LinearLayout>
-</LinearLayout>
+</ScrollView>

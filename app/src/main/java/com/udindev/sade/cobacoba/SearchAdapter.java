@@ -24,8 +24,8 @@ import static com.udindev.sade.activity.DetailActivity.EXTRA_PRODUK;
 import static com.udindev.sade.utils.AppUtils.loadImageFromUrl;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchViewHolder> implements Filterable {
-    private Activity activity;
-    private ArrayList<Produk> listItem = new ArrayList<>();
+    private final Activity activity;
+    private final ArrayList<Produk> listItem = new ArrayList<>();
     private ArrayList<Produk> listItemFiltered = new ArrayList<>();
 
     public SearchAdapter(Activity activity){
@@ -74,8 +74,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     }
 
     public class SearchViewHolder extends RecyclerView.ViewHolder {
-        private ImageView imgPhoto;
-        private TextView tvName, tvAddress, tvPrice;
+        private final ImageView imgPhoto;
+        private final TextView tvName, tvAddress, tvPrice;
 
         public SearchViewHolder(@NonNull View itemView) {
             super(itemView);

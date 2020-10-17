@@ -45,11 +45,18 @@
 
             <com.mindorks.editdrawabletext.EditDrawableText
                 android:id="@+id/search"
-                style="@style/searchBlack"
+                style="@style/Search.Black"
+                android:layout_toStartOf="@+id/btn_search"/>
+
+            <ImageButton
+                android:id="@+id/btn_search"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
-                android:layout_marginHorizontal="8dp"
-                android:hint="@string/cari"
-                tools:ignore="RtlHardcoded,UnusedAttribute" />
+                android:layout_marginEnd="8dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_baseline_search_24"
+                tools:ignore="ContentDescription" />
 
         </RelativeLayout>
 

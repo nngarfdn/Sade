@@ -1,5 +1,8 @@
 package com.udindev.sade.fragment;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -32,13 +35,11 @@ import com.udindev.sade.viewmodel.ProfileViewModel;
 import static com.udindev.sade.utils.AppUtils.loadImageFromUrl;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener{
-
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
     private RoundedImageView imgPhoto;
     private TextView tvName, tvAddress, tvFullname, tvEmail, tvFulladdress, tvPhoneNumber, tvWaNumber;
     private ProfileViewModel profileViewModel;
-    private ImageView imgTentangClick ;
 
     public ProfileFragment() {}
 
@@ -55,6 +56,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         firebaseUser = firebaseAuth.getCurrentUser();
         Log.d(getClass().getSimpleName(), "userId: " + firebaseUser.getUid());
 
+        ImageButton btnShop = view.findViewById(R.id.btn_shop_profile);
+        btnShop.setOnClickListener(this);
+
         imgPhoto = view.findViewById(R.id.img_photo_profile);
         tvName = view.findViewById(R.id.tv_name_profile);
         tvAddress = view.findViewById(R.id.tv_address_profile);
@@ -63,7 +67,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         tvFulladdress = view.findViewById(R.id.tv_fulladdress_profile);
         tvPhoneNumber = view.findViewById(R.id.tv_phone_number_profile);
         tvWaNumber = view.findViewById(R.id.tv_wa_number_profile);
-        imgTentangClick = view.findViewById(R.id.img_tentang_click);
 
         TextView tvAbout = view.findViewById(R.id.tv_about_profile);
         TextView tvHelpCenter = view.findViewById(R.id.tv_help_center_profile);
@@ -72,10 +75,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         tvHelpCenter.setOnClickListener(this);
         tvLogout.setOnClickListener(this);
 
-        imgTentangClick.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), TentangAplikasi.class);
-            startActivity(intent);
-        });
+        ImageButton btnAbout = view.findViewById(R.id.btn_about_profile);
+        ImageButton btnHelpCenter = view.findViewById(R.id.btn_help_center_profile);
+        ImageButton btnLogout = view.findViewById(R.id.btn_logout_profile);
+        btnAbout.setOnClickListener(this);
+        btnHelpCenter.setOnClickListener(this);
+        btnLogout.setOnClickListener(this);
 
         Button btnEdit = view.findViewById(R.id.btn_edit_profile);
         btnEdit.setOnClickListener(this);
@@ -105,38 +110,57 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         profileViewModel.loadData(firebaseUser.getUid());
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
         switch (view.getId()){
+            case R.id.btn_shop_profile:
+                loadFragment(new TokoSayaFragment());
+                break;
+
             case R.id.btn_edit_profile:
-                Fragment fragment = new EditProfileFragment();
-                if (getActivity() != null) {
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fl_container, fragment)
-                            .addToBackStack(null)
-                            .commit();
-                }
+                loadFragment(new EditProfileFragment());
                 break;
 
             case R.id.tv_about_profile:
-                //startActivity(new Intent(getActivity(), ));
+            case R.id.btn_about_profile:
+                startActivity(new Intent(getContext(), TentangAplikasi.class));
                 break;
 
             case R.id.tv_help_center_profile:
-                startActivity(new Intent(getActivity(), PusatBantuanActivity.class));
+            case R.id.btn_help_center_profile:
+                startActivity(new Intent(getContext(), PusatBantuanActivity.class));
                 break;
 
             case R.id.tv_logout_profile:
-                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                        .requestIdToken(getString(R.string.default_web_client_id))
-                        .requestEmail()
-                        .build();
-                GoogleSignIn.getClient(getActivity(), gso).signOut();
-                firebaseAuth.signOut();
+            case R.id.btn_logout_profile:
+                new AlertDialog.Builder(getActivity())
+                        .setMessage("Apakah Anda yakin ingin keluar?")
+                        .setNegativeButton("Tidak", null)
+                        .setNeutralButton("Batal", null)
+                        .setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                                        .requestIdToken(getString(R.string.default_web_client_id))
+                                        .requestEmail()
+                                        .build();
+                                GoogleSignIn.getClient(getActivity(), gso).signOut();
+                                firebaseAuth.signOut();
 
-                startActivity(new Intent(getActivity(), LoginActivity.class));
-                getActivity().finish();
+                                startActivity(new Intent(getContext(), LoginActivity.class));
+                                getActivity().finish();
+                            }
+                        })
+                        .create().show();
                 break;
         }
+    }
+
+    private void loadFragment(Fragment fragment){
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fl_container, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 }

@@ -1,48 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.RegisterFragment"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
     android:padding="48dp">
 
-    <EditText
-        android:id="@+id/edt_name_register"
-        style="@style/EditText"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nama lengkap"
-        android:inputType="textPersonName"
-        android:imeOptions="actionNext"
-        android:layout_marginBottom="16dp"/>
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/edt_email_register"
-        style="@style/EditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:imeOptions="actionNext"
-        android:layout_marginBottom="16dp"/>
+        <EditText
+            android:id="@+id/edt_name_register"
+            style="@style/EditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/fullname"
+            android:inputType="textPersonName"
+            android:imeOptions="actionNext"
+            android:layout_marginBottom="16dp"
+            tools:ignore="Autofill" />
 
-    <EditText
-        android:id="@+id/edt_password_register"
-        style="@style/EditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Kata sandi"
-        android:inputType="textPassword"
-        android:imeOptions="actionDone"
-        android:layout_marginBottom="16dp"/>
+        <EditText
+            android:id="@+id/edt_email_register"
+            style="@style/EditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:imeOptions="actionNext"
+            android:layout_marginBottom="16dp"
+            tools:ignore="Autofill" />
 
-    <Button
-        android:id="@+id/btn_email_register"
-        style="@style/Button.Primary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Daftar"/>
-</LinearLayout>
+        <EditText
+            android:id="@+id/edt_password_register"
+            style="@style/EditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:imeOptions="actionDone"
+            android:layout_marginBottom="16dp"
+            tools:ignore="Autofill" />
+
+        <Button
+            android:id="@+id/btn_email_register"
+            style="@style/Button.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/register"/>
+    </LinearLayout>
+</ScrollView>

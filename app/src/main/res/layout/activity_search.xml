@@ -9,13 +9,13 @@
     tools:context=".cobacoba.SearchActivity">
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/tv_title_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_32dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/mont_semibold"
-        android:text="Pencarian"
+        android:text="@string/title_search"
         android:textColor="@android:color/white"
         android:textSize="22sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,10 +28,10 @@
         android:background="@drawable/background_white_rounded"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4">
+        app:layout_constraintTop_toBottomOf="@+id/tv_title_search">
 
         <RelativeLayout
-            android:id="@+id/relative"
+            android:id="@+id/layout_search_search"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginStart="@dimen/margin_24dp"
@@ -43,37 +43,35 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.mindorks.editdrawabletext.EditDrawableText
-                android:id="@+id/search"
-                style="@style/searchBlack2"
-                android:layout_toStartOf="@+id/btn_search"
-                android:hint="@string/cari"
-                android:imeOptions="actionSearch"
-                android:maxLines="1"
-                android:singleLine="true" />
+                android:id="@+id/edt_search_search"
+                style="@style/Search.Black"
+                android:layout_toStartOf="@+id/btn_search_search"/>
 
             <ImageButton
-                android:id="@+id/btn_search"
+                android:id="@+id/btn_search_search"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="8dp"
                 android:background="@android:color/transparent"
-                android:src="@drawable/ic_baseline_search_24" />
+                android:src="@drawable/ic_baseline_search_24"
+                tools:ignore="ContentDescription" />
         </RelativeLayout>
 
         <ImageButton
-            android:id="@+id/imgbtn_filter_semua"
+            android:id="@+id/btn_filter_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_24dp"
             android:background="@drawable/background_menu"
             android:src="@drawable/ic_filter"
-            app:layout_constraintBottom_toBottomOf="@+id/relative"
+            app:layout_constraintBottom_toBottomOf="@+id/layout_search_search"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/relative" />
+            app:layout_constraintTop_toTopOf="@+id/layout_search_search"
+            tools:ignore="ContentDescription" />
 
         <com.facebook.shimmer.ShimmerFrameLayout
-            android:id="@+id/shimmerFrameLayoutSemuaItem"
+            android:id="@+id/shimmer_result_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -81,7 +79,7 @@
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/rv_semua_item">
+            app:layout_constraintTop_toTopOf="@+id/rv_result_search">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -121,7 +119,7 @@
         </com.facebook.shimmer.ShimmerFrameLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_semua_item"
+            android:id="@+id/rv_result_search"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginHorizontal="@dimen/margin_24dp"
@@ -129,6 +127,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/relative" />
+            app:layout_constraintTop_toBottomOf="@+id/layout_search_search" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

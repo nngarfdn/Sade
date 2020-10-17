@@ -8,7 +8,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -19,10 +18,9 @@ import java.util.ArrayList;
 
 public class ProductRepository {
     private final String TAG = getClass().getSimpleName();
-    private FirebaseFirestore database = FirebaseFirestore.getInstance();
-    private Filter filter;
+    private final FirebaseFirestore database = FirebaseFirestore.getInstance();
 
-    private MutableLiveData<ArrayList<Produk>> resultData = new MutableLiveData<>();
+    private final MutableLiveData<ArrayList<Produk>> resultData = new MutableLiveData<>();
     public LiveData<ArrayList<Produk>> getData(){
         return resultData;
     }

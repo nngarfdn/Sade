@@ -1,5 +1,6 @@
 package com.udindev.sade.dialogfragment;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -36,7 +37,7 @@ import java.util.List;
 public class FilterDialog extends DialogFragment implements View.OnClickListener, AdapterView.OnItemSelectedListener, CheckBox.OnCheckedChangeListener {
     private final String TAG = getClass().getSimpleName();
 
-    private Activity activity;
+    private final Activity activity;
     private AlertDialog dialog;
     private Filter filter;
     private FilterDialogListener listener;
@@ -47,8 +48,6 @@ public class FilterDialog extends DialogFragment implements View.OnClickListener
     private Spinner spinProvince, spinRegency, spinDistrict;
     private CheckBox cbProduk, cbJasa, cbUsaha, cbLainnya, cbProvince, cbRegency, cbDistrict;
     private RadioButton rbMurah, rbMahal;
-
-    private boolean isFirstResult = true;
 
     public FilterDialog(Activity activity){
         this.activity = activity;
@@ -190,6 +189,7 @@ public class FilterDialog extends DialogFragment implements View.OnClickListener
         });
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         switch (adapterView.getId()){
@@ -212,6 +212,7 @@ public class FilterDialog extends DialogFragment implements View.OnClickListener
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {}
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
         switch (compoundButton.getId()){
@@ -236,6 +237,7 @@ public class FilterDialog extends DialogFragment implements View.OnClickListener
         }
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
         switch (view.getId()){

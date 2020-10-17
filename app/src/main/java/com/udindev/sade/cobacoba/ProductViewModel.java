@@ -8,7 +8,7 @@ import com.udindev.sade.model.Produk;
 import java.util.ArrayList;
 
 public class ProductViewModel extends ViewModel {
-    private ProductRepository repository = new ProductRepository();
+    private final ProductRepository repository = new ProductRepository();
 
     public LiveData<ArrayList<Produk>> getData(){
         return repository.getData();

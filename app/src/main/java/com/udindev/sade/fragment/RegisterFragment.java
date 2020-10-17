@@ -111,17 +111,17 @@ public class RegisterFragment extends Fragment {
         boolean valid = true;
 
         if (TextUtils.isEmpty(name)){
-            edtName.setError("Masukkan nama lengkap.");
+            edtName.setError("Masukkan nama lengkap");
             valid = false;
         }
 
         if (TextUtils.isEmpty(email) || !Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            edtEmail.setError("Masukkan email yang valid.");
+            edtEmail.setError("Masukkan email yang valid");
             valid = false;
         }
 
         if (TextUtils.isEmpty(password) || password.length() < 6) { // Syarat Firebase Auth
-            edtPassword.setError("Masukkan kata sandi minimal 6 karakter.");
+            edtPassword.setError("Masukkan kata sandi minimal 6 karakter");
             valid = false;
         }
 

@@ -18,15 +18,17 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.udindev.sade.R;
+import com.udindev.sade.customview.LoadingDialog;
 import com.udindev.sade.model.Profile;
 import com.udindev.sade.viewmodel.ProfileViewModel;
 
 public class EditProfileFragment extends Fragment {
     private Button btnSave;
-    private EditText edtName, edtAddress, edtPhone, edtWhatsapp;
+    private EditText edtName, edtAddress, edtPhoneNumber, edtWaNumber;
     private FirebaseUser firebaseUser;
     private ProfileViewModel profileViewModel;
     private boolean isNewUser;
+    private LoadingDialog loadingDialog;
 
     public EditProfileFragment() {}
 
@@ -40,11 +42,13 @@ public class EditProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        loadingDialog = new LoadingDialog(getActivity());
+        loadingDialog.show();
 
-        edtName = view.findViewById(R.id.edt_name_edit_profile);
-        edtAddress = view.findViewById(R.id.edt_address_edit_profile);
-        edtPhone = view.findViewById(R.id.edt_phone_edit_profile);
-        edtWhatsapp = view.findViewById(R.id.edt_whatsapp_edit_profile);
+        edtName = view.findViewById(R.id.edt_name_ep);
+        edtAddress = view.findViewById(R.id.edt_address_ep);
+        edtPhoneNumber = view.findViewById(R.id.edt_phone_number_ep);
+        edtWaNumber = view.findViewById(R.id.edt_wa_number_ep);
 
         profileViewModel = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(ProfileViewModel.class);
         profileViewModel.loadData(firebaseUser.getUid());
@@ -53,34 +57,36 @@ public class EditProfileFragment extends Fragment {
             public void onChanged(Profile profile) {
                 edtName.setText(firebaseUser.getDisplayName());
                 edtAddress.setText(profile.getAddress());
-                edtPhone.setText(profile.getPhoneNumber());
-                edtWhatsapp.setText(profile.getWaNumber());
+                edtPhoneNumber.setText(profile.getPhoneNumber());
+                edtWaNumber.setText(profile.getWaNumber());
                 btnSave.setEnabled(true);
 
                 // Kalau alamatnya kosong, berarti pengguna baru (belum pernah isi data)
                 isNewUser = (edtAddress.getText().toString().equals(""));
+
+                loadingDialog.dismiss();
             }
         });
 
-        btnSave = view.findViewById(R.id.btn_save_edit_profile);
+        btnSave = view.findViewById(R.id.btn_save_ep);
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String name = edtName.getText().toString();
                 String address = edtAddress.getText().toString();
-                String phone = edtPhone.getText().toString();
-                String whatsapp = edtWhatsapp.getText().toString();
+                String phone = edtPhoneNumber.getText().toString();
+                String whatsapp = edtWaNumber.getText().toString();
 
                 if (name.equals("") || address.equals("") || phone.equals("") || whatsapp.equals("")){
-                    if (name.equals("")) edtName.setError("Tidak boleh kosong");
-                    if (address.equals("")) edtAddress.setError("Tidak boleh kosong");
-                    if (phone.equals("")) edtPhone.setError("Tidak boleh kosong");
-                    if (whatsapp.equals("")) edtWhatsapp.setError("Tidak boleh kosong");
+                    if (name.equals("")) edtName.setError("Masukkan nama lengkap");
+                    if (address.equals("")) edtAddress.setError("Masukkan alamat");
+                    if (phone.equals("")) edtPhoneNumber.setError("Masukkan nomor telepon");
+                    if (whatsapp.equals("")) edtWaNumber.setError("Masukkan nomor WhatsApp");
                     return;
                 }
 
                 Profile profile = new Profile(address, phone, whatsapp);
-                if (isNewUser) profileViewModel.insert(firebaseUser.getUid(), profile);
+                if (isNewUser) profileViewModel.insert(firebaseUser.getUid(), profile); // Pengguna baru insert
                 else profileViewModel.update(firebaseUser.getUid(), profile);
 
                 UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
