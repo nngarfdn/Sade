@@ -50,11 +50,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         exitToast = Toast.makeText(this, "Tekan sekali lagi untuk keluar", Toast.LENGTH_SHORT);
     }
 
-    @Override
+    /*@Override
     public void onBackPressed() {
         if (exitToast.getView().isShown()) super.onBackPressed();
         else exitToast.show();
-    }
+    }*/
 
     private void setBottomNavigationView() {
         bottomNavigationView = findViewById(R.id.bn_main);
@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         if (fragment != null) {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fl_container, fragment)
+                    .addToBackStack(null)
                     .commit();
             return true;
         }

@@ -48,11 +48,7 @@ public class DashboardFragment extends Fragment  {
     private Button btnProdukSelengkapnya , btnSemuaSelengkapnya ;
     private ImageButton imgbtnSemua, imgBtnTokoSaya, imgBtnUsaha,  imgBtnJasa, imgBtnProduk, imgBtnLainnya;
 
-
-    public DashboardFragment() {
-
-    }
-
+    public DashboardFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -221,4 +217,9 @@ public class DashboardFragment extends Fragment  {
         return false;
     }
 
+    @Override
+    public void onDetach() {
+        getActivity().finish();
+        super.onDetach();
+    }
 }
