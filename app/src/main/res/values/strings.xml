@@ -24,6 +24,8 @@
     <string name="alamat_lengkap_usaha_jasa_produk">Alamat lengkap usaha/jasa/produk</string>
     <string name="nomor_whatsapp">Nomor WhatsApp</string>
     <string name="harga_text">Harga</string>
+    <string name="update_produk">Update</string>
+
     <string name="profile">Profil</string>
     <string name="loading">Memuat…</string>
     <string name="about">Tentang Aplikasi</string>
@@ -63,9 +65,8 @@
     <string name="desc_rp">Silakan masukkan alamat email Anda.</string>
     <string name="title_search">Pencarian</string>
 
+
     <string-array name="kategori">
-        <item>Pilih kategori</item>
-        <item>Semua</item>
         <item>Usaha</item>
         <item>Jasa</item>
         <item>Produk</item>

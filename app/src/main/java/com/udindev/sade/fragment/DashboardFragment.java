@@ -11,7 +11,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,13 +20,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
-import com.mindorks.editdrawabletext.DrawablePosition;
 import com.mindorks.editdrawabletext.EditDrawableText;
 import com.udindev.sade.R;
-import com.udindev.sade.cobacoba.Filter;
-import com.udindev.sade.cobacoba.SearchActivity;
 import com.udindev.sade.adapter.JasaMenuAdapter;
 import com.udindev.sade.adapter.ProdukMenuAdapter;
+import com.udindev.sade.cobacoba.Filter;
+import com.udindev.sade.cobacoba.SearchActivity;
 import com.udindev.sade.model.Produk;
 import com.udindev.sade.viewmodel.ProdukViewModel;
 
@@ -90,8 +88,8 @@ public class DashboardFragment extends Fragment  {
         imgBtnProduk.setOnClickListener(v -> performSearch("Produk"));
         imgBtnLainnya.setOnClickListener(v -> performSearch("Lainnya"));
 
-        btnProdukSelengkapnya.setOnClickListener(v -> loadFragment(new ProdukFragment()));
-        btnSemuaSelengkapnya.setOnClickListener(v -> loadFragment(new SemuaItemFragment()));
+        btnProdukSelengkapnya.setOnClickListener(v -> performSearch("Produk"));
+        btnSemuaSelengkapnya.setOnClickListener(v -> performSearch("Semua"));
 
         shimmerFrameLayoutProduk = view.findViewById(R.id.shimmerFrameLayoutProduk);
         shimmerFrameLayoutJasa = view.findViewById(R.id.shimmerFrameLayoutJasa);

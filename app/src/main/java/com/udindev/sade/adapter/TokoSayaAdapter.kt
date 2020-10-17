@@ -9,10 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.udindev.sade.R
 import com.udindev.sade.activity.DetailActivity
+import com.udindev.sade.activity.EditProduk
 import com.udindev.sade.model.Produk
 import kotlinx.android.synthetic.main.item_produk_vertical.view.*
 
-class TokoSayaAdapter (private val list: List<Produk>?) :
+class TokoSayaAdapter(private val list: List<Produk>?) :
         RecyclerView.Adapter<TokoSayaAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -36,10 +37,11 @@ class TokoSayaAdapter (private val list: List<Produk>?) :
         holder.itemView.txt_harga.text = "Rp ${list?.get(position)?.harga}"
 
         holder.itemView.setOnClickListener {
-            val intent = Intent(holder.itemView.context, DetailActivity::class.java)
+            val intent = Intent(holder.itemView.context, EditProduk::class.java)
             intent.putExtra(DetailActivity.EXTRA_PRODUK, list?.get(position))
             holder.itemView.context.startActivity(intent)
-
         }
     }
+
+
 }

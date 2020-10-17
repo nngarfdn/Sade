@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -42,14 +40,10 @@ import com.udindev.sade.model.Produk;
 import com.udindev.sade.reponse.Attributes;
 import com.udindev.sade.viewmodel.LocationViewModel;
 import com.udindev.sade.viewmodel.ProdukViewModel;
-import com.udindev.sade.viewmodel.ProfileViewModel;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -62,25 +56,18 @@ public class TambahProdukFragment extends Fragment implements AdapterView.OnItem
     private int PICK_IMAGE_REQUEST = 22;
     private Uri filePath;
     private Button btnChose;
-    private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
     private Button btnTambahProduk;
     private ImageView imgUpload;
     private Spinner spinProvinces;
     private Spinner spinRegencies;
     private Spinner spinDistricts;
-    private LocationViewModel locationViewModel;
     private ProdukViewModel produkViewModel;
-    private ProfileViewModel profileViewModel;
     TextView txtUploading;
     Spinner kategoriSpinner;
     private ArrayList<Location> listProvinces, listRegencies, listDistricts;
     private LocationViewModel lvm;
     private EditText edtNamaProduk, edtAlamatProduk, edtNoWA, edtHarga, edtDeskripsi;
-
-
-    final int IMAGE_REQUEST = 71;
-    Uri imageLocationPath;
 
     StorageReference objectStorageReference;
     FirebaseFirestore objectFirebaseFirestore;
@@ -92,13 +79,9 @@ public class TambahProdukFragment extends Fragment implements AdapterView.OnItem
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageReference = storage.getReference();
-        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
-        locationViewModel = ViewModelProviders.of(this).get(LocationViewModel.class);
         produkViewModel = ViewModelProviders.of(this).get(ProdukViewModel.class);
-        profileViewModel = ViewModelProviders.of(this).get(ProfileViewModel.class);
 
         objectStorageReference = FirebaseStorage.getInstance().getReference("imageFolder"); // Create folder to Firebase Storage
         objectFirebaseFirestore = FirebaseFirestore.getInstance();
@@ -155,7 +138,7 @@ public class TambahProdukFragment extends Fragment implements AdapterView.OnItem
             String wa = edtNoWA.getText().toString();
             String harga = edtHarga.getText().toString();
             String deskripsi = edtDeskripsi.getText().toString();
-            if (nama.length()<=0) {
+            if (nama.length() <= 0) {
                 edtNamaProduk.setError("Masukan nama produk/barang/jasa");
                 Toast.makeText(getContext(), "Masukan nama produk/barang/jasa", Toast.LENGTH_SHORT).show();
             }
@@ -168,8 +151,8 @@ public class TambahProdukFragment extends Fragment implements AdapterView.OnItem
                 edtNoWA.setError("Masukan nomer Whatsapp");
             }
 
-            if (!TextUtils.isEmpty(wa)){
-                if (wa.charAt(0) != '6' && wa.charAt(1) != '2'){
+            if (!TextUtils.isEmpty(wa)) {
+                if (wa.charAt(0) != '6' && wa.charAt(1) != '2') {
                     edtNoWA.setError("Awali nomer dengan 628xxx");
                 }
             }
@@ -221,6 +204,7 @@ public class TambahProdukFragment extends Fragment implements AdapterView.OnItem
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinRegencies.setAdapter(adapter);
             }
+
         });
     }
 
@@ -266,11 +250,8 @@ public class TambahProdukFragment extends Fragment implements AdapterView.OnItem
                                 Objects.requireNonNull(getContext()).getContentResolver(),
                                 filePath);
                 imgUpload.setImageBitmap(bitmap);
-                byte[] imgBytes = getBytes(bitmap);
                 btnChose.setText("Upload");
-                btnChose.setOnClickListener(v -> {
-                    uploadImage();
-                });
+                btnChose.setOnClickListener(v -> uploadImage());
 
             } catch (IOException e) {
                 // Log the exception
@@ -307,18 +288,16 @@ public class TambahProdukFragment extends Fragment implements AdapterView.OnItem
 
             objectUploadTask.continueWithTask(task -> {
                 if (!task.isSuccessful()) {
-                    throw task.getException();
+                    throw Objects.requireNonNull(task.getException());
                 }
                 return imageRef.getDownloadUrl();
             }).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
-                    Map<String, String> objectMap = new HashMap<>();
-                    objectMap.put("photo", task.getResult().toString());
                     txtUploading.setVisibility(View.INVISIBLE);
                     Toast.makeText(getContext(), "Upload Gamabr Berhasil", Toast.LENGTH_SHORT).show();
 
                     btnTambahProduk.setOnClickListener(v -> {
-                        String photo = task.getResult().toString();
+                        String photo = Objects.requireNonNull(task.getResult()).toString();
 
                         Log.d(TAG, "uploadImage: photoUrl : " + photo);
                         String id = "";
@@ -334,57 +313,49 @@ public class TambahProdukFragment extends Fragment implements AdapterView.OnItem
                         int hargaInt = Integer.parseInt(harga);
                         String deskripsi = edtDeskripsi.getText().toString();
 
-                        Boolean valid = true;
-
-                        if (nama.length()<=0) {
+                        if (nama.length() <= 0) {
                             edtNamaProduk.setError("Masukan nama produk/barang/jasa");
                             Toast.makeText(getContext(), "Masukan nama produk/barang/jasa", Toast.LENGTH_SHORT).show();
-                            valid = false;
                         }
 
                         if (TextUtils.isEmpty(alamat)) {
                             edtAlamatProduk.setError("Masukan alamat produk/barang/jasa");
-                            valid = false;
                         }
 
                         if (TextUtils.isEmpty(wa)) {
                             edtNoWA.setError("Masukan nomer Whatsapp");
-                            valid = false;
                         }
 
                         if (wa.charAt(0) != '6' && wa.charAt(1) != '2') {
                             edtNoWA.setError("Awali nomer dengan 628xxx");
-                            valid = false;
                         }
 
                         if (TextUtils.isEmpty(harga)) {
                             edtHarga.setError("Masukan harga");
-                            valid = false;
                         }
 
                         if (TextUtils.isEmpty(deskripsi)) {
                             edtHarga.setError("Masukan deskripsi");
-                            valid = false;
                         }
 
-                            Produk produk = new Produk(id, email, nama, kategori, alamat, kecamatan,
-                                    kabupaten, prov, wa, hargaInt, deskripsi, photo);
+                        assert email != null;
+                        Produk produk = new Produk(id, email, nama, kategori, alamat, kecamatan,
+                                kabupaten, prov, wa, hargaInt, deskripsi, photo);
 
-                            produkViewModel.insertProduk(produk);
-                            loadFragment(new DashboardFragment());
+                        produkViewModel.insertProduk(produk);
+                        loadFragment(new DashboardFragment());
 
                     });
 
 
                 } else if (!task.isSuccessful()) {
 
-                    Toast.makeText(getContext(), task.getException().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), Objects.requireNonNull(task.getException()).toString(), Toast.LENGTH_SHORT).show();
                 }
             });
 
         }
     }
-
 
 
     @Override
@@ -410,45 +381,18 @@ public class TambahProdukFragment extends Fragment implements AdapterView.OnItem
 
     }
 
-    private boolean loadFragment(Fragment fragment) {
+    private void loadFragment(Fragment fragment) {
         if (fragment != null) {
-            getActivity().getSupportFragmentManager().beginTransaction()
+            Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fl_container, fragment)
                     .addToBackStack(null)
                     .commit();
-            return true;
         }
-        return false;
-    }
-
-
-    // bitmap ke byte array
-    public static byte[] getBytes(Bitmap bitmap) {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream);
-
-        try {
-            stream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return stream.toByteArray();
-    }
-
-    // byte array ke bitmap
-    public static Bitmap getImage(byte[] image) {
-        return BitmapFactory.decodeByteArray(image, 0, image.length);
-    }
-
-    //ambil bitmap dari imageview
-    public static Bitmap getBitmap(ImageView imageView) {
-        return ((BitmapDrawable) imageView.getDrawable()).getBitmap();
     }
 
     private String getExtension(Uri uri) {
         try {
-            ContentResolver objectContentResolver = getContext().getContentResolver();
+            ContentResolver objectContentResolver = Objects.requireNonNull(getContext()).getContentResolver();
             MimeTypeMap objectMimeTypeMap = MimeTypeMap.getSingleton();
 
             return objectMimeTypeMap.getExtensionFromMimeType(objectContentResolver.getType(uri));

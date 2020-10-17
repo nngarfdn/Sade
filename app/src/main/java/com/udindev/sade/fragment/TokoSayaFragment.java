@@ -20,7 +20,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.udindev.sade.R;
-import com.udindev.sade.adapter.JasaMenuAdapter;
+import com.udindev.sade.adapter.TokoSayaAdapter;
 import com.udindev.sade.model.Produk;
 import com.udindev.sade.viewmodel.ProdukViewModel;
 import com.udindev.sade.viewmodel.ProfileViewModel;
@@ -81,7 +81,6 @@ public class TokoSayaFragment extends Fragment {
 
         fabTambahProduk.setOnClickListener(v -> loadFragment(new TambahProdukFragment()));
 
-//        getProdukSaya(email);
 
         produkViewModel.loadResultDataEmail(email);
         produkViewModel.getDataEmail().observe(this, result -> {
@@ -96,7 +95,7 @@ public class TokoSayaFragment extends Fragment {
                 imgIlustrasi.setVisibility(View.INVISIBLE);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
                 rvTokoSaya.setLayoutManager(layoutManager);
-                JasaMenuAdapter adapter = new JasaMenuAdapter(result);
+                TokoSayaAdapter adapter = new TokoSayaAdapter(result);
 
                 rvTokoSaya.setAdapter(adapter);
 

@@ -14,7 +14,7 @@ data class Produk(
         var kabupaten : String? = "",
         var provinsi : String? = "",
         var wa : String? = "",
-        var harga : Int? = 0,
+        var harga : Int? = null,
         var deskripsi : String? = "",
         var photo : String? = ""
         ) : Parcelable
