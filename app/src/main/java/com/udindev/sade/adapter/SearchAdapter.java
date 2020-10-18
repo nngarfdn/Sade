@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.udindev.sade.R;
 import com.udindev.sade.activity.DetailActivity;
+import com.udindev.sade.cobacoba.DetailTestActivity;
 import com.udindev.sade.model.Produk;
 
 import java.util.ArrayList;
@@ -61,7 +62,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(activity, DetailActivity.class);
+                Intent intent = new Intent(activity, DetailTestActivity.class);
                 intent.putExtra(EXTRA_PRODUK, item);
                 activity.startActivity(intent);
             }

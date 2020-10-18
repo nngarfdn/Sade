@@ -57,7 +57,7 @@ public class FavoriteRepository {
                 });
     }
 
-    public void remove(String userId, String productId){
+    public void add(String userId, String productId){
         database.collection("favorite").document(userId)
                 .update("listProductId", FieldValue.arrayUnion(productId))
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -69,7 +69,7 @@ public class FavoriteRepository {
                 });
     }
 
-    public void add(String userId, String productId){
+    public void remove(String userId, String productId){
         database.collection("favorite").document(userId)
                 .update("listProductId", FieldValue.arrayRemove(productId))
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
