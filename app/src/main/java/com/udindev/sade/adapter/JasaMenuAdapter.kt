@@ -10,6 +10,7 @@ import com.squareup.picasso.Picasso
 import com.udindev.sade.R
 import com.udindev.sade.activity.DetailActivity
 import com.udindev.sade.model.Produk
+import com.udindev.sade.utils.AppUtils.getRupiahFormat
 import kotlinx.android.synthetic.main.item_produk_vertical.view.*
 
 class JasaMenuAdapter (private val list: List<Produk>?) :
@@ -33,7 +34,7 @@ class JasaMenuAdapter (private val list: List<Produk>?) :
         holder.itemView.txt_nama_produk.text = list?.get(position)?.nama
         holder.itemView.txt_alamatproduk.text = list?.get(position)?.alamat
         holder.itemView.txt_deskripsi_produk.text = list?.get(position)?.deskripsi
-        holder.itemView.txt_harga.text = "Rp ${list?.get(position)?.harga}"
+        holder.itemView.txt_harga.text = list?.get(position)?.harga?.let { getRupiahFormat(it, true) }
 
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, DetailActivity::class.java)

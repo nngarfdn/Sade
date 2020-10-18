@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.udindev.sade.activity.DetailActivity.EXTRA_PRODUK;
+import static com.udindev.sade.utils.AppUtils.getRupiahFormat;
+import static com.udindev.sade.utils.AppUtils.getSimpleKabupaten;
 import static com.udindev.sade.utils.AppUtils.loadImageFromUrl;
 
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder> implements Filterable {
@@ -75,20 +77,22 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
 
     public static class FavoriteViewHolder extends RecyclerView.ViewHolder {
         private final ImageView imgPhoto;
-        private final TextView tvName, tvAddress, tvPrice;
+        private final TextView tvName, tvAddress, tvPrice, tvDescription;
 
         public FavoriteViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.txt_nama_produk);
             tvAddress = itemView.findViewById(R.id.txt_alamatproduk);
             tvPrice = itemView.findViewById(R.id.txt_harga);
+            tvDescription = itemView.findViewById(R.id.txt_deskripsi_produk);
             imgPhoto = itemView.findViewById(R.id.img_item);
         }
 
         public void bind(Produk item) {
             tvName.setText(item.getNama());
-            tvAddress.setText(item.getKecamatan() + ", " + item.getKabupaten());
-            tvPrice.setText("Rp" + item.getHarga());
+            tvAddress.setText(item.getKecamatan() + ", " + getSimpleKabupaten(item.getKabupaten()));
+            tvPrice.setText(getRupiahFormat(item.getHarga(), true));
+            tvDescription.setText(item.getDeskripsi());
             loadImageFromUrl(imgPhoto, item.getPhoto());
         }
     }@Override

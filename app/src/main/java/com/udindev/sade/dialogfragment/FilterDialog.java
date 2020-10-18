@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -242,7 +243,7 @@ public class FilterDialog extends DialogFragment implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_apply_filter:
-                if (spinDistrict != null){ // Spin null ketika tidak ada koneksi/koneksi lambat -> gagal memuat daftar prov/kab/kec
+                try { // Mengatasi spinner yang terkadang null
                     filter = new Filter("",
                             cbProduk.isChecked(), cbJasa.isChecked(), cbUsaha.isChecked(), cbLainnya.isChecked(),
                             cbProvince.isChecked(), cbRegency.isChecked(), cbDistrict.isChecked(),
@@ -252,6 +253,8 @@ public class FilterDialog extends DialogFragment implements View.OnClickListener
                     );
                     listener.receiveFilter(filter);
                     dialog.dismiss();
+                } catch (Exception e){
+                    Log.d(TAG, e.getMessage());
                 }
                 break;
 

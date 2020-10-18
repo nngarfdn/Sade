@@ -12,6 +12,7 @@ import com.squareup.picasso.Picasso
 import com.udindev.sade.R
 import com.udindev.sade.model.Favorite
 import com.udindev.sade.model.Produk
+import com.udindev.sade.utils.AppUtils.getRupiahFormat
 import com.udindev.sade.viewmodel.ProdukViewModel
 import kotlinx.android.synthetic.main.activity_detail.*
 
@@ -83,10 +84,10 @@ class DetailActivity : AppCompatActivity() {
                 .placeholder(R.drawable.image_empty)
                 .into(img_detailproduk)
 
-        txt_alamat_detail.text = produk?.alamat
+        txt_alamat_detail.text = "${produk?.alamat}, ${produk?.kecamatan}, ${produk?.kabupaten}, ${produk?.provinsi}"
         txt_deskripsi_detail.text = produk?.deskripsi
         txt_nama_produk_detail.text = produk?.nama
-        txt_harga_detail.text = "Rp ${produk?.harga}"
+        txt_harga_detail.text = produk?.harga?.let { getRupiahFormat(it, true) }
 
         btn_chat_detail.setText("Chat ${produk?.wa}")
 

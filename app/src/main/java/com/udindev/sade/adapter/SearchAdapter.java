@@ -15,13 +15,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.udindev.sade.R;
 import com.udindev.sade.activity.DetailActivity;
-import com.udindev.sade.cobacoba.DetailTestActivity;
 import com.udindev.sade.model.Produk;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.udindev.sade.activity.DetailActivity.EXTRA_PRODUK;
+import static com.udindev.sade.utils.AppUtils.getRupiahFormat;
+import static com.udindev.sade.utils.AppUtils.getSimpleKabupaten;
 import static com.udindev.sade.utils.AppUtils.loadImageFromUrl;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchViewHolder> implements Filterable {
@@ -62,7 +63,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(activity, DetailTestActivity.class);
+                Intent intent = new Intent(activity, DetailActivity.class);
                 intent.putExtra(EXTRA_PRODUK, item);
                 activity.startActivity(intent);
             }
@@ -89,7 +90,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         public void bind(Produk item) {
             tvName.setText(item.getNama());
             tvAddress.setText(item.getKecamatan() + ", " + getSimpleKabupaten(item.getKabupaten()));
-            tvPrice.setText("Rp" + item.getHarga());
+            tvPrice.setText(getRupiahFormat(item.getHarga(), true));
             loadImageFromUrl(imgPhoto, item.getPhoto());
         }
     }
@@ -128,11 +129,4 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
             notifyDataSetChanged();
         }
     };
-
-    private String getSimpleKabupaten(String namaKabupaten){
-        String[] arrayKabupaten = namaKabupaten.split(" ");
-        StringBuilder namaBaru = new StringBuilder(arrayKabupaten[1]);
-        for (int i = 2; i < arrayKabupaten.length; i++) namaBaru.append(" ").append(arrayKabupaten[i]);
-        return namaBaru.toString();
-    }
 }
