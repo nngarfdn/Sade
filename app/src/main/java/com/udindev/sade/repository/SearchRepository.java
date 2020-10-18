@@ -1,4 +1,4 @@
-package com.udindev.sade.cobacoba;
+package com.udindev.sade.repository;
 
 import android.util.Log;
 
@@ -12,11 +12,12 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.udindev.sade.model.Filter;
 import com.udindev.sade.model.Produk;
 
 import java.util.ArrayList;
 
-public class ProductRepository {
+public class SearchRepository {
     private final String TAG = getClass().getSimpleName();
     private final FirebaseFirestore database = FirebaseFirestore.getInstance();
 
@@ -84,21 +85,4 @@ public class ProductRepository {
                     }
                 });
     }
-
-    /*private Map<String, Object> hashMapProduct(Produk product){
-        Map<String, Object> document = new HashMap<>();
-        document.put("alamat", product.getAlamat());
-        document.put("deskripsi", product.getDeskripsi());
-        document.put("email", product.getEmail());
-        document.put("harga", product.getHarga());
-        document.put("isFavorite", product.isFavorite());
-        document.put("kabupaten", product.getKabupaten());
-        document.put("kategori", product.getKategori());
-        document.put("kecamatan", product.getKecamatan());
-        document.put("nama", product.getNama());
-        document.put("photo", product.getPhoto());
-        document.put("provinsi", product.getProvinsi());
-        document.put("wa", product.getWa());
-        return document;
-    }*/
 }

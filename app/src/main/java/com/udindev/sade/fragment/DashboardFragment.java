@@ -24,8 +24,8 @@ import com.mindorks.editdrawabletext.EditDrawableText;
 import com.udindev.sade.R;
 import com.udindev.sade.adapter.JasaMenuAdapter;
 import com.udindev.sade.adapter.ProdukMenuAdapter;
-import com.udindev.sade.cobacoba.Filter;
-import com.udindev.sade.cobacoba.SearchActivity;
+import com.udindev.sade.model.Filter;
+import com.udindev.sade.activity.SearchActivity;
 import com.udindev.sade.model.Produk;
 import com.udindev.sade.viewmodel.ProdukViewModel;
 
@@ -34,7 +34,7 @@ import co.mobiwise.materialintro.shape.FocusGravity;
 import co.mobiwise.materialintro.shape.ShapeType;
 import co.mobiwise.materialintro.view.MaterialIntroView;
 
-import static com.udindev.sade.cobacoba.SearchActivity.getDefaultFilter;
+import static com.udindev.sade.utils.AppUtils.getDefaultFilter;
 
 public class DashboardFragment extends Fragment  {
 

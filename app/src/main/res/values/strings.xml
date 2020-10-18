@@ -65,8 +65,15 @@
     <string name="desc_rp">Silakan masukkan alamat email Anda.</string>
     <string name="title_search">Pencarian</string>
 
-
     <string-array name="kategori">
+        <item>Usaha</item>
+        <item>Jasa</item>
+        <item>Produk</item>
+        <item>Lainnya</item>
+    </string-array>
+
+    <string-array name="filter_category">
+        <item>Semua</item>
         <item>Usaha</item>
         <item>Jasa</item>
         <item>Produk</item>

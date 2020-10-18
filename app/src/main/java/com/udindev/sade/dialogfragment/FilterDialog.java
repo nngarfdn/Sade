@@ -23,7 +23,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.udindev.sade.R;
-import com.udindev.sade.cobacoba.Filter;
+import com.udindev.sade.model.Filter;
 import com.udindev.sade.model.Location;
 import com.udindev.sade.reponse.Attributes;
 import com.udindev.sade.reponse.Districts;
@@ -242,15 +242,17 @@ public class FilterDialog extends DialogFragment implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_apply_filter:
-                filter = new Filter("",
-                        cbProduk.isChecked(), cbJasa.isChecked(), cbUsaha.isChecked(), cbLainnya.isChecked(),
-                        cbProvince.isChecked(), cbRegency.isChecked(), cbDistrict.isChecked(),
-                        rbMurah.isChecked(),
-                        spinProvince.getSelectedItem().toString(), spinRegency.getSelectedItem().toString(), spinDistrict.getSelectedItem().toString(),
-                        spinProvince.getSelectedItemPosition(), spinRegency.getSelectedItemPosition(), spinDistrict.getSelectedItemPosition()
-                );
-                listener.receiveFilter(filter);
-                dialog.dismiss();
+                if (spinDistrict == null){ // Spin null ketika tidak ada koneksi/koneksi lambat -> gagal memuat daftar prov/kab/kec
+                    filter = new Filter("",
+                            cbProduk.isChecked(), cbJasa.isChecked(), cbUsaha.isChecked(), cbLainnya.isChecked(),
+                            cbProvince.isChecked(), cbRegency.isChecked(), cbDistrict.isChecked(),
+                            rbMurah.isChecked(),
+                            spinProvince.getSelectedItem().toString(), spinRegency.getSelectedItem().toString(), spinDistrict.getSelectedItem().toString(),
+                            spinProvince.getSelectedItemPosition(), spinRegency.getSelectedItemPosition(), spinDistrict.getSelectedItemPosition()
+                    );
+                    listener.receiveFilter(filter);
+                    dialog.dismiss();
+                }
                 break;
 
             case R.id.btn_cancel_filter:

@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activity.EditProduk"></activity>
-        <activity android:name=".cobacoba.SearchActivity" />
+        <activity android:name=".activity.SearchActivity" />
         <activity android:name=".activity.TentangAplikasi" />
         <activity android:name=".activity.PusatBantuanActivity" />
         <activity android:name=".activity.DetailActivity" />

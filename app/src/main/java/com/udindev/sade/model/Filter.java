@@ -1,4 +1,4 @@
-package com.udindev.sade.cobacoba;
+package com.udindev.sade.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

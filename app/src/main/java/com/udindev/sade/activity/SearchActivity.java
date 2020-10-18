@@ -1,4 +1,4 @@
-package com.udindev.sade.cobacoba;
+package com.udindev.sade.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -16,15 +15,17 @@ import android.widget.TextView;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.mindorks.editdrawabletext.EditDrawableText;
 import com.udindev.sade.R;
+import com.udindev.sade.viewmodel.SearchViewModel;
+import com.udindev.sade.adapter.SearchAdapter;
 import com.udindev.sade.dialogfragment.FilterDialog;
-import com.udindev.sade.model.Produk;
+import com.udindev.sade.model.Filter;
 
 public class SearchActivity extends AppCompatActivity implements FilterDialog.FilterDialogListener {
     private static final String TAG = SearchActivity.class.getSimpleName();
 
     private ShimmerFrameLayout shimmer;
     private EditDrawableText edtSearch;
-    private ProductViewModel productViewModel;
+    private SearchViewModel productViewModel;
     private Filter filter;
     private SearchAdapter adapter;
     private FilterDialog filterDialog;
@@ -72,7 +73,7 @@ public class SearchActivity extends AppCompatActivity implements FilterDialog.Fi
         });
 
         // Muat data
-        productViewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
+        productViewModel = ViewModelProviders.of(this).get(SearchViewModel.class);
         productViewModel.loadData(filter);
         productViewModel.getData().observe(this, result -> {
             shimmer.stopShimmerAnimation();
@@ -105,14 +106,5 @@ public class SearchActivity extends AppCompatActivity implements FilterDialog.Fi
     public void receiveFilter(Filter filter) {
         this.filter = filter;
         productViewModel.loadData(filter);
-    }
-
-    public static Filter getDefaultFilter(){
-        return new Filter("",
-                true, true, true, true,
-                false, false, false,
-                true,
-                "", "", "",
-                0, 0, 0);
     }
 }
