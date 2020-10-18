@@ -61,7 +61,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(activity, DetailTestActivity.class);
+                Intent intent = new Intent(activity, DetailActivity.class);
                 intent.putExtra(EXTRA_PRODUK, item);
                 activity.startActivity(intent);
             }

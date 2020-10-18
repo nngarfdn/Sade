@@ -3,7 +3,6 @@ package com.udindev.sade.activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -13,13 +12,12 @@ import com.squareup.picasso.Picasso
 import com.udindev.sade.R
 import com.udindev.sade.model.Favorite
 import com.udindev.sade.model.Produk
-import com.udindev.sade.viewmodel.FavoriteViewModel
 import com.udindev.sade.viewmodel.ProdukViewModel
 import kotlinx.android.synthetic.main.activity_detail.*
 
 class DetailActivity : AppCompatActivity() {
 
-    private lateinit var favoriteViewModel: FavoriteViewModel
+    private lateinit var favoriteViewModel: com.udindev.sade.cobacoba.FavoriteViewModel
     private lateinit var produkViewModel: ProdukViewModel
     val firebaseAuth = FirebaseAuth.getInstance()
     val firebaseUser = firebaseAuth.getCurrentUser()
@@ -44,7 +42,7 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
-        favoriteViewModel = ViewModelProviders.of(this).get(FavoriteViewModel::class.java)
+        favoriteViewModel = ViewModelProviders.of(this).get(com.udindev.sade.cobacoba.FavoriteViewModel::class.java)
         produkViewModel = ViewModelProviders.of(this).get(ProdukViewModel::class.java)
 
 
@@ -57,46 +55,25 @@ class DetailActivity : AppCompatActivity() {
         val produk = intent.getParcelableExtra<Produk>(EXTRA_PRODUK)
 
         // ra gelem metu
-        favoriteViewModel.loadResult()
-        favoriteViewModel.getResult().observe(this, Observer {
-
-            allFavorite = it
-
+        favoriteViewModel.data.observe(this, Observer { favorite ->
+            isFavorite = favorite.listProductId.contains(produk!!.id)
+            if (isFavorite) img_favorite.setImageResource(R.drawable.ic_baseline_favorite_24_red) else img_favorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
         })
 
-        allFavorite?.forEach { fav ->
 
-            if (fav.email == firebaseUser?.email) {
-                fav.idDocument?.let { it1 -> listIdMyFavorite.add(it1) }
-                Log.d(TAG, "onCreate: list id my favorite ada = ${listIdMyFavorite.size}")
-
-                for (id in listIdMyFavorite) {
-                    Log.d(TAG, "onCreate daftar idDokument Myfavorite: $id ")
-                    produkViewModel.loadResultById(id)
-                    myFavorite.clear()
-                    produkViewModel.getDataById().observe(this, Observer {
-                        if (produk in it) {
-                            isFavorite = true
-                            setIconFavorite(isFavorite)
-                        } else {
-                            isFavorite = false
-                            setIconFavorite(isFavorite)
-                        }
-
-                    })
-                }
-            }
             img_favorite.setOnClickListener {
+                val userId = firebaseUser!!.uid
                 if (isFavorite) {
-                    setIconFavorite(false)
-                    favoriteViewModel.deleteFavorite(fav)
+                    favoriteViewModel.remove(userId, produk!!.id)
+                    img_favorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+                    Toast.makeText(this, "Berhasil Hapus Favorite", Toast.LENGTH_SHORT).show()
                 } else {
-                    setIconFavorite(true)
-                    val favoriteAdd = Favorite("", produk?.id, firebaseUser?.email)
-                    favoriteViewModel.saveFavorite(favoriteAdd)
+                    favoriteViewModel.add(userId, produk!!.id)
+                    img_favorite.setImageResource(R.drawable.ic_baseline_favorite_24_red)
+                    Toast.makeText(this, "Berhasil Tambah Favorite", Toast.LENGTH_SHORT).show()
                 }
+                isFavorite = !isFavorite
             }
-        }
 
 
         Picasso.get()
@@ -111,7 +88,7 @@ class DetailActivity : AppCompatActivity() {
         txt_nama_produk_detail.text = produk?.nama
         txt_harga_detail.text = "Rp ${produk?.harga}"
 
-        btn_chat_detail.setText( "Chat ${produk?.wa}")
+        btn_chat_detail.setText("Chat ${produk?.wa}")
 
         btn_chat_detail.setOnClickListener {
             val nomer = produk?.wa
@@ -123,11 +100,12 @@ class DetailActivity : AppCompatActivity() {
             } else{
                 Toast.makeText(this, "TIdak bisa membuka", Toast.LENGTH_SHORT).show()
             }
-
         }
-
-
     }
 
+    override fun onStart() {
+        super.onStart()
+        favoriteViewModel.loadData(firebaseUser!!.uid)
+    }
 
 }
