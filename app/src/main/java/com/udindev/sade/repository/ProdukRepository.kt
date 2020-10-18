@@ -3,6 +3,7 @@ package com.udindev.sade.repository
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.udindev.sade.model.Produk
 
@@ -118,7 +119,7 @@ class ProdukRepository {
                 }
     }
 
-    fun getDataKabupaten(kabupaten : String) {
+    fun getDataKabupaten(kabupaten: String) {
         val produkData: MutableList<Produk> = ArrayList()
         val db = FirebaseFirestore.getInstance()
         val savedProdukList = ArrayList<Produk>()
@@ -268,7 +269,7 @@ class ProdukRepository {
                 }
     }
 
-    fun getDataByIdDocument(idDocument : String) {
+    fun getDataByIdDocument(idDocument: String) {
         val produkData: MutableList<Produk> = ArrayList()
         val db = FirebaseFirestore.getInstance()
         val savedProdukList = ArrayList<Produk>()
@@ -318,11 +319,14 @@ class ProdukRepository {
     }
 
     fun saveProduk(produk: Produk) {
+        // Simpan id di dokumen juga
+        val ref: DocumentReference = db.collection("produk").document()
+        produk.id = ref.id;
+
         val item = hashMapProduk(produk)
-        db.collection("produk")
-                .add(item)
+        ref.set(item)
                 .addOnSuccessListener { documentReference ->
-                    Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+                    Log.d(TAG, "DocumentSnapshot added with ID: ${ref.id}")
                 }
                 .addOnFailureListener { e ->
                     Log.e(TAG, "Error adding document", e)
@@ -360,6 +364,7 @@ class ProdukRepository {
 
     private fun hashMapProduk(produk: Produk): HashMap<String, Any?> {
         return hashMapOf(
+                "id" to produk.id,
                 "nama" to produk.nama,
                 "email" to produk.email,
                 "kategori" to produk.kategori,
