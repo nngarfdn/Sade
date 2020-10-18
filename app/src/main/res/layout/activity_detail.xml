@@ -12,10 +12,11 @@
     android:background="@android:color/white"
     tools:context=".activity.DetailActivity">
 
-    <ImageView
+    <com.ravikoradiya.zoomableimageview.ZoomableImageView
         android:id="@+id/img_detailproduk"
         android:layout_width="match_parent"
         android:layout_height="300dp"
+        android:scaleType="centerCrop"
         android:src="@drawable/image_empty"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

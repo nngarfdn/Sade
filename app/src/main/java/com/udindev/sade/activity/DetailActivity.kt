@@ -1,5 +1,6 @@
 package com.udindev.sade.activity
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -10,7 +11,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.google.firebase.auth.FirebaseAuth
 import com.squareup.picasso.Picasso
 import com.udindev.sade.R
-import com.udindev.sade.model.Favorite
 import com.udindev.sade.model.Produk
 import com.udindev.sade.utils.AppUtils.getRupiahFormat
 import com.udindev.sade.viewmodel.ProdukViewModel
@@ -23,22 +23,15 @@ class DetailActivity : AppCompatActivity() {
     val firebaseAuth = FirebaseAuth.getInstance()
     val firebaseUser = firebaseAuth.getCurrentUser()
     var isFavorite: Boolean = false
-    var allFavorite: List<Favorite>? = arrayListOf()
+
 
     companion object {
         const val EXTRA_PRODUK = "extra_produk"
         private const val TAG = "DetailActivity"
     }
 
-    private fun setIconFavorite(favorite: Boolean) {
-        if (favorite) {
-            img_favorite.setImageResource(R.drawable.ic_baseline_favorite_24_red)
-        } else {
-            img_favorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
-        }
-    }
 
-
+    @SuppressLint("SetTextI18n", "QueryPermissionsNeeded")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
@@ -46,16 +39,8 @@ class DetailActivity : AppCompatActivity() {
         favoriteViewModel = ViewModelProviders.of(this).get(com.udindev.sade.cobacoba.FavoriteViewModel::class.java)
         produkViewModel = ViewModelProviders.of(this).get(ProdukViewModel::class.java)
 
-
-        var myFavorite = arrayListOf<Produk>()
-
-
-        //kumpulan dukument id produk favorite saya
-        var listIdMyFavorite = arrayListOf<String>()
-
         val produk = intent.getParcelableExtra<Produk>(EXTRA_PRODUK)
 
-        // ra gelem metu
         favoriteViewModel.data.observe(this, Observer { favorite ->
             isFavorite = favorite.listProductId.contains(produk!!.id)
             if (isFavorite) img_favorite.setImageResource(R.drawable.ic_baseline_favorite_24_red) else img_favorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
@@ -108,5 +93,6 @@ class DetailActivity : AppCompatActivity() {
         super.onStart()
         favoriteViewModel.loadData(firebaseUser!!.uid)
     }
+
 
 }

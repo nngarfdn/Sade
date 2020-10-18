@@ -73,4 +73,7 @@ dependencies {
 
     // Showcase
     implementation 'com.github.iammert:MaterialIntroView:1.6.0'
+
+    //zoomable
+    implementation 'com.github.RaviKoradiya:ZoomableImageView:1.1.1'
 }
