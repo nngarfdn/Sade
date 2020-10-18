@@ -295,7 +295,6 @@ public class TambahProdukFragment extends Fragment implements AdapterView.OnItem
                 if (task.isSuccessful()) {
                     txtUploading.setVisibility(View.INVISIBLE);
                     Toast.makeText(getContext(), "Upload Gamabr Berhasil", Toast.LENGTH_SHORT).show();
-
                     btnTambahProduk.setOnClickListener(v -> {
                         String photo = Objects.requireNonNull(task.getResult()).toString();
 
@@ -305,9 +304,27 @@ public class TambahProdukFragment extends Fragment implements AdapterView.OnItem
                         String nama = edtNamaProduk.getText().toString();
                         String kategori = kategoriSpinner.getSelectedItem().toString();
                         String alamat = edtAlamatProduk.getText().toString();
-                        String kecamatan = spinDistricts.getSelectedItem().toString();
-                        String kabupaten = spinRegencies.getSelectedItem().toString();
-                        String prov = spinProvinces.getSelectedItem().toString();
+                        String kecamatan = null;
+                        if(spinDistricts != null && spinDistricts.getSelectedItem() !=null ) {
+                            kecamatan = (String)spinDistricts.getSelectedItem();
+                        } else  {
+                            kecamatan = "-";
+                        }
+
+                        String kabupaten = null;
+                        if(spinRegencies != null && spinRegencies.getSelectedItem() !=null ) {
+                            kabupaten = (String)spinRegencies.getSelectedItem();
+                        } else  {
+                            kabupaten = "-";
+                        }
+
+                        String prov = null;
+                        if(spinProvinces != null && spinProvinces.getSelectedItem() !=null ) {
+                            prov = (String)spinProvinces.getSelectedItem();
+                        } else  {
+                            kecamatan = "-";
+                        }
+
                         String wa = edtNoWA.getText().toString();
                         String harga = edtHarga.getText().toString();
                         int hargaInt = Integer.parseInt(harga);
@@ -321,7 +338,7 @@ public class TambahProdukFragment extends Fragment implements AdapterView.OnItem
                         if (TextUtils.isEmpty(alamat)) {
                             edtAlamatProduk.setError("Masukan alamat produk/barang/jasa");
                         }
-
+                        
                         if (TextUtils.isEmpty(wa)) {
                             edtNoWA.setError("Masukan nomer Whatsapp");
                         }
@@ -338,6 +355,9 @@ public class TambahProdukFragment extends Fragment implements AdapterView.OnItem
                             edtHarga.setError("Masukan deskripsi");
                         }
 
+                        if (TextUtils.isEmpty(photo)){
+                            Toast.makeText(getContext(), "Upload foto dulu", Toast.LENGTH_SHORT).show();
+                        }
                         assert email != null;
                         Produk produk = new Produk(id, email, nama, kategori, alamat, kecamatan,
                                 kabupaten, prov, wa, hargaInt, deskripsi, photo);

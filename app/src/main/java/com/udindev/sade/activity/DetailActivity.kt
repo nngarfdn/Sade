@@ -91,9 +91,6 @@ class DetailActivity : AppCompatActivity() {
                     setIconFavorite(false)
                     favoriteViewModel.deleteFavorite(fav)
                 } else {
-                    
-                    
-
                     setIconFavorite(true)
                     val favoriteAdd = Favorite("", produk?.id, firebaseUser?.email)
                     favoriteViewModel.saveFavorite(favoriteAdd)

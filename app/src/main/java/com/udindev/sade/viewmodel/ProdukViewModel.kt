@@ -42,7 +42,7 @@ class ProdukViewModel : ViewModel() {
     fun loadResultById(idDokumen : String) = produkRepository.getDataByIdDocument(idDokumen)
 
     fun insertProduk(produk: Produk) { produkRepository.saveProduk(produk) }
-    fun deteteProduk(produk: Produk) { produkRepository.delete(produk) }
+    fun deteteProduk(idProduk: String) { produkRepository.delete(idProduk) }
     fun updateProduk(produk: Produk) { produkRepository.update(produk) }
 
 }

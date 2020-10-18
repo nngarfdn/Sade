@@ -78,9 +78,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         produkViewModel.insertProduk(produk);
     }
 
-    private void deleteProduk(Produk produk) {
-        produkViewModel.deteteProduk(produk);
-    }
+
 
     private void updateProduk(Produk produk) {
         produkViewModel.updateProduk(produk);
@@ -99,7 +97,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         produkViewModel.loadResult();
         produkViewModel.getResult().observe(this, result -> {
             for (Produk produk : result) {
-                deleteProduk(produk);
             }
         });
     }

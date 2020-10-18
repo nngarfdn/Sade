@@ -73,7 +73,6 @@
     </string-array>
 
     <string-array name="filter_category">
-        <item>Semua</item>
         <item>Usaha</item>
         <item>Jasa</item>
         <item>Produk</item>

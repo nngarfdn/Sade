@@ -345,9 +345,7 @@ class ProdukRepository {
         }
     }
 
-    fun delete(produk: Produk) {
-        val idProduk: String? = produk.id
-        hashMapProduk(produk)
+    fun delete(idProduk: String) {
         if (idProduk != null) {
             db.collection("produk").document(idProduk)
                     .delete()

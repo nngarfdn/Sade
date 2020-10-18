@@ -12,6 +12,7 @@ import android.webkit.MimeTypeMap
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -29,6 +30,7 @@ import com.google.firebase.storage.UploadTask
 import com.squareup.picasso.Picasso
 import com.udindev.sade.R
 import com.udindev.sade.fragment.DashboardFragment
+import com.udindev.sade.fragment.TokoSayaFragment
 import com.udindev.sade.model.Location
 import com.udindev.sade.model.Produk
 import com.udindev.sade.reponse.Districts
@@ -110,6 +112,23 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         btn_upload_image.setOnClickListener{
             selectImage() }
 
+        imgbtn_delete_produk.setOnClickListener{
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Hapus produk")
+            builder.setMessage("Apakah kamu yakin ingin menghapus ?")
+
+            builder.setPositiveButton("Ya") { dialog, which ->
+                produkViewModel!!.deteteProduk(produk.id.toString())
+                Toast.makeText(this, "Berhasil Menghapus Produk", Toast.LENGTH_SHORT).show()
+                loadFragment(TokoSayaFragment())
+            }
+
+            builder.setNegativeButton("Tidak") { dialog, which ->
+            }
+
+            builder.show()
+
+        }
 
         btn_tambah_produk.setOnClickListener(View.OnClickListener { v: View? ->
             val id = produk.id
