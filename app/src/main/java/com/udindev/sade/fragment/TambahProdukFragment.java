@@ -361,10 +361,8 @@ public class TambahProdukFragment extends Fragment implements AdapterView.OnItem
                         assert email != null;
                         Produk produk = new Produk(id, email, nama, kategori, alamat, kecamatan,
                                 kabupaten, prov, wa, hargaInt, deskripsi, photo);
-
                         produkViewModel.insertProduk(produk);
                         loadFragment(new DashboardFragment());
-
                     });
 
 
