@@ -366,6 +366,7 @@ class ProdukRepository {
 
     private fun hashMapProduk(produk: Produk): HashMap<String, Any?> {
         return hashMapOf(
+                "id" to produk.id,
                 "nama" to produk.nama,
                 "email" to produk.email,
                 "kategori" to produk.kategori,
