@@ -84,7 +84,7 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         edt_alamat_deskripsi.setText(produk?.deskripsi)
 
 
-        var kategori = spinner_kategori.selectedItem.toString()
+        var kategori = produk.kategori
         var select = 0
 
         when (kategori) {
