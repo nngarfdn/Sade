@@ -165,6 +165,8 @@ public class TambahProdukFragment extends Fragment implements AdapterView.OnItem
                 edtDeskripsi.setError("Masukan deskripsi");
             }
 
+            Toast.makeText(getContext(), "Pastikan Foto telah diupload", Toast.LENGTH_SHORT).show();
+
         });
 
     }
@@ -322,7 +324,7 @@ public class TambahProdukFragment extends Fragment implements AdapterView.OnItem
                         if(spinProvinces != null && spinProvinces.getSelectedItem() !=null ) {
                             prov = (String)spinProvinces.getSelectedItem();
                         } else  {
-                            kecamatan = "-";
+                            prov = "-";
                         }
 
                         String wa = edtNoWA.getText().toString();
@@ -352,7 +354,7 @@ public class TambahProdukFragment extends Fragment implements AdapterView.OnItem
                         }
 
                         if (TextUtils.isEmpty(deskripsi)) {
-                            edtHarga.setError("Masukan deskripsi");
+                            edtDeskripsi.setError("Masukan deskripsi");
                         }
 
                         if (TextUtils.isEmpty(photo)){

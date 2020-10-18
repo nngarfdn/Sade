@@ -14,7 +14,6 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.NewInstanceFactory
@@ -29,8 +28,6 @@ import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import com.squareup.picasso.Picasso
 import com.udindev.sade.R
-import com.udindev.sade.fragment.DashboardFragment
-import com.udindev.sade.fragment.TokoSayaFragment
 import com.udindev.sade.model.Location
 import com.udindev.sade.model.Produk
 import com.udindev.sade.reponse.Districts
@@ -90,7 +87,7 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         var kategori = spinner_kategori.selectedItem.toString()
         var select = 0
 
-        when (kategori){
+        when (kategori) {
             "Usaha" -> select = 0
             "Jasa" -> select = 1
             "Produk" -> select = 2
@@ -109,10 +106,11 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
 
 
-        btn_upload_image.setOnClickListener{
-            selectImage() }
+        btn_upload_image.setOnClickListener {
+            selectImage()
+        }
 
-        imgbtn_delete_produk.setOnClickListener{
+        imgbtn_delete_produk.setOnClickListener {
             val builder = AlertDialog.Builder(this)
             builder.setTitle("Hapus produk")
             builder.setMessage("Apakah kamu yakin ingin menghapus ?")
@@ -120,7 +118,8 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             builder.setPositiveButton("Ya") { dialog, which ->
                 produkViewModel!!.deteteProduk(produk.id.toString())
                 Toast.makeText(this, "Berhasil Menghapus Produk", Toast.LENGTH_SHORT).show()
-                loadFragment(TokoSayaFragment())
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
             }
 
             builder.setNegativeButton("Tidak") { dialog, which ->
@@ -131,41 +130,81 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         }
 
         btn_tambah_produk.setOnClickListener(View.OnClickListener { v: View? ->
-            val id = produk.id
             val email = firebaseUser!!.email
             val nama: String = edt_nama_produk.getText().toString()
             val kategori: String = spinner_kategori.getSelectedItem().toString()
             val alamat: String = edt_alamat_produk.getText().toString()
-            val kecamatan: String = spin_districts.getSelectedItem().toString()
-            val kabupaten: String = spin_regencies.getSelectedItem().toString()
-            val prov: String = spin_provinces.getSelectedItem().toString()
+            var kecamatan: String? = null
+            kecamatan = if (spin_districts != null && spin_districts.getSelectedItem() != null) {
+                spin_districts.getSelectedItem() as String
+            } else {
+                "-"
+            }
+
+            var kabupaten: String? = null
+            kabupaten = if (spin_regencies != null && spin_regencies.getSelectedItem() != null) {
+                spin_regencies.getSelectedItem() as String
+            } else {
+                "-"
+            }
+
+            var prov: String? = null
+            prov = if (spin_provinces != null && spin_provinces.getSelectedItem() != null) {
+                spin_provinces.getSelectedItem() as String
+            } else {
+                "-"
+            }
+
             val wa: String = edt_alamat_nowa.getText().toString()
             val harga: String = edt_alamat_harga.getText().toString()
             val hargaInt = harga.toInt()
             val deskripsi: String = edt_alamat_deskripsi.getText().toString()
-            val photo = produk.photo
+
+            var cek = true
             if (nama.length <= 0) {
                 edt_nama_produk.setError("Masukan nama produk/barang/jasa")
+                cek = false
             }
+
             if (TextUtils.isEmpty(alamat)) {
                 edt_alamat_produk.setError("Masukan alamat produk/barang/jasa")
+                cek = false
             }
+
             if (TextUtils.isEmpty(wa)) {
                 edt_alamat_nowa.setError("Masukan nomer Whatsapp")
+                cek = false
+            }
+
+            if (wa[0] != '6' && wa[1] != '2') {
+                edt_alamat_nowa.setError("Awali nomer dengan 628xxx")
+                cek = false
             }
 
             if (TextUtils.isEmpty(harga)) {
                 edt_alamat_harga.setError("Masukan harga")
-            }
-            if (TextUtils.isEmpty(deskripsi)) {
-                edt_alamat_deskripsi.setError("Masukan deskripsi")
+                cek = false
             }
 
+            if (TextUtils.isEmpty(deskripsi)) {
+                edt_alamat_deskripsi.setError("Masukan deskripsi")
+                cek = false
+            }
+
+            if (TextUtils.isEmpty(produk.photo)) {
+                Toast.makeText(this, "Upload foto dulu", Toast.LENGTH_SHORT).show()
+                cek = false
+            }
             assert(email != null)
-            val produk = Produk(id, email!!, nama, kategori, alamat, kecamatan,
-                    kabupaten, prov, wa, hargaInt, deskripsi, photo)
-            produkViewModel!!.updateProduk(produk)
-            loadFragment(DashboardFragment())
+            val p = Produk(produk.id, email!!, nama, kategori, alamat, kecamatan,
+                    kabupaten, prov, wa, hargaInt, deskripsi, produk.photo)
+
+            if (cek){
+                produkViewModel!!.updateProduk(p)
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            }
+
         })
 
     }
@@ -200,7 +239,6 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     override fun onNothingSelected(parent: AdapterView<*>?) {
         TODO("Not yet implemented")
     }
-
 
 
     private fun loadProvinces() {
@@ -291,40 +329,79 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                     btn_tambah_produk.setOnClickListener(View.OnClickListener { v: View? ->
                         val photo = Objects.requireNonNull(task.result).toString()
                         Log.d(TAG, "uploadImage: photoUrl : $photo")
-                        val id = produk.id
                         val email = firebaseUser!!.email
                         val nama: String = edt_nama_produk.getText().toString()
                         val kategori: String = spinner_kategori.getSelectedItem().toString()
                         val alamat: String = edt_alamat_produk.getText().toString()
-                        val kecamatan: String = spin_districts.getSelectedItem().toString()
-                        val kabupaten: String = spin_regencies.getSelectedItem().toString()
-                        val prov: String = spin_provinces.getSelectedItem().toString()
+                        var kecamatan: String? = null
+                        kecamatan = if (spin_districts != null && spin_districts.getSelectedItem() != null) {
+                            spin_districts.getSelectedItem() as String
+                        } else {
+                            "-"
+                        }
+                        var kabupaten: String? = null
+                        kabupaten = if (spin_regencies != null && spin_regencies.getSelectedItem() != null) {
+                            spin_regencies.getSelectedItem() as String
+                        } else {
+                            "-"
+                        }
+
+                        var prov: String? = null
+                        prov = if (spin_provinces != null && spin_provinces.getSelectedItem() != null) {
+                            spin_provinces.getSelectedItem() as String
+                        } else {
+                            "-"
+                        }
+
                         val wa: String = edt_alamat_nowa.getText().toString()
                         val harga: String = edt_alamat_harga.getText().toString()
                         val hargaInt = harga.toInt()
                         val deskripsi: String = edt_alamat_deskripsi.getText().toString()
+
+                        var cek = true
                         if (nama.length <= 0) {
                             edt_nama_produk.setError("Masukan nama produk/barang/jasa")
+                            cek = false
                         }
+
                         if (TextUtils.isEmpty(alamat)) {
                             edt_alamat_produk.setError("Masukan alamat produk/barang/jasa")
+                            cek = false
                         }
+
                         if (TextUtils.isEmpty(wa)) {
                             edt_alamat_nowa.setError("Masukan nomer Whatsapp")
+                            cek = false
+                        }
+
+                        if (wa[0] != '6' && wa[1] != '2') {
+                            edt_alamat_nowa.setError("Awali nomer dengan 628xxx")
+                            cek = false
                         }
 
                         if (TextUtils.isEmpty(harga)) {
                             edt_alamat_harga.setError("Masukan harga")
-                        }
-                        if (TextUtils.isEmpty(deskripsi)) {
-                            edt_alamat_deskripsi.setError("Masukan deskripsi")
+                            cek = false
                         }
 
+                        if (TextUtils.isEmpty(deskripsi)) {
+                            edt_alamat_deskripsi.setError("Masukan deskripsi")
+                            cek = false
+                        }
+
+                        if (TextUtils.isEmpty(photo)) {
+                            Toast.makeText(this, "Upload foto dulu", Toast.LENGTH_SHORT).show()
+                            cek = false
+                        }
                         assert(email != null)
-                        val produk = Produk(id, email!!, nama, kategori, alamat, kecamatan,
+                        val p = Produk(produk.id, email!!, nama, kategori, alamat, kecamatan,
                                 kabupaten, prov, wa, hargaInt, deskripsi, photo)
-                        produkViewModel!!.updateProduk(produk)
-                        loadFragment(DashboardFragment())
+
+                        if (cek){
+                            produkViewModel!!.updateProduk(p)
+                            val intent = Intent(this, MainActivity::class.java)
+                            startActivity(intent)
+                        }
                     })
                 } else if (!task.isSuccessful) {
                     Toast.makeText(this, Objects.requireNonNull(task.exception).toString(), Toast.LENGTH_SHORT).show()
@@ -344,14 +421,6 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         return null
     }
 
-    private fun loadFragment(fragment: Fragment?) {
-        if (fragment != null) {
-            Objects.requireNonNull(this).getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fl_container, fragment)
-                    .addToBackStack(null)
-                    .commit()
-        }
-    }
 
     companion object {
         private const val TAG = "EditProduk"
