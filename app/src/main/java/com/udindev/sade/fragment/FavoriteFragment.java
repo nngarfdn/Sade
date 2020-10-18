@@ -102,6 +102,7 @@ public class FavoriteFragment extends Fragment implements View.OnClickListener {
     }
 
     private void loadProductById(List<String> listProductId){
+        if (listProductId.size() == 0) return;
         database.collection("produk")
                 .whereIn("id", listProductId)
                 .get()
