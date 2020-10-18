@@ -242,7 +242,7 @@ public class FilterDialog extends DialogFragment implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_apply_filter:
-                if (spinDistrict == null){ // Spin null ketika tidak ada koneksi/koneksi lambat -> gagal memuat daftar prov/kab/kec
+                if (spinDistrict != null){ // Spin null ketika tidak ada koneksi/koneksi lambat -> gagal memuat daftar prov/kab/kec
                     filter = new Filter("",
                             cbProduk.isChecked(), cbJasa.isChecked(), cbUsaha.isChecked(), cbLainnya.isChecked(),
                             cbProvince.isChecked(), cbRegency.isChecked(), cbDistrict.isChecked(),
