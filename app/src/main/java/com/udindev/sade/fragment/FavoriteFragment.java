@@ -102,7 +102,7 @@ public class FavoriteFragment extends Fragment implements View.OnClickListener {
     }
 
     private void loadProductById(List<String> listProductId){
-        if (listProductId.size() == 0) return;
+        if (listProductId.size() == 0) return; // A non-empty array is required for 'in' filters.
         database.collection("produk")
                 .whereIn("id", listProductId)
                 .get()

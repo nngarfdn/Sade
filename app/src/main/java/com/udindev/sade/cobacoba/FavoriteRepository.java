@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -31,16 +32,22 @@ public class FavoriteRepository {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()){
                             Favorite favorite = task.getResult().toObject(Favorite.class);
-                            if (favorite == null) favorite = new Favorite(new ArrayList<>()); // Pengguna yang belum pernah tambah favorit
+
+                            // Pengguna yang belum pernah tambah favorit
+                            if (favorite == null) {
+                                favorite = new Favorite(new ArrayList<>());
+                                insert(userId, favorite);  // Sekalian bikin dokumennya
+                            }
+
                             resultData.postValue(favorite);
                         } else Log.w(TAG, "Error querying document", task.getException());
                     }
                 });
     }
 
-    public void insert(String userId, Favorite favorite){
+    private void insert(String userId, Favorite favorite){
         database.collection("favorite").document(userId)
-                .set(favorite.getListProductId())
+                .set(favorite)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -50,9 +57,21 @@ public class FavoriteRepository {
                 });
     }
 
-    public void update(String userId, Favorite favorite){
+    public void remove(String userId, String productId){
         database.collection("favorite").document(userId)
-                .update("listProductId", favorite.getListProductId())
+                .update("listProductId", FieldValue.arrayUnion(productId))
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) Log.d(TAG, "Document was updated");
+                        else Log.w(TAG, "Error updating document", task.getException());
+                    }
+                });
+    }
+
+    public void add(String userId, String productId){
+        database.collection("favorite").document(userId)
+                .update("listProductId", FieldValue.arrayRemove(productId))
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

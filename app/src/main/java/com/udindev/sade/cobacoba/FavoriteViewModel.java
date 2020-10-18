@@ -14,11 +14,11 @@ public class FavoriteViewModel extends ViewModel {
         repository.query(userId);
     }
 
-    public void insert(String userId, Favorite favorite){
-        repository.insert(userId, favorite);
+    public void add(String userId, String productId){
+        repository.add(userId, productId);
     }
 
-    public void update(String userId, Favorite favorite){
-        repository.update(userId, favorite);
+    public void remove(String userId, String productId){
+        repository.remove(userId, productId);
     }
 }
