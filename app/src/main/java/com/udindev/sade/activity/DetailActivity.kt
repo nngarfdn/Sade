@@ -81,7 +81,7 @@ class DetailActivity : AppCompatActivity() {
         img_detail_share.setOnClickListener {
             val share: String = "Saya punya ${produk?.nama}\n" +
                     "${produk?.deskripsi}\n" +
-                    "Harga ${produk?.harga}\n" +
+                    "Harga Rp${produk?.harga}\n" +
                     "Contact :  ${produk?.wa}"
             ShareCompat.IntentBuilder
                     .from(this).setChooserTitle("Bagikan :")

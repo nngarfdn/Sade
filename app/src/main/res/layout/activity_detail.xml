@@ -121,7 +121,7 @@
         android:layout_marginTop="24dp"
         android:fontFamily="@font/mont_semibold"
         android:maxWidth="300dp"
-        android:maxLines="2"
+        android:maxLines="3"
         android:padding="8dp"
         android:text="@string/alamat_contoh"
         android:textColor="@android:color/black"

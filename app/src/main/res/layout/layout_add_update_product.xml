@@ -131,6 +131,17 @@
         app:layout_constraintTop_toBottomOf="@+id/relativeSpinnerKecamatan"
         tools:layout_editor_absoluteX="32dp" />
 
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/mont_regular"
+        android:text="Awali nomer dengan 628123xxx"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/edt_alamat_nowa"
+        app:layout_constraintTop_toBottomOf="@+id/edt_alamat_nowa" />
+
     <EditText
         android:id="@+id/edt_alamat_harga"
         style="@style/EditText"
@@ -141,7 +152,7 @@
         android:hint="@string/harga_text"
         android:imeOptions="actionNext"
         android:inputType="number"
-        app:layout_constraintTop_toBottomOf="@+id/edt_alamat_nowa"
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
         tools:layout_editor_absoluteX="32dp" />
 
     <EditText
