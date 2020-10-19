@@ -1,20 +1,13 @@
 package com.udindev.sade.pageradapter;
 
-import android.content.Context;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.udindev.sade.R;
 import com.udindev.sade.fragment.DashboardFragment;
 import com.udindev.sade.fragment.FavoriteFragment;
-import com.udindev.sade.fragment.LoginFragment;
 import com.udindev.sade.fragment.ProfileFragment;
-import com.udindev.sade.fragment.RegisterFragment;
 
 public class MainPagerAdapter extends FragmentPagerAdapter {
     public MainPagerAdapter(@NonNull FragmentManager fm) {

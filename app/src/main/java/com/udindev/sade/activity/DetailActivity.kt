@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ShareCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.firebase.auth.FirebaseAuth
@@ -15,6 +16,7 @@ import com.udindev.sade.model.Produk
 import com.udindev.sade.utils.AppUtils.getRupiahFormat
 import com.udindev.sade.viewmodel.ProdukViewModel
 import kotlinx.android.synthetic.main.activity_detail.*
+
 
 class DetailActivity : AppCompatActivity() {
 
@@ -76,8 +78,16 @@ class DetailActivity : AppCompatActivity() {
         txt_nama_produk_detail.text = produk?.nama
         txt_harga_detail.text = produk?.harga?.let { getRupiahFormat(it, true) }
 
-        val wa = produk?.wa
-
+        img_detail_share.setOnClickListener {
+            val share: String = "Saya punya ${produk?.nama}\n" +
+                    "${produk?.deskripsi}\n" +
+                    "Harga Rp${produk?.harga}\n" +
+                    "Contact :  ${produk?.wa}"
+            ShareCompat.IntentBuilder
+                    .from(this).setChooserTitle("Bagikan :")
+                    .setText(share).setType("text/plain")
+                    .startChooser()
+        }
 
         btn_chat_detail.setText("Chat ${produk?.wa}")
 

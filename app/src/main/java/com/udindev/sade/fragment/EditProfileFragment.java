@@ -18,9 +18,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.udindev.sade.R;
+import com.udindev.sade.callback.OnProfileUpdateCallback;
 import com.udindev.sade.customview.LoadingDialog;
 import com.udindev.sade.model.Profile;
 import com.udindev.sade.viewmodel.ProfileViewModel;
+
+import static com.udindev.sade.utils.AppUtils.isValidPhone;
 
 public class EditProfileFragment extends Fragment {
     private Button btnSave;
@@ -29,8 +32,11 @@ public class EditProfileFragment extends Fragment {
     private ProfileViewModel profileViewModel;
     private boolean isNewUser;
     private LoadingDialog loadingDialog;
+    private final OnProfileUpdateCallback callback;
 
-    public EditProfileFragment() {}
+    public EditProfileFragment(OnProfileUpdateCallback callback) {
+        this.callback = callback;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -77,11 +83,14 @@ public class EditProfileFragment extends Fragment {
                 String phone = edtPhoneNumber.getText().toString();
                 String whatsapp = edtWaNumber.getText().toString();
 
-                if (name.equals("") || address.equals("") || phone.equals("") || whatsapp.equals("")){
+                if (name.equals("") || address.equals("") || phone.equals("") || whatsapp.equals("") ||
+                        !isValidPhone(phone) || !isValidPhone(whatsapp)){
                     if (name.equals("")) edtName.setError("Masukkan nama lengkap");
                     if (address.equals("")) edtAddress.setError("Masukkan alamat");
                     if (phone.equals("")) edtPhoneNumber.setError("Masukkan nomor telepon");
                     if (whatsapp.equals("")) edtWaNumber.setError("Masukkan nomor WhatsApp");
+                    if (!isValidPhone(phone)) edtPhoneNumber.setError("Awali nomor dengan 628xxx");
+                    if (!isValidPhone(whatsapp)) edtWaNumber.setError("Awali nomor dengan 628xxx");
                     return;
                 }
 
@@ -94,6 +103,7 @@ public class EditProfileFragment extends Fragment {
                         .build();
                 firebaseUser.updateProfile(profileUpdates);
 
+                callback.onUpdate();
                 if (getActivity() != null) getActivity().getSupportFragmentManager().popBackStack();
             }
         });

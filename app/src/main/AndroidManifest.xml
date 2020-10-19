@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.SplashActivity"></activity>
+        <activity android:name=".activity.LoginActivity"></activity>
+        <activity android:name=".activity.SplashActivity" />
         <activity android:name=".cobacoba.DetailTestActivity" />
         <activity android:name=".activity.EditProduk" />
         <activity android:name=".activity.SearchActivity" />
@@ -21,7 +22,7 @@
         <activity android:name=".activity.WilayahTest" />
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.KotlinTest" />
-        <activity android:name=".activity.LoginActivity">
+        <activity android:name=".activity.Welcome">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

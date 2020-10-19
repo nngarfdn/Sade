@@ -33,9 +33,11 @@ import com.udindev.sade.model.Produk
 import com.udindev.sade.reponse.Districts
 import com.udindev.sade.reponse.Provinces
 import com.udindev.sade.reponse.Regencies
+import com.udindev.sade.utils.AppUtils.isValidPhone
 import com.udindev.sade.viewmodel.LocationViewModel
 import com.udindev.sade.viewmodel.ProdukViewModel
 import kotlinx.android.synthetic.main.activity_edit_produk.*
+import kotlinx.android.synthetic.main.layout_add_update_product.*
 import java.io.IOException
 import java.util.*
 
@@ -62,7 +64,8 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         firebaseUser = firebaseAuth.currentUser
         produkViewModel = ViewModelProviders.of(this).get(ProdukViewModel::class.java)
         lvm = ViewModelProvider(this, NewInstanceFactory()).get(LocationViewModel::class.java)
-        objectStorageReference = FirebaseStorage.getInstance().getReference("imageFolder") // Create folder to Firebase Storage
+
+        objectStorageReference = FirebaseStorage.getInstance().getReference("imageFolder")
         objectFirebaseFirestore = FirebaseFirestore.getInstance()
 
         produk = intent.getParcelableExtra<Produk>(DetailActivity.EXTRA_PRODUK)!!
@@ -118,8 +121,7 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             builder.setPositiveButton("Ya") { dialog, which ->
                 produkViewModel!!.deteteProduk(produk.id.toString())
                 Toast.makeText(this, "Berhasil Menghapus Produk", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
+                finish()
             }
 
             builder.setNegativeButton("Tidak") { dialog, which ->
@@ -129,6 +131,7 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         }
 
+        btn_tambah_produk.setText(R.string.update_produk)
         btn_tambah_produk.setOnClickListener(View.OnClickListener { v: View? ->
             val email = firebaseUser!!.email
             val nama: String = edt_nama_produk.getText().toString()
@@ -157,37 +160,43 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
             val wa: String = edt_alamat_nowa.getText().toString()
             val harga: String = edt_alamat_harga.getText().toString()
-            val hargaInt = harga.toInt()
             val deskripsi: String = edt_alamat_deskripsi.getText().toString()
 
             var cek = true
+
+            var hargaInt = 0
+            if (harga.trim().toLong() <= Int.MAX_VALUE) hargaInt = harga.toInt() else {
+                edt_alamat_harga.error = "Harga barang terlalu besar"
+                cek = false
+            }
+
             if (nama.length <= 0) {
-                edt_nama_produk.setError("Masukan nama produk/barang/jasa")
+                edt_nama_produk.setError("Masukkan nama produk/barang/jasa")
                 cek = false
             }
 
             if (TextUtils.isEmpty(alamat)) {
-                edt_alamat_produk.setError("Masukan alamat produk/barang/jasa")
+                edt_alamat_produk.setError("Masukkan alamat produk/barang/jasa")
                 cek = false
             }
 
             if (TextUtils.isEmpty(wa)) {
-                edt_alamat_nowa.setError("Masukan nomer Whatsapp")
+                edt_alamat_nowa.setError("Masukkan nomor WhatsApp")
                 cek = false
             }
 
-            if (wa[0] != '6' && wa[1] != '2') {
-                edt_alamat_nowa.setError("Awali nomer dengan 628xxx")
+            if (!isValidPhone(wa)) {
+                edt_alamat_nowa.setError("Awali nomor dengan 628xxx")
                 cek = false
             }
 
             if (TextUtils.isEmpty(harga)) {
-                edt_alamat_harga.setError("Masukan harga")
+                edt_alamat_harga.setError("Masukkan harga")
                 cek = false
             }
 
             if (TextUtils.isEmpty(deskripsi)) {
-                edt_alamat_deskripsi.setError("Masukan deskripsi")
+                edt_alamat_deskripsi.setError("Masukkan deskripsi")
                 cek = false
             }
 
@@ -199,10 +208,9 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             val p = Produk(produk.id, email!!, nama, kategori, alamat, kecamatan,
                     kabupaten, prov, wa, hargaInt, deskripsi, produk.photo)
 
-            if (cek){
+            if (cek) {
                 produkViewModel!!.updateProduk(p)
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
+                finish()
             }
 
         })
@@ -254,6 +262,10 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 val adapter = ArrayAdapter(Objects.requireNonNull(this), android.R.layout.simple_spinner_item, itemList)
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 spin_provinces.setAdapter(adapter)
+                if (produk.provinsi != "-"){
+                    spin_provinces.setSelection(adapter.getPosition(produk.provinsi))
+                }
+
             }
         })
     }
@@ -269,6 +281,9 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 val adapter = ArrayAdapter(Objects.requireNonNull(this), android.R.layout.simple_spinner_item, itemList)
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 spin_regencies.setAdapter(adapter)
+                if (produk.kabupaten != "-"){
+                    spin_regencies.setSelection(adapter.getPosition(produk.kabupaten))
+                }
             }
         })
     }
@@ -284,6 +299,9 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 val adapter = ArrayAdapter(Objects.requireNonNull(this), android.R.layout.simple_spinner_item, itemList)
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 spin_districts.setAdapter(adapter)
+                if (produk.kecamatan != "-"){
+                    spin_districts.setSelection(adapter.getPosition(produk.kecamatan))
+                }
             }
         })
     }
@@ -325,7 +343,7 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             }).addOnCompleteListener { task: Task<Uri?> ->
                 if (task.isSuccessful) {
                     txt_uploading.setVisibility(View.INVISIBLE)
-                    Toast.makeText(this, "Upload Gamabr Berhasil", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Upload Gambar Berhasil", Toast.LENGTH_SHORT).show()
                     btn_tambah_produk.setOnClickListener(View.OnClickListener { v: View? ->
                         val photo = Objects.requireNonNull(task.result).toString()
                         Log.d(TAG, "uploadImage: photoUrl : $photo")
@@ -360,32 +378,32 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
                         var cek = true
                         if (nama.length <= 0) {
-                            edt_nama_produk.setError("Masukan nama produk/barang/jasa")
+                            edt_nama_produk.setError("Masukkan nama produk/barang/jasa")
                             cek = false
                         }
 
                         if (TextUtils.isEmpty(alamat)) {
-                            edt_alamat_produk.setError("Masukan alamat produk/barang/jasa")
+                            edt_alamat_produk.setError("Masukkan alamat produk/barang/jasa")
                             cek = false
                         }
 
                         if (TextUtils.isEmpty(wa)) {
-                            edt_alamat_nowa.setError("Masukan nomer Whatsapp")
+                            edt_alamat_nowa.setError("Masukkan nomor Whatsapp")
                             cek = false
                         }
 
-                        if (wa[0] != '6' && wa[1] != '2') {
-                            edt_alamat_nowa.setError("Awali nomer dengan 628xxx")
+                        if (!isValidPhone(wa)) {
+                            edt_alamat_nowa.setError("Awali nomor dengan 628xxx")
                             cek = false
                         }
 
                         if (TextUtils.isEmpty(harga)) {
-                            edt_alamat_harga.setError("Masukan harga")
+                            edt_alamat_harga.setError("Masukkan harga")
                             cek = false
                         }
 
                         if (TextUtils.isEmpty(deskripsi)) {
-                            edt_alamat_deskripsi.setError("Masukan deskripsi")
+                            edt_alamat_deskripsi.setError("Masukkan deskripsi")
                             cek = false
                         }
 
@@ -397,10 +415,9 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                         val p = Produk(produk.id, email!!, nama, kategori, alamat, kecamatan,
                                 kabupaten, prov, wa, hargaInt, deskripsi, photo)
 
-                        if (cek){
+                        if (cek) {
                             produkViewModel!!.updateProduk(p)
-                            val intent = Intent(this, MainActivity::class.java)
-                            startActivity(intent)
+                            finish()
                         }
                     })
                 } else if (!task.isSuccessful) {
