@@ -93,9 +93,8 @@
 
     <TextView
         android:id="@+id/txt_deskripsi_detail"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/margin_32dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/mont_medium"
         android:text="@string/lorem"
@@ -116,17 +115,17 @@
 
     <TextView
         android:id="@+id/txt_alamat_detail"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:fontFamily="@font/mont_semibold"
         android:maxWidth="300dp"
+        android:maxLines="2"
         android:padding="8dp"
         android:text="@string/alamat_contoh"
         android:textColor="@android:color/black"
         android:textSize="16sp"
-        android:maxLines="2"
         app:layout_constraintEnd_toEndOf="@+id/txt_deskripsi_detail"
         app:layout_constraintStart_toEndOf="@+id/imageView4"
         app:layout_constraintTop_toBottomOf="@+id/txt_deskripsi_detail" />

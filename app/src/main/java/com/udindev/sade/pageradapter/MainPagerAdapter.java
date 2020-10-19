@@ -10,15 +10,15 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.udindev.sade.R;
+import com.udindev.sade.fragment.DashboardFragment;
+import com.udindev.sade.fragment.FavoriteFragment;
 import com.udindev.sade.fragment.LoginFragment;
+import com.udindev.sade.fragment.ProfileFragment;
 import com.udindev.sade.fragment.RegisterFragment;
 
-public class SectionsPagerAdapter extends FragmentPagerAdapter {
-    private final Context context;
-
-    public SectionsPagerAdapter(Context context, @NonNull FragmentManager fm) {
+public class MainPagerAdapter extends FragmentPagerAdapter {
+    public MainPagerAdapter(@NonNull FragmentManager fm) {
         super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        this.context = context;
     }
     
     @NonNull
@@ -27,11 +27,15 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         Fragment fragment = null;
         switch (position){
             case 0:
-                fragment = new LoginFragment();
+                fragment = new DashboardFragment();
                 break;
 
             case 1:
-                fragment = new RegisterFragment();
+                fragment = new FavoriteFragment();
+                break;
+
+            case 2:
+                fragment = new ProfileFragment();
                 break;
         }
         return fragment;
@@ -39,18 +43,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
-    }
-
-    @StringRes
-    private final int[] TAB_TITLES = new int[]{
-            R.string.tab_title_login,
-            R.string.tab_title_register
-    };
-
-    @Nullable
-    @Override
-    public CharSequence getPageTitle(int position) {
-        return context.getResources().getString(TAB_TITLES[position]);
+        return 3;
     }
 }

@@ -8,77 +8,82 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.udindev.sade.R;
-import com.udindev.sade.fragment.DashboardFragment;
-import com.udindev.sade.fragment.FavoriteFragment;
-import com.udindev.sade.fragment.ProfileFragment;
 import com.udindev.sade.model.Produk;
+import com.udindev.sade.pageradapter.MainPagerAdapter;
 import com.udindev.sade.viewmodel.ProdukViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
-
+public class MainActivity extends AppCompatActivity {
     String TAG = MainActivity.class.getSimpleName();
     ProdukViewModel produkViewModel;
-    BottomNavigationView bottomNavigationView;
     List<Produk> listRendahKeTinggi = new ArrayList<Produk>();
     List<Produk> listKecamatan = new ArrayList<Produk>();
     List<Produk> listShow = new ArrayList<Produk>();
-
     private Toast exitToast;
+    private FragmentManager fragmentManager;
 
     @SuppressLint("ShowToast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        produkViewModel = ViewModelProviders.of(this).get(ProdukViewModel.class);
 
-        loadFragment(new DashboardFragment());
+        fragmentManager = getSupportFragmentManager();
         setBottomNavigationView();
 
-
-//        tesDataClass();
-
+        produkViewModel = ViewModelProviders.of(this).get(ProdukViewModel.class);
         exitToast = Toast.makeText(this, "Tekan sekali lagi untuk keluar", Toast.LENGTH_SHORT);
     }
 
-    /*@Override
-    public void onBackPressed() {
-        if (exitToast.getView().isShown()) super.onBackPressed();
-        else exitToast.show();
-    }*/
+    @Override
+    public void onBackPressed(){
+        if (fragmentManager.getBackStackEntryCount() > 0) fragmentManager.popBackStack();
+        else {
+            if (exitToast.getView().isShown()) super.onBackPressed();
+            else exitToast.show();
+        }
+    }
 
     private void setBottomNavigationView() {
-        bottomNavigationView = findViewById(R.id.bn_main);
-        bottomNavigationView.setOnNavigationItemSelectedListener(this);
+        MainPagerAdapter pagerAdapter = new MainPagerAdapter(fragmentManager);
+        ViewPager viewPager = findViewById(R.id.vp_main);
+        viewPager.setAdapter(pagerAdapter);
 
+        BottomNavigationView navigationView = findViewById(R.id.bn_main);
+        navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.dashboard_menu:
+                        viewPager.setCurrentItem(0);
+                        break;
+
+                    case R.id.favorite_menu:
+                        viewPager.setCurrentItem(1);
+                        break;
+
+                    case R.id.profile_menu:
+                        viewPager.setCurrentItem(2);
+                        break;
+                }
+                if (fragmentManager.getBackStackEntryCount() > 0) fragmentManager.popBackStack();
+                return true;
+            }
+        });
     }
-
-    private boolean loadFragment(Fragment fragment) {
-        if (fragment != null) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fl_container, fragment)
-                    .addToBackStack(null)
-                    .commit();
-            return true;
-        }
-        return false;
-    }
-
 
     private void insertProduk(Produk produk) {
         produkViewModel.insertProduk(produk);
     }
-
-
 
     private void updateProduk(Produk produk) {
         produkViewModel.updateProduk(produk);
@@ -165,25 +170,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             }
         });
     }
-
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        Fragment fragment = null;
-        switch (menuItem.getItemId()) {
-            case R.id.dashboard_menu:
-                fragment = new DashboardFragment();
-                break;
-            case R.id.favorite_menu:
-                fragment = new FavoriteFragment();
-                break;
-            case R.id.profile_menu:
-                fragment = new ProfileFragment();
-                break;
-        }
-        return loadFragment(fragment);
-    }
-
 
 //    private void tesLoginRegister() {
 //        Button btnLogin = findViewById(R.id.tesLogin);
