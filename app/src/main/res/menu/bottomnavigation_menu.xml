@@ -3,7 +3,7 @@
      <item
         android:id="@+id/dashboard_menu"
          android:title="Dasbor"
-        android:icon="@drawable/ic_baseline_home_24"/>
+         android:icon="@drawable/ic_baseline_home_24"/>
 
     <item
         android:id="@+id/favorite_menu"

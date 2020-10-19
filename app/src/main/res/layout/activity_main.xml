@@ -6,7 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".activity.MainActivity">
 
-    <!--Content Main-->
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vp_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bn_main"/>
+
     <FrameLayout
         android:id="@+id/fl_container"
         android:layout_width="match_parent"
@@ -23,5 +28,4 @@
         app:itemIconTint="@drawable/state_bnve"
         app:itemTextColor="@drawable/state_bnve"
         app:menu="@menu/bottomnavigation_menu" />
-
 </RelativeLayout>
