@@ -20,5 +20,16 @@ class PusatBantuanAdapter (private val list: List<PusatBantuan>) : RecyclerView.
 
         holder.itemView.txt_nama_pusat_bantuan.text = list[position].namaPusatBantuan
         holder.itemView.txt_deskripsi_pusat_bantuan.text = list[position].deskripsiPusatBantuan
+
+        holder.itemView.setOnClickListener {
+            var click = holder.itemView.txt_deskripsi_pusat_bantuan.maxLines == 3
+            if (click){
+                holder.itemView.txt_deskripsi_pusat_bantuan.maxLines = Int.MAX_VALUE
+                click = false
+            } else {
+                holder.itemView.txt_deskripsi_pusat_bantuan.maxLines == 3
+                click = true
+            }
+        }
     }
 }

@@ -56,7 +56,7 @@
         app:layout_constraintTop_toTopOf="@+id/img_detail_share" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/txt_diarsipkan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -75,9 +75,9 @@
         android:text="Rp 22.000"
         android:textSize="16sp"
         android:textColor="@android:color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/textView10"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_diarsipkan"
         app:layout_constraintEnd_toEndOf="@+id/img_detail_share"
-        app:layout_constraintTop_toTopOf="@+id/textView10" />
+        app:layout_constraintTop_toTopOf="@+id/txt_diarsipkan" />
 
     <TextView
         android:id="@+id/textView11"
@@ -89,7 +89,7 @@
         android:textColor="@android:color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/txt_nama_produk_detail"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_diarsipkan" />
 
     <TextView
         android:id="@+id/txt_deskripsi_detail"

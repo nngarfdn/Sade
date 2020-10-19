@@ -78,9 +78,7 @@ public class TokoSayaFragment extends Fragment {
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
                 rvTokoSaya.setLayoutManager(layoutManager);
                 TokoSayaAdapter adapter = new TokoSayaAdapter(result);
-
                 rvTokoSaya.setAdapter(adapter);
-
                 for (Produk produk : result) {
                     Log.d(TAG, "onCreate: getResultKategori" + produk.component2() + " kategori " + produk.component3());
                 }

@@ -210,6 +210,7 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
             if (cek) {
                 produkViewModel!!.updateProduk(p)
+                Toast.makeText(this, "Update Berhasil", Toast.LENGTH_SHORT).show()
                 finish()
             }
 
@@ -417,6 +418,7 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
                         if (cek) {
                             produkViewModel!!.updateProduk(p)
+                            Toast.makeText(this, "Update Berhasil", Toast.LENGTH_SHORT).show()
                             finish()
                         }
                     })
