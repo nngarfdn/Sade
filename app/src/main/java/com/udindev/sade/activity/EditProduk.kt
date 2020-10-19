@@ -33,6 +33,7 @@ import com.udindev.sade.model.Produk
 import com.udindev.sade.reponse.Districts
 import com.udindev.sade.reponse.Provinces
 import com.udindev.sade.reponse.Regencies
+import com.udindev.sade.utils.AppUtils.isValidPhone
 import com.udindev.sade.viewmodel.LocationViewModel
 import com.udindev.sade.viewmodel.ProdukViewModel
 import kotlinx.android.synthetic.main.activity_edit_produk.*
@@ -159,37 +160,43 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
             val wa: String = edt_alamat_nowa.getText().toString()
             val harga: String = edt_alamat_harga.getText().toString()
-            val hargaInt = harga.toInt()
             val deskripsi: String = edt_alamat_deskripsi.getText().toString()
 
             var cek = true
+
+            var hargaInt = 0
+            if (harga.trim().toLong() <= Int.MAX_VALUE) hargaInt = harga.toInt() else {
+                edt_alamat_harga.error = "Harga barang terlalu besar"
+                cek = false
+            }
+
             if (nama.length <= 0) {
-                edt_nama_produk.setError("Masukan nama produk/barang/jasa")
+                edt_nama_produk.setError("Masukkan nama produk/barang/jasa")
                 cek = false
             }
 
             if (TextUtils.isEmpty(alamat)) {
-                edt_alamat_produk.setError("Masukan alamat produk/barang/jasa")
+                edt_alamat_produk.setError("Masukkan alamat produk/barang/jasa")
                 cek = false
             }
 
             if (TextUtils.isEmpty(wa)) {
-                edt_alamat_nowa.setError("Masukan nomer Whatsapp")
+                edt_alamat_nowa.setError("Masukkan nomor WhatsApp")
                 cek = false
             }
 
-            if (wa[0] != '6' && wa[1] != '2') {
-                edt_alamat_nowa.setError("Awali nomer dengan 628xxx")
+            if (!isValidPhone(wa)) {
+                edt_alamat_nowa.setError("Awali nomor dengan 628xxx")
                 cek = false
             }
 
             if (TextUtils.isEmpty(harga)) {
-                edt_alamat_harga.setError("Masukan harga")
+                edt_alamat_harga.setError("Masukkan harga")
                 cek = false
             }
 
             if (TextUtils.isEmpty(deskripsi)) {
-                edt_alamat_deskripsi.setError("Masukan deskripsi")
+                edt_alamat_deskripsi.setError("Masukkan deskripsi")
                 cek = false
             }
 
@@ -201,7 +208,7 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             val p = Produk(produk.id, email!!, nama, kategori, alamat, kecamatan,
                     kabupaten, prov, wa, hargaInt, deskripsi, produk.photo)
 
-            if (cek){
+            if (cek) {
                 produkViewModel!!.updateProduk(p)
                 finish()
             }
@@ -371,32 +378,32 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
                         var cek = true
                         if (nama.length <= 0) {
-                            edt_nama_produk.setError("Masukan nama produk/barang/jasa")
+                            edt_nama_produk.setError("Masukkan nama produk/barang/jasa")
                             cek = false
                         }
 
                         if (TextUtils.isEmpty(alamat)) {
-                            edt_alamat_produk.setError("Masukan alamat produk/barang/jasa")
+                            edt_alamat_produk.setError("Masukkan alamat produk/barang/jasa")
                             cek = false
                         }
 
                         if (TextUtils.isEmpty(wa)) {
-                            edt_alamat_nowa.setError("Masukan nomer Whatsapp")
+                            edt_alamat_nowa.setError("Masukkan nomor Whatsapp")
                             cek = false
                         }
 
-                        if (wa[0] != '6' && wa[1] != '2') {
-                            edt_alamat_nowa.setError("Awali nomer dengan 628xxx")
+                        if (!isValidPhone(wa)) {
+                            edt_alamat_nowa.setError("Awali nomor dengan 628xxx")
                             cek = false
                         }
 
                         if (TextUtils.isEmpty(harga)) {
-                            edt_alamat_harga.setError("Masukan harga")
+                            edt_alamat_harga.setError("Masukkan harga")
                             cek = false
                         }
 
                         if (TextUtils.isEmpty(deskripsi)) {
-                            edt_alamat_deskripsi.setError("Masukan deskripsi")
+                            edt_alamat_deskripsi.setError("Masukkan deskripsi")
                             cek = false
                         }
 
@@ -408,7 +415,7 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                         val p = Produk(produk.id, email!!, nama, kategori, alamat, kecamatan,
                                 kabupaten, prov, wa, hargaInt, deskripsi, photo)
 
-                        if (cek){
+                        if (cek) {
                             produkViewModel!!.updateProduk(p)
                             finish()
                         }

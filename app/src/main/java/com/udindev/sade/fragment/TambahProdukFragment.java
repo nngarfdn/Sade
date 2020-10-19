@@ -49,6 +49,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 import static android.app.Activity.RESULT_OK;
+import static com.udindev.sade.utils.AppUtils.isValidPhone;
 
 
 public class TambahProdukFragment extends Fragment implements AdapterView.OnItemSelectedListener {
@@ -139,30 +140,30 @@ public class TambahProdukFragment extends Fragment implements AdapterView.OnItem
             String harga = edtHarga.getText().toString();
             String deskripsi = edtDeskripsi.getText().toString();
             if (nama.length() <= 0) {
-                edtNamaProduk.setError("Masukan nama produk/barang/jasa");
-                Toast.makeText(getContext(), "Masukan nama produk/barang/jasa", Toast.LENGTH_SHORT).show();
+                edtNamaProduk.setError("Masukkan nama produk/barang/jasa");
+                Toast.makeText(getContext(), "Masukkan nama produk/barang/jasa", Toast.LENGTH_SHORT).show();
             }
 
             if (TextUtils.isEmpty(alamat)) {
-                edtAlamatProduk.setError("Masukan alamat produk/barang/jasa");
+                edtAlamatProduk.setError("Masukkan alamat produk/barang/jasa");
             }
 
             if (TextUtils.isEmpty(wa)) {
-                edtNoWA.setError("Masukan nomer Whatsapp");
+                edtNoWA.setError("Masukkan nomor WhatsApp");
             }
 
             if (!TextUtils.isEmpty(wa)) {
-                if (wa.charAt(0) != '6' && wa.charAt(1) != '2') {
-                    edtNoWA.setError("Awali nomer dengan 628xxx");
+                if (!isValidPhone(wa)) {
+                    edtNoWA.setError("Awali nomor dengan 628xxx");
                 }
             }
 
             if (TextUtils.isEmpty(harga)) {
-                edtHarga.setError("Masukan harga");
+                edtHarga.setError("Masukkan harga");
             }
 
             if (TextUtils.isEmpty(deskripsi)) {
-                edtDeskripsi.setError("Masukan deskripsi");
+                edtDeskripsi.setError("Masukkan deskripsi");
             }
 
             Toast.makeText(getContext(), "Pastikan Foto telah diupload", Toast.LENGTH_SHORT).show();
@@ -329,32 +330,38 @@ public class TambahProdukFragment extends Fragment implements AdapterView.OnItem
 
                         String wa = edtNoWA.getText().toString();
                         String harga = edtHarga.getText().toString();
-                        int hargaInt = Integer.parseInt(harga);
                         String deskripsi = edtDeskripsi.getText().toString();
 
+                        int hargaInt;
+                        if (Long.parseLong(harga.trim()) <= Integer.MAX_VALUE) hargaInt = Integer.parseInt(harga);
+                        else{
+                            edtHarga.setError("Harga barang terlalu besar");
+                            return;
+                        }
+
                         if (nama.length() <= 0) {
-                            edtNamaProduk.setError("Masukan nama produk/barang/jasa");
-                            Toast.makeText(getContext(), "Masukan nama produk/barang/jasa", Toast.LENGTH_SHORT).show();
+                            edtNamaProduk.setError("Masukkan nama produk/barang/jasa");
+                            Toast.makeText(getContext(), "Masukkan nama produk/barang/jasa", Toast.LENGTH_SHORT).show();
                         }
 
                         if (TextUtils.isEmpty(alamat)) {
-                            edtAlamatProduk.setError("Masukan alamat produk/barang/jasa");
+                            edtAlamatProduk.setError("Masukkan alamat produk/barang/jasa");
                         }
                         
                         if (TextUtils.isEmpty(wa)) {
-                            edtNoWA.setError("Masukan nomer Whatsapp");
+                            edtNoWA.setError("Masukkan nomor WhatsApp");
                         }
 
-                        if (wa.charAt(0) != '6' && wa.charAt(1) != '2') {
-                            edtNoWA.setError("Awali nomer dengan 628xxx");
+                        if (!isValidPhone(wa)) {
+                            edtNoWA.setError("Awali nomor dengan 628xxx");
                         }
 
                         if (TextUtils.isEmpty(harga)) {
-                            edtHarga.setError("Masukan harga");
+                            edtHarga.setError("Masukkan harga");
                         }
 
                         if (TextUtils.isEmpty(deskripsi)) {
-                            edtDeskripsi.setError("Masukan deskripsi");
+                            edtDeskripsi.setError("Masukkan deskripsi");
                         }
 
                         if (TextUtils.isEmpty(photo)){

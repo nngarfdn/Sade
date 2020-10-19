@@ -56,4 +56,8 @@ public class AppUtils {
         if (getUnit) return "Rp" + formattedAmount;
         return formattedAmount;
     }
+
+    public static boolean isValidPhone(String number){
+        return number.charAt(0) == '6' && number.charAt(1) == '2';
+    }
 }
