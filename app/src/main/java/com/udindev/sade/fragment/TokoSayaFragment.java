@@ -16,7 +16,6 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.udindev.sade.R;
@@ -31,12 +30,11 @@ public class TokoSayaFragment extends Fragment {
     TextView txtProdukKosong;
     RecyclerView rvTokoSaya ;
     ProdukViewModel produkViewModel;
-    FloatingActionButton fabTambahProduk ;
+    Button fabTambahProduk ;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
     private ProfileViewModel profileViewModel;
     private static final String TAG = "TokoSayaFragment";
-
 
     public TokoSayaFragment() {
         // Required empty public constructor
@@ -104,10 +102,6 @@ public class TokoSayaFragment extends Fragment {
                 }
             }
 
-
-
-//            shimmerFrameLayoutJasa.stopShimmerAnimation();
-//            shimmerFrameLayoutJasa.setVisibility(View.INVISIBLE);
 
         });
     }

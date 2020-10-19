@@ -10,7 +10,6 @@
         android:background="@color/colorPrimary"
         tools:context=".activity.PusatBantuanActivity">
 
-
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"

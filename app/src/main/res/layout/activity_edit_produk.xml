@@ -34,17 +34,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textView" />
 
-        <ImageButton
-            android:id="@+id/imgbtn_archive_produk"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:background="@color/colorPrimary"
-            android:src="@drawable/ic_icon_archive"
-            app:layout_constraintBottom_toBottomOf="@+id/imgbtn_delete_produk"
-            app:layout_constraintEnd_toStartOf="@+id/imgbtn_delete_produk"
-            app:layout_constraintTop_toTopOf="@+id/textView" />
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="1000dp"

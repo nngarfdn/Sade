@@ -76,6 +76,9 @@ class DetailActivity : AppCompatActivity() {
         txt_nama_produk_detail.text = produk?.nama
         txt_harga_detail.text = produk?.harga?.let { getRupiahFormat(it, true) }
 
+        val wa = produk?.wa
+
+
         btn_chat_detail.setText("Chat ${produk?.wa}")
 
         btn_chat_detail.setOnClickListener {
