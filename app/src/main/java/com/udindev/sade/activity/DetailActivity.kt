@@ -69,6 +69,8 @@ class DetailActivity : AppCompatActivity() {
                 .placeholder(R.drawable.image_empty)
                 .into(img_detailproduk)
 
+        img_detailproduk.setImageUrl(produk?.photo)
+
         txt_alamat_detail.text = "${produk?.alamat}, ${produk?.kecamatan}, ${produk?.kabupaten}, ${produk?.provinsi}"
         txt_deskripsi_detail.text = produk?.deskripsi
         txt_nama_produk_detail.text = produk?.nama
