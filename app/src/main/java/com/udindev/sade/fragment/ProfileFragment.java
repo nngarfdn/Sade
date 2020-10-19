@@ -29,12 +29,13 @@ import com.udindev.sade.R;
 import com.udindev.sade.activity.LoginActivity;
 import com.udindev.sade.activity.PusatBantuanActivity;
 import com.udindev.sade.activity.TentangAplikasi;
+import com.udindev.sade.callback.OnProfileUpdateCallback;
 import com.udindev.sade.model.Profile;
 import com.udindev.sade.viewmodel.ProfileViewModel;
 
 import static com.udindev.sade.utils.AppUtils.loadImageFromUrl;
 
-public class ProfileFragment extends Fragment implements View.OnClickListener{
+public class ProfileFragment extends Fragment implements View.OnClickListener, OnProfileUpdateCallback {
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
     private RoundedImageView imgPhoto;
@@ -119,7 +120,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.btn_edit_profile:
-                loadFragment(new EditProfileFragment());
+                loadFragment(new EditProfileFragment(this));
                 break;
 
             case R.id.tv_about_profile:
@@ -162,5 +163,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
                 .replace(R.id.fl_container, fragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    @Override
+    public void onUpdate() {
+        onStart();
     }
 }

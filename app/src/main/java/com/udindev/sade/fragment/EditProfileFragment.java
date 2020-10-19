@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.udindev.sade.R;
+import com.udindev.sade.callback.OnProfileUpdateCallback;
 import com.udindev.sade.customview.LoadingDialog;
 import com.udindev.sade.model.Profile;
 import com.udindev.sade.viewmodel.ProfileViewModel;
@@ -29,8 +30,11 @@ public class EditProfileFragment extends Fragment {
     private ProfileViewModel profileViewModel;
     private boolean isNewUser;
     private LoadingDialog loadingDialog;
+    private OnProfileUpdateCallback callback;
 
-    public EditProfileFragment() {}
+    public EditProfileFragment(OnProfileUpdateCallback callback) {
+        this.callback = callback;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -94,6 +98,7 @@ public class EditProfileFragment extends Fragment {
                         .build();
                 firebaseUser.updateProfile(profileUpdates);
 
+                callback.onUpdate();
                 if (getActivity() != null) getActivity().getSupportFragmentManager().popBackStack();
             }
         });
