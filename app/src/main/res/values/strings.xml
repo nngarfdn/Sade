@@ -64,6 +64,8 @@
     <string name="send">Kirim</string>
     <string name="desc_rp">Silakan masukkan alamat email Anda.</string>
     <string name="title_search">Pencarian</string>
+    <string name="start">Mulai</string>
+    <string name="next">Lanjut</string>
 
     <string-array name="kategori">
         <item>Usaha</item>
