@@ -20,9 +20,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.udindev.sade.R;
 import com.udindev.sade.adapter.TokoSayaAdapter;
+import com.udindev.sade.callback.OnProductAddCallback;
 import com.udindev.sade.model.Produk;
 import com.udindev.sade.viewmodel.ProdukViewModel;
-import com.udindev.sade.viewmodel.ProfileViewModel;
 
 public class TokoSayaFragment extends Fragment {
     Button btnTambah;
@@ -31,36 +31,24 @@ public class TokoSayaFragment extends Fragment {
     RecyclerView rvTokoSaya ;
     ProdukViewModel produkViewModel;
     Button fabTambahProduk ;
-    private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
-    private ProfileViewModel profileViewModel;
     private static final String TAG = "TokoSayaFragment";
+    private final OnProductAddCallback callback;
 
-    public TokoSayaFragment() {
-        // Required empty public constructor
-    }
-
-
-    public static TokoSayaFragment newInstance(String param1, String param2) {
-        TokoSayaFragment fragment = new TokoSayaFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+    public TokoSayaFragment(OnProductAddCallback callback) {
+        this.callback = callback;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
         produkViewModel = ViewModelProviders.of(this).get(ProdukViewModel.class);
-        profileViewModel = ViewModelProviders.of(this).get(ProfileViewModel.class);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_toko_saya, container, false);
     }
 
@@ -73,14 +61,10 @@ public class TokoSayaFragment extends Fragment {
         rvTokoSaya = view.findViewById(R.id.rv_toko_saya);
         fabTambahProduk = view.findViewById(R.id.fab_add);
 
-        btnTambah.setOnClickListener(v -> loadFragment(new TambahProdukFragment()));
+        btnTambah.setOnClickListener(v -> loadFragment(new TambahProdukFragment(callback)));
 
-        String email = firebaseUser.getEmail();
+        fabTambahProduk.setOnClickListener(v -> loadFragment(new TambahProdukFragment(callback)));
 
-        fabTambahProduk.setOnClickListener(v -> loadFragment(new TambahProdukFragment()));
-
-
-        produkViewModel.loadResultDataEmail(email);
         produkViewModel.getDataEmail().observe(this, result -> {
 
             if (result.isEmpty()){
@@ -114,15 +98,18 @@ public class TokoSayaFragment extends Fragment {
 
     }
 
-
-    private boolean loadFragment(Fragment fragment) {
+    private void loadFragment(Fragment fragment) {
         if (fragment != null) {
             getActivity().getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fl_container, fragment)
                     .addToBackStack(null)
                     .commit();
-            return true;
         }
-        return false;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        produkViewModel.loadResultDataEmail(firebaseUser.getEmail());
     }
 }

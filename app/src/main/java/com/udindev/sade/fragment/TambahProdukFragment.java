@@ -35,6 +35,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.udindev.sade.R;
+import com.udindev.sade.callback.OnProductAddCallback;
 import com.udindev.sade.model.Location;
 import com.udindev.sade.model.Produk;
 import com.udindev.sade.reponse.Attributes;
@@ -53,7 +54,7 @@ import static android.app.Activity.RESULT_OK;
 public class TambahProdukFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
     private static final String TAG = "TambahProdukFragment";
-    private int PICK_IMAGE_REQUEST = 22;
+    private final int PICK_IMAGE_REQUEST = 22;
     private Uri filePath;
     private Button btnChose;
     private FirebaseUser firebaseUser;
@@ -68,12 +69,13 @@ public class TambahProdukFragment extends Fragment implements AdapterView.OnItem
     private ArrayList<Location> listProvinces, listRegencies, listDistricts;
     private LocationViewModel lvm;
     private EditText edtNamaProduk, edtAlamatProduk, edtNoWA, edtHarga, edtDeskripsi;
+    private final OnProductAddCallback callback;
 
     StorageReference objectStorageReference;
     FirebaseFirestore objectFirebaseFirestore;
 
-    public TambahProdukFragment() {
-        // Required empty public constructor
+    public TambahProdukFragment(OnProductAddCallback callback) {
+        this.callback = callback;
     }
 
     @Override
@@ -88,9 +90,7 @@ public class TambahProdukFragment extends Fragment implements AdapterView.OnItem
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_tambah_produk, container, false);
     }
 
@@ -296,7 +296,7 @@ public class TambahProdukFragment extends Fragment implements AdapterView.OnItem
             }).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     txtUploading.setVisibility(View.INVISIBLE);
-                    Toast.makeText(getContext(), "Upload Gamabr Berhasil", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Upload Gambar Berhasil", Toast.LENGTH_SHORT).show();
                     btnTambahProduk.setOnClickListener(v -> {
                         String photo = Objects.requireNonNull(task.getResult()).toString();
 
@@ -306,21 +306,21 @@ public class TambahProdukFragment extends Fragment implements AdapterView.OnItem
                         String nama = edtNamaProduk.getText().toString();
                         String kategori = kategoriSpinner.getSelectedItem().toString();
                         String alamat = edtAlamatProduk.getText().toString();
-                        String kecamatan = null;
+                        String kecamatan;
                         if(spinDistricts != null && spinDistricts.getSelectedItem() !=null ) {
                             kecamatan = (String)spinDistricts.getSelectedItem();
                         } else  {
                             kecamatan = "-";
                         }
 
-                        String kabupaten = null;
+                        String kabupaten;
                         if(spinRegencies != null && spinRegencies.getSelectedItem() !=null ) {
                             kabupaten = (String)spinRegencies.getSelectedItem();
                         } else  {
                             kabupaten = "-";
                         }
 
-                        String prov = null;
+                        String prov;
                         if(spinProvinces != null && spinProvinces.getSelectedItem() !=null ) {
                             prov = (String)spinProvinces.getSelectedItem();
                         } else  {
@@ -364,7 +364,9 @@ public class TambahProdukFragment extends Fragment implements AdapterView.OnItem
                         Produk produk = new Produk(id, email, nama, kategori, alamat, kecamatan,
                                 kabupaten, prov, wa, hargaInt, deskripsi, photo);
                         produkViewModel.insertProduk(produk);
-                        loadFragment(new DashboardFragment());
+
+                        if (callback != null) callback.onAdd();
+                        if (getActivity() != null) getActivity().getSupportFragmentManager().popBackStack();
                     });
 
 
@@ -378,6 +380,7 @@ public class TambahProdukFragment extends Fragment implements AdapterView.OnItem
     }
 
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int i, long id) {
         switch (parent.getId()) {
@@ -399,15 +402,6 @@ public class TambahProdukFragment extends Fragment implements AdapterView.OnItem
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
-    }
-
-    private void loadFragment(Fragment fragment) {
-        if (fragment != null) {
-            Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fl_container, fragment)
-                    .addToBackStack(null)
-                    .commit();
-        }
     }
 
     private String getExtension(Uri uri) {

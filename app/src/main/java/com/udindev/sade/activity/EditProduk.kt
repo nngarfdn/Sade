@@ -36,6 +36,7 @@ import com.udindev.sade.reponse.Regencies
 import com.udindev.sade.viewmodel.LocationViewModel
 import com.udindev.sade.viewmodel.ProdukViewModel
 import kotlinx.android.synthetic.main.activity_edit_produk.*
+import kotlinx.android.synthetic.main.layout_add_update_product.*
 import java.io.IOException
 import java.util.*
 
@@ -118,8 +119,7 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             builder.setPositiveButton("Ya") { dialog, which ->
                 produkViewModel!!.deteteProduk(produk.id.toString())
                 Toast.makeText(this, "Berhasil Menghapus Produk", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
+                finish()
             }
 
             builder.setNegativeButton("Tidak") { dialog, which ->
@@ -129,6 +129,7 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         }
 
+        btn_tambah_produk.setText(R.string.update_produk)
         btn_tambah_produk.setOnClickListener(View.OnClickListener { v: View? ->
             val email = firebaseUser!!.email
             val nama: String = edt_nama_produk.getText().toString()
@@ -201,8 +202,7 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
             if (cek){
                 produkViewModel!!.updateProduk(p)
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
+                finish()
             }
 
         })
@@ -325,7 +325,7 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             }).addOnCompleteListener { task: Task<Uri?> ->
                 if (task.isSuccessful) {
                     txt_uploading.setVisibility(View.INVISIBLE)
-                    Toast.makeText(this, "Upload Gamabr Berhasil", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Upload Gambar Berhasil", Toast.LENGTH_SHORT).show()
                     btn_tambah_produk.setOnClickListener(View.OnClickListener { v: View? ->
                         val photo = Objects.requireNonNull(task.result).toString()
                         Log.d(TAG, "uploadImage: photoUrl : $photo")
@@ -399,8 +399,7 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
                         if (cek){
                             produkViewModel!!.updateProduk(p)
-                            val intent = Intent(this, MainActivity::class.java)
-                            startActivity(intent)
+                            finish()
                         }
                     })
                 } else if (!task.isSuccessful) {

@@ -24,6 +24,7 @@ import com.mindorks.editdrawabletext.EditDrawableText;
 import com.udindev.sade.R;
 import com.udindev.sade.adapter.JasaMenuAdapter;
 import com.udindev.sade.adapter.ProdukMenuAdapter;
+import com.udindev.sade.callback.OnProductAddCallback;
 import com.udindev.sade.model.Filter;
 import com.udindev.sade.activity.SearchActivity;
 import com.udindev.sade.model.Produk;
@@ -36,7 +37,7 @@ import co.mobiwise.materialintro.view.MaterialIntroView;
 
 import static com.udindev.sade.utils.AppUtils.getDefaultFilter;
 
-public class DashboardFragment extends Fragment  {
+public class DashboardFragment extends Fragment implements OnProductAddCallback {
 
     private static final String TAG = "DashboardFragment";
     private EditDrawableText search;
@@ -77,7 +78,7 @@ public class DashboardFragment extends Fragment  {
         imgBtnUsaha = view.findViewById(R.id.imgbtn_usaha);
         imgBtnTokoSaya = view.findViewById(R.id.btn_tokosaya);
 
-        imgBtnTokoSaya.setOnClickListener(v -> loadFragment(new TokoSayaFragment()));
+        imgBtnTokoSaya.setOnClickListener(v -> loadFragment(new TokoSayaFragment(this)));
         imgbtnSemua.setOnClickListener(v -> performSearch("Semua"));
         imgBtnUsaha.setOnClickListener(v -> performSearch("Usaha"));
         imgBtnJasa.setOnClickListener(v -> performSearch("Jasa"));
@@ -104,7 +105,7 @@ public class DashboardFragment extends Fragment  {
         shimmerFrameLayoutProduk.startShimmerAnimation();
         shimmerFrameLayoutJasa.startShimmerAnimation();
 
-        getResultProduk("Produk");
+        getResultProduk();
         getAllResult();
 
         // Tambah
@@ -173,8 +174,7 @@ public class DashboardFragment extends Fragment  {
         startActivity(intent);
     }
 
-    private void getResultProduk(String kategori) {
-        produkViewModel.loadResultByKategory(kategori);
+    private void getResultProduk() {
         produkViewModel.getResultByKategori().observe(this, result -> {
             shimmerFrameLayoutProduk.stopShimmerAnimation();
             shimmerFrameLayoutProduk.setVisibility(View.INVISIBLE);
@@ -189,7 +189,6 @@ public class DashboardFragment extends Fragment  {
     }
 
     private void getAllResult() {
-        produkViewModel.loadResult();
         produkViewModel.getResult().observe(this, result -> {
             shimmerFrameLayoutJasa.stopShimmerAnimation();
             shimmerFrameLayoutJasa.setVisibility(View.INVISIBLE);
@@ -204,20 +203,24 @@ public class DashboardFragment extends Fragment  {
         });
     }
 
-    private boolean loadFragment(Fragment fragment) {
+    private void loadFragment(Fragment fragment) {
         if (fragment != null) {
             getActivity().getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fl_container, fragment)
                     .addToBackStack(null)
                     .commit();
-            return true;
         }
-        return false;
     }
 
     @Override
-    public void onDetach() {
-        getActivity().finish();
-        super.onDetach();
+    public void onResume() {
+        super.onResume();
+        produkViewModel.loadResultByKategory("Produk");
+        produkViewModel.loadResult();
+    }
+
+    @Override
+    public void onAdd() {
+        onResume();
     }
 }
