@@ -63,7 +63,8 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         firebaseUser = firebaseAuth.currentUser
         produkViewModel = ViewModelProviders.of(this).get(ProdukViewModel::class.java)
         lvm = ViewModelProvider(this, NewInstanceFactory()).get(LocationViewModel::class.java)
-        objectStorageReference = FirebaseStorage.getInstance().getReference("imageFolder") // Create folder to Firebase Storage
+
+        objectStorageReference = FirebaseStorage.getInstance().getReference("imageFolder")
         objectFirebaseFirestore = FirebaseFirestore.getInstance()
 
         produk = intent.getParcelableExtra<Produk>(DetailActivity.EXTRA_PRODUK)!!
@@ -254,6 +255,10 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 val adapter = ArrayAdapter(Objects.requireNonNull(this), android.R.layout.simple_spinner_item, itemList)
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 spin_provinces.setAdapter(adapter)
+                if (produk.provinsi != "-"){
+                    spin_provinces.setSelection(adapter.getPosition(produk.provinsi))
+                }
+
             }
         })
     }
@@ -269,6 +274,9 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 val adapter = ArrayAdapter(Objects.requireNonNull(this), android.R.layout.simple_spinner_item, itemList)
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 spin_regencies.setAdapter(adapter)
+                if (produk.kabupaten != "-"){
+                    spin_regencies.setSelection(adapter.getPosition(produk.kabupaten))
+                }
             }
         })
     }
@@ -284,6 +292,9 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 val adapter = ArrayAdapter(Objects.requireNonNull(this), android.R.layout.simple_spinner_item, itemList)
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 spin_districts.setAdapter(adapter)
+                if (produk.kecamatan != "-"){
+                    spin_districts.setSelection(adapter.getPosition(produk.kecamatan))
+                }
             }
         })
     }
