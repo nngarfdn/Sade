@@ -75,9 +75,23 @@ public class MainActivity extends AppCompatActivity {
                         viewPager.setCurrentItem(2);
                         break;
                 }
-                if (fragmentManager.getBackStackEntryCount() > 0) fragmentManager.popBackStack();
+                for(int i = 0; i < fragmentManager.getBackStackEntryCount(); ++i) fragmentManager.popBackStack();
                 return true;
             }
+        });
+
+        // Biar warna berubah saat ganti fragment dengan drag
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            @Override
+            public void onPageSelected(int position) {
+                navigationView.getMenu().getItem(position).setChecked(true);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {}
         });
     }
 
