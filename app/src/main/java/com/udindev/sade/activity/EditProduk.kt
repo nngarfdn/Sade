@@ -389,7 +389,7 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                         }
 
                         if (TextUtils.isEmpty(wa)) {
-                            edt_alamat_nowa.setError("Masukkan nomor Whatsapp")
+                            edt_alamat_nowa.setError("Masukkan nomor WhatsApp")
                             cek = false
                         }
 

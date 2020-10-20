@@ -83,12 +83,15 @@ public class EditProfileFragment extends Fragment {
                 String phone = edtPhoneNumber.getText().toString();
                 String whatsapp = edtWaNumber.getText().toString();
 
-                if (name.equals("") || address.equals("") || phone.equals("") || whatsapp.equals("") ||
-                        !isValidPhone(phone) || !isValidPhone(whatsapp)){
+                if (name.equals("") || address.equals("") || phone.equals("") || whatsapp.equals("")){
                     if (name.equals("")) edtName.setError("Masukkan nama lengkap");
                     if (address.equals("")) edtAddress.setError("Masukkan alamat");
                     if (phone.equals("")) edtPhoneNumber.setError("Masukkan nomor telepon");
                     if (whatsapp.equals("")) edtWaNumber.setError("Masukkan nomor WhatsApp");
+                    return;
+                }
+
+                if (!isValidPhone(phone) || !isValidPhone(whatsapp)){
                     if (!isValidPhone(phone)) edtPhoneNumber.setError("Awali nomor dengan 628xxx");
                     if (!isValidPhone(whatsapp)) edtWaNumber.setError("Awali nomor dengan 628xxx");
                     return;
