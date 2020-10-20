@@ -297,7 +297,7 @@ public class TambahProdukFragment extends Fragment implements AdapterView.OnItem
             }).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     txtUploading.setVisibility(View.INVISIBLE);
-                    Toast.makeText(getContext(), "Upload Gambar Berhasil", Toast.LENGTH_SHORT).show();
+                    if (getContext()!=null) Toast.makeText(getContext(), "Upload Gambar Berhasil", Toast.LENGTH_SHORT).show();
                     btnTambahProduk.setOnClickListener(v -> {
                         String photo = Objects.requireNonNull(task.getResult()).toString();
 
