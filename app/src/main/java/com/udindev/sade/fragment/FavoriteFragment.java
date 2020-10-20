@@ -102,24 +102,25 @@ public class FavoriteFragment extends Fragment implements View.OnClickListener {
     }
 
     private void loadProductById(List<String> listProductId){
-        if (listProductId.size() == 0) return; // A non-empty array is required for 'in' filters.
-        database.collection("produk")
-                .whereIn("id", listProductId)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()){
-                            ArrayList<Produk> listItem = new ArrayList<>();
-                            for (DocumentSnapshot snapshot : task.getResult())
-                                listItem.add(snapshot.toObject(Produk.class));
-                            adapter.setData(listItem);
-
-                            if (adapter.getItemCount() > 0) layoutEmpty.setVisibility(View.INVISIBLE);
-                            else layoutEmpty.setVisibility(View.VISIBLE);
+        ArrayList<Produk> listItem = new ArrayList<>();
+        for (String productId : listProductId){
+            database.collection("produk").document(productId)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()){
+                                Produk product = task.getResult().toObject(Produk.class);
+                                if (product != null){
+                                    listItem.add(product);
+                                    adapter.setData(listItem);
+                                    if (adapter.getItemCount() > 0) layoutEmpty.setVisibility(View.INVISIBLE);
+                                    else layoutEmpty.setVisibility(View.VISIBLE);
+                                }
+                            }
                         }
-                    }
-                });
+                    });
+        }
     }
 
     @SuppressLint("NonConstantResourceId")
