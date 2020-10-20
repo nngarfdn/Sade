@@ -21,13 +21,14 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp">
+        android:layout_marginTop="24dp"
+        android:background="@drawable/background_white_rounded">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_white_rounded"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="24dp">
 
             <EditText
                 android:id="@+id/edt_name_ep"
@@ -76,6 +77,15 @@
                 android:imeOptions="actionDone"
                 android:inputType="phone"
                 tools:ignore="Autofill"  />
+
+            <TextView
+                android:id="@+id/textView5"
+                style="@style/TextView.Regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginHorizontal="@dimen/margin_32dp"
+                android:text="Awali nomor dengan 628123xxx"/>
 
             <Button
                 android:id="@+id/btn_save_ep"

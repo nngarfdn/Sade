@@ -22,7 +22,7 @@
                 android:color="@color/colorPrimary" />
             <stroke
                 android:width="0dp"
-                android:color="#FFFFFF" />
+                android:color="@color/white" />
             <corners
                 android:radius="4dp" />
             <padding
