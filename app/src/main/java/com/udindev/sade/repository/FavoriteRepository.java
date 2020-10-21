@@ -1,4 +1,4 @@
-package com.udindev.sade.cobacoba;
+package com.udindev.sade.repository;
 
 import android.util.Log;
 
@@ -11,9 +11,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.udindev.sade.model.Favorite;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class FavoriteRepository {
     private final String TAG = getClass().getSimpleName();

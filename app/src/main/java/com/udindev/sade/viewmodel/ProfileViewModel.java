@@ -7,7 +7,7 @@ import com.udindev.sade.model.Profile;
 import com.udindev.sade.repository.ProfileRepository;
 
 public class ProfileViewModel extends ViewModel {
-    private ProfileRepository repository = new ProfileRepository();
+    private final ProfileRepository repository = new ProfileRepository();
 
     public LiveData<Profile> getData(){
         return repository.getData();

@@ -14,13 +14,14 @@ import com.squareup.picasso.Picasso
 import com.udindev.sade.R
 import com.udindev.sade.model.Produk
 import com.udindev.sade.utils.AppUtils.getRupiahFormat
+import com.udindev.sade.viewmodel.FavoriteViewModel
 import com.udindev.sade.viewmodel.ProdukViewModel
 import kotlinx.android.synthetic.main.activity_detail.*
 
 
 class DetailActivity : AppCompatActivity() {
 
-    private lateinit var favoriteViewModel: com.udindev.sade.cobacoba.FavoriteViewModel
+    private lateinit var favoriteViewModel: FavoriteViewModel
     private lateinit var produkViewModel: ProdukViewModel
     val firebaseAuth = FirebaseAuth.getInstance()
     val firebaseUser = firebaseAuth.getCurrentUser()
@@ -38,7 +39,7 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
-        favoriteViewModel = ViewModelProviders.of(this).get(com.udindev.sade.cobacoba.FavoriteViewModel::class.java)
+        favoriteViewModel = ViewModelProviders.of(this).get(FavoriteViewModel::class.java)
         produkViewModel = ViewModelProviders.of(this).get(ProdukViewModel::class.java)
 
         val produk = intent.getParcelableExtra<Produk>(EXTRA_PRODUK)

@@ -1,7 +1,10 @@
-package com.udindev.sade.cobacoba;
+package com.udindev.sade.viewmodel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
+
+import com.udindev.sade.model.Favorite;
+import com.udindev.sade.repository.FavoriteRepository;
 
 public class FavoriteViewModel extends ViewModel {
     private final FavoriteRepository repository = new FavoriteRepository();

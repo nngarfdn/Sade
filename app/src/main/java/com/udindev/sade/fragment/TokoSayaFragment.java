@@ -83,17 +83,7 @@ public class TokoSayaFragment extends Fragment {
                     Log.d(TAG, "onCreate: getResultKategori" + produk.component2() + " kategori " + produk.component3());
                 }
             }
-
-
         });
-    }
-
-    private void getProdukSaya(String email) {
-        btnTambah.setVisibility(View.INVISIBLE);
-        txtProdukKosong.setVisibility(View.INVISIBLE);
-        imgIlustrasi.setVisibility(View.VISIBLE);
-
-
     }
 
     private void loadFragment(Fragment fragment) {

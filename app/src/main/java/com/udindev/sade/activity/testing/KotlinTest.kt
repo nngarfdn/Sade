@@ -1,16 +1,14 @@
-package com.udindev.sade.activity
+package com.udindev.sade.activity.testing
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.udindev.sade.R
 import com.udindev.sade.model.Produk
 import com.udindev.sade.viewmodel.ProdukViewModel
 import kotlinx.android.synthetic.main.activity_kotlin_test.*
-import kotlin.math.log
 
 class KotlinTest : AppCompatActivity() {
     private val TAG = KotlinTest::class.java.simpleName

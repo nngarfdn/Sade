@@ -1,4 +1,4 @@
-package com.udindev.sade.cobacoba;
+package com.udindev.sade.adapter;
 
 import android.app.Activity;
 import android.content.Intent;

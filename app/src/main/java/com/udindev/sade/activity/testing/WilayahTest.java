@@ -1,4 +1,4 @@
-package com.udindev.sade.activity;
+package com.udindev.sade.activity.testing;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;

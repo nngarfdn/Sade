@@ -25,12 +25,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.udindev.sade.R;
 import com.udindev.sade.activity.SearchActivity;
-import com.udindev.sade.cobacoba.FavoriteAdapter;
-import com.udindev.sade.cobacoba.Favorite;
-import com.udindev.sade.cobacoba.FavoriteViewModel;
+import com.udindev.sade.adapter.FavoriteAdapter;
+import com.udindev.sade.model.Favorite;
+import com.udindev.sade.viewmodel.FavoriteViewModel;
 import com.udindev.sade.model.Produk;
 
 import java.util.ArrayList;

@@ -1,8 +1,8 @@
 package com.udindev.sade.model;
 
 public class Location {
-    private int id;
-    private String name;
+    private final int id;
+    private final String name;
 
     public Location(int id, String name) {
         this.id = id;

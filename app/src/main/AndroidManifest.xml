@@ -13,15 +13,14 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activity.LoginActivity"/>
         <activity android:name=".activity.SplashActivity" />
-        <activity android:name=".cobacoba.DetailTestActivity" />
         <activity android:name=".activity.EditProduk" />
         <activity android:name=".activity.SearchActivity" />
         <activity android:name=".activity.TentangAplikasi" />
         <activity android:name=".activity.PusatBantuanActivity" />
         <activity android:name=".activity.DetailActivity" />
-        <activity android:name=".activity.WilayahTest" />
+        <activity android:name=".activity.testing.WilayahTest" />
         <activity android:name=".activity.MainActivity" />
-        <activity android:name=".activity.KotlinTest" />
+        <activity android:name=".activity.testing.KotlinTest" />
         <activity android:name=".activity.Welcome">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

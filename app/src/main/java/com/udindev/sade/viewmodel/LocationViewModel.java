@@ -18,11 +18,11 @@ import retrofit2.Response;
 
 public class LocationViewModel extends ViewModel {
     private final String TAG = getClass().getSimpleName();
-    private ApiClient client = new ApiClient();
+    private final ApiClient client = new ApiClient();
 
-    private MutableLiveData<Provinces> resultProvinces = new MutableLiveData<>();
-    private MutableLiveData<Regencies> resultRegencies = new MutableLiveData<>();
-    private MutableLiveData<Districts> resultDistricts = new MutableLiveData<>();
+    private final MutableLiveData<Provinces> resultProvinces = new MutableLiveData<>();
+    private final MutableLiveData<Regencies> resultRegencies = new MutableLiveData<>();
+    private final MutableLiveData<Districts> resultDistricts = new MutableLiveData<>();
 
     public LiveData<Provinces> getProvinces(){
         return resultProvinces;
