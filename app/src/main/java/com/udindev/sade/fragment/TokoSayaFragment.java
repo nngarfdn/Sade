@@ -62,19 +62,19 @@ public class TokoSayaFragment extends Fragment {
         fabTambahProduk = view.findViewById(R.id.fab_add);
 
         btnTambah.setOnClickListener(v -> loadFragment(new TambahProdukFragment(callback)));
-
         fabTambahProduk.setOnClickListener(v -> loadFragment(new TambahProdukFragment(callback)));
 
         produkViewModel.getDataEmail().observe(this, result -> {
-
             if (result.isEmpty()){
                 btnTambah.setVisibility(View.VISIBLE);
                 txtProdukKosong.setVisibility(View.VISIBLE);
                 imgIlustrasi.setVisibility(View.VISIBLE);
+                rvTokoSaya.setVisibility(View.INVISIBLE); // List tidak mau refresh setelah produk terakhir dihapus
             }else {
                 btnTambah.setVisibility(View.INVISIBLE);
                 txtProdukKosong.setVisibility(View.INVISIBLE);
                 imgIlustrasi.setVisibility(View.INVISIBLE);
+                rvTokoSaya.setVisibility(View.VISIBLE);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
                 rvTokoSaya.setLayoutManager(layoutManager);
                 TokoSayaAdapter adapter = new TokoSayaAdapter(result);
