@@ -93,7 +93,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.tv_reset_password_login:
-                ResetPasswordDialog resetPasswordDialog = new ResetPasswordDialog(getActivity());
+                ResetPasswordDialog resetPasswordDialog = new ResetPasswordDialog();
                 resetPasswordDialog.show(getActivity().getSupportFragmentManager(), "ResetPasswordDialog");
                 break;
         }

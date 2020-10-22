@@ -84,7 +84,7 @@ public class SearchActivity extends AppCompatActivity implements FilterDialog.Fi
         });
 
         // Filter dialog
-        filterDialog = new FilterDialog(this);
+        filterDialog = new FilterDialog();
         ImageButton btnFilter = findViewById(R.id.btn_filter_search);
         btnFilter.setOnClickListener(new View.OnClickListener() {
             @Override

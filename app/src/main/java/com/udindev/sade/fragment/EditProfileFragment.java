@@ -32,7 +32,9 @@ public class EditProfileFragment extends Fragment {
     private ProfileViewModel profileViewModel;
     private boolean isNewUser;
     private LoadingDialog loadingDialog;
-    private final OnProfileUpdateCallback callback;
+    private OnProfileUpdateCallback callback;
+
+    public EditProfileFragment(){}
 
     public EditProfileFragment(OnProfileUpdateCallback callback) {
         this.callback = callback;
@@ -106,7 +108,7 @@ public class EditProfileFragment extends Fragment {
                         .build();
                 firebaseUser.updateProfile(profileUpdates);
 
-                callback.onUpdate();
+                if (callback != null) callback.onUpdate();
                 if (getActivity() != null) getActivity().getSupportFragmentManager().popBackStack();
             }
         });

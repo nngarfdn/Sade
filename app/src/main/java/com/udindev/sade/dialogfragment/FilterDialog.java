@@ -1,7 +1,6 @@
 package com.udindev.sade.dialogfragment;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -38,7 +37,6 @@ import java.util.List;
 public class FilterDialog extends DialogFragment implements View.OnClickListener, AdapterView.OnItemSelectedListener, CheckBox.OnCheckedChangeListener {
     private final String TAG = getClass().getSimpleName();
 
-    private final Activity activity;
     private AlertDialog dialog;
     private Filter filter;
     private FilterDialogListener listener;
@@ -50,9 +48,7 @@ public class FilterDialog extends DialogFragment implements View.OnClickListener
     private CheckBox cbProduk, cbJasa, cbUsaha, cbLainnya, cbProvince, cbRegency, cbDistrict;
     private RadioButton rbMurah, rbMahal;
 
-    public FilterDialog(Activity activity){
-        this.activity = activity;
-    }
+    public FilterDialog(){}
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -68,7 +64,7 @@ public class FilterDialog extends DialogFragment implements View.OnClickListener
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        LayoutInflater inflater = activity.getLayoutInflater();
+        LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_filter, null);
 
         Button btnApply = view.findViewById(R.id.btn_apply_filter);
@@ -123,7 +119,7 @@ public class FilterDialog extends DialogFragment implements View.OnClickListener
         }
 
         // Create alert dialog instance
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(view);
         dialog = builder.create();
         return dialog;
@@ -143,7 +139,7 @@ public class FilterDialog extends DialogFragment implements View.OnClickListener
                         else listProvinces.add(new Location(attributes.getId(), attributes.getName()));
                     }
                     for (Location location : listProvinces) itemList.add(location.getName());
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(activity, android.R.layout.simple_spinner_item, itemList);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, itemList);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinProvince.setAdapter(adapter);
                     spinProvince.setSelection(filter.getPosisiProvinsi());
@@ -162,7 +158,7 @@ public class FilterDialog extends DialogFragment implements View.OnClickListener
                     List<String> itemList = new ArrayList<>();
                     for (Attributes attributes : regencies.getRegencies()) listRegencies.add(new Location(attributes.getId(), attributes.getName()));
                     for (Location location : listRegencies) itemList.add(location.getName());
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(activity, android.R.layout.simple_spinner_item, itemList);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, itemList);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinRegency.setAdapter(adapter);
                     spinRegency.setSelection(filter.getPosisiKabupaten());
@@ -181,7 +177,7 @@ public class FilterDialog extends DialogFragment implements View.OnClickListener
                     List<String> itemList = new ArrayList<>();
                     for (Attributes attributes : districts.getDistricts()) listDistricts.add(new Location(attributes.getId(), attributes.getName()));
                     for (Location location : listDistricts) itemList.add(location.getName());
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(activity, android.R.layout.simple_spinner_item, itemList);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, itemList);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinDistrict.setAdapter(adapter);
                     spinDistrict.setSelection(filter.getPosisiKecamatan());

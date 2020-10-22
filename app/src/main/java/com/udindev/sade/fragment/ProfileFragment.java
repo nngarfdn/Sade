@@ -116,7 +116,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, O
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_shop_profile:
-                loadFragment(new TokoSayaFragment(null));
+                loadFragment(new TokoSayaFragment());
                 break;
 
             case R.id.btn_edit_profile:

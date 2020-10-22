@@ -33,7 +33,9 @@ public class TokoSayaFragment extends Fragment {
     Button fabTambahProduk ;
     private FirebaseUser firebaseUser;
     private static final String TAG = "TokoSayaFragment";
-    private final OnProductAddCallback callback;
+    private OnProductAddCallback callback;
+
+    public TokoSayaFragment(){}
 
     public TokoSayaFragment(OnProductAddCallback callback) {
         this.callback = callback;

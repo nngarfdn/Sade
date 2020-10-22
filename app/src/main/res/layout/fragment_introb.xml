@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimary"
-    tools:context=".fragment.intro.FragmentIntrob">
+    tools:context=".fragment.intro.FragmentIntrob"
+    android:paddingHorizontal="8dp">
 
     <ImageView
         android:id="@+id/imageView5"

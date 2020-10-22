@@ -2,6 +2,7 @@ package com.udindev.sade.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -70,10 +71,12 @@ public class TambahProdukFragment extends Fragment implements AdapterView.OnItem
     private ArrayList<Location> listProvinces, listRegencies, listDistricts;
     private LocationViewModel lvm;
     private EditText edtNamaProduk, edtAlamatProduk, edtNoWA, edtHarga, edtDeskripsi;
-    private final OnProductAddCallback callback;
+    private OnProductAddCallback callback;
 
     StorageReference objectStorageReference;
     FirebaseFirestore objectFirebaseFirestore;
+
+    public TambahProdukFragment(){}
 
     public TambahProdukFragment(OnProductAddCallback callback) {
         this.callback = callback;

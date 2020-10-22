@@ -130,7 +130,7 @@ public class FavoriteFragment extends Fragment implements View.OnClickListener, 
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_shop_favorite:
-                loadFragment(new TokoSayaFragment(null));
+                loadFragment(new TokoSayaFragment());
                 break;
 
             case R.id.btn_filter_favorite:

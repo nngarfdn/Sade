@@ -1,6 +1,5 @@
 package com.udindev.sade.dialogfragment;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
@@ -25,22 +24,16 @@ import static com.udindev.sade.utils.AppUtils.showSnackbar;
 
 public class ResetPasswordDialog extends DialogFragment {
     private final String TAG = getClass().getSimpleName();
-
-    private final Activity activity;
     private AlertDialog dialog;
     private FirebaseAuth firebaseAuth;
-
     private EditText edtEmail;
 
-    public ResetPasswordDialog(Activity activity){
-        this.activity = activity;
-    }
-
+    public ResetPasswordDialog(){}
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        LayoutInflater inflater = activity.getLayoutInflater();
+        LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_reset_password, null);
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -64,7 +57,7 @@ public class ResetPasswordDialog extends DialogFragment {
         });
 
         // Create alert dialog instance
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(view);
         dialog = builder.create();
         return dialog;
@@ -79,10 +72,10 @@ public class ResetPasswordDialog extends DialogFragment {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()){
                             Log.d(TAG, "Email sent.");
-                            showSnackbar(activity.findViewById(R.id.activity_login), "Permintaan setel ulang kata sandi telah dikirim ke email.");
+                            showSnackbar(getActivity().findViewById(R.id.activity_login), "Permintaan setel ulang kata sandi telah dikirim ke email.");
                         } else {
                             Log.d(TAG, "Email sent failed.");
-                            showSnackbar(activity.findViewById(R.id.activity_login), "Email tidak terdaftar atau koneksi sedang bermasalah.");
+                            showSnackbar(getActivity().findViewById(R.id.activity_login), "Email tidak terdaftar atau koneksi sedang bermasalah.");
                         }
                         dialog.dismiss();
                     }
