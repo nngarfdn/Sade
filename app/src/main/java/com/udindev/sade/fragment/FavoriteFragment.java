@@ -1,7 +1,6 @@
 package com.udindev.sade.fragment;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,17 +25,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.udindev.sade.R;
-import com.udindev.sade.activity.SearchActivity;
 import com.udindev.sade.adapter.FavoriteAdapter;
 import com.udindev.sade.model.Favorite;
-import com.udindev.sade.viewmodel.FavoriteViewModel;
 import com.udindev.sade.model.Produk;
+import com.udindev.sade.viewmodel.FavoriteViewModel;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import static com.udindev.sade.utils.AppUtils.getDefaultFilter;
 
 public class FavoriteFragment extends Fragment implements View.OnClickListener, FavoriteCallback {
     private FirebaseUser firebaseUser;
@@ -81,8 +77,6 @@ public class FavoriteFragment extends Fragment implements View.OnClickListener, 
         Button btnFilter = view.findViewById(R.id.btn_filter_favorite);
         btnFilter.setOnClickListener(this);
 
-        Button btnSearch = view.findViewById(R.id.btn_search_favorite);
-        btnSearch.setOnClickListener(this);
 
         spinnerFilter = view.findViewById(R.id.spinner_filter_favorite);
 
@@ -135,12 +129,6 @@ public class FavoriteFragment extends Fragment implements View.OnClickListener, 
 
             case R.id.btn_filter_favorite:
                 performSearch();
-                break;
-
-            case R.id.btn_search_favorite:
-                Intent intent = new Intent(getActivity(), SearchActivity.class);
-                intent.putExtra("extra_filter", getDefaultFilter());
-                startActivity(intent);
                 break;
         }
     }
