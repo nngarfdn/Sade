@@ -106,8 +106,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, O
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
         profileViewModel.loadData(firebaseUser.getUid());
     }
 
@@ -167,6 +167,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, O
 
     @Override
     public void onUpdate() {
-        onStart();
+        onResume();
     }
 }
