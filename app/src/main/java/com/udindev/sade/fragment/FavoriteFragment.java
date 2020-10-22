@@ -33,17 +33,19 @@ import com.udindev.sade.viewmodel.FavoriteViewModel;
 import com.udindev.sade.model.Produk;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import static com.udindev.sade.utils.AppUtils.getDefaultFilter;
 
-public class FavoriteFragment extends Fragment implements View.OnClickListener {
+public class FavoriteFragment extends Fragment implements View.OnClickListener, FavoriteCallback {
     private FirebaseUser firebaseUser;
     private FavoriteViewModel favoriteViewModel;
     private FavoriteAdapter adapter;
     private FirebaseFirestore database;
     private LinearLayout layoutEmpty;
     private Spinner spinnerFilter;
+    private List<String> listProductId = new ArrayList<>();
 
     public FavoriteFragment() {}
 
@@ -88,8 +90,12 @@ public class FavoriteFragment extends Fragment implements View.OnClickListener {
         favoriteViewModel.getData().observe(getViewLifecycleOwner(), new Observer<Favorite>() {
             @Override
             public void onChanged(Favorite favorite) {
-                // Muat semua produk menurut id yang difavoritkan
-                loadProductById(favorite.getListProductId());
+                // Kalo daftar favorit masih sama, jangan dimuat lagi
+                if (!listProductId.equals(favorite.getListProductId())){
+                    listProductId = favorite.getListProductId();
+                    // Muat semua produk menurut id yang difavoritkan
+                    loadProductById();
+                }
             }
         });
     }
@@ -100,22 +106,19 @@ public class FavoriteFragment extends Fragment implements View.OnClickListener {
         favoriteViewModel.loadData(firebaseUser.getUid());
     }
 
-    private void loadProductById(List<String> listProductId){
+    private void loadProductById(){
         ArrayList<Produk> listItem = new ArrayList<>();
-        for (String productId : listProductId){
-            database.collection("produk").document(productId)
+        Iterator<String> iterator = listProductId.iterator();
+        while (iterator.hasNext()){
+            database.collection("produk").document(iterator.next())
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                             if (task.isSuccessful()){
                                 Produk product = task.getResult().toObject(Produk.class);
-                                if (product != null){
-                                    listItem.add(product);
-                                    adapter.setData(listItem);
-                                    if (adapter.getItemCount() > 0) layoutEmpty.setVisibility(View.INVISIBLE);
-                                    else layoutEmpty.setVisibility(View.VISIBLE);
-                                }
+                                if (product != null) listItem.add(product);
+                                if (!iterator.hasNext()) onFinish(listItem); // Pemuatan id terakhir
                             }
                         }
                     });
@@ -131,7 +134,7 @@ public class FavoriteFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.btn_filter_favorite:
-                adapter.getFilter().filter(spinnerFilter.getSelectedItem().toString());
+                performSearch();
                 break;
 
             case R.id.btn_search_favorite:
@@ -142,10 +145,27 @@ public class FavoriteFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    private void performSearch() {
+        adapter.getFilter().filter(spinnerFilter.getSelectedItem().toString());
+    }
+
     private void loadFragment(Fragment fragment){
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fl_container, fragment)
                 .addToBackStack(null)
                 .commit();
     }
+
+    @Override
+    public void onFinish(ArrayList<Produk> listItem) {
+        adapter.setData(listItem);
+        if (adapter.getItemCount() > 0) layoutEmpty.setVisibility(View.INVISIBLE);
+        else layoutEmpty.setVisibility(View.VISIBLE);
+        spinnerFilter.setSelection(0);
+        performSearch();
+    }
+}
+
+interface FavoriteCallback{
+    void onFinish(ArrayList<Produk> listItem);
 }
