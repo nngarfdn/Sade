@@ -42,7 +42,6 @@ import java.io.IOException
 import java.util.*
 
 class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
-
     private var firebaseUser: FirebaseUser? = null
     private var produkViewModel: ProdukViewModel? = null
     var objectStorageReference: StorageReference? = null
@@ -54,7 +53,6 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private val PICK_IMAGE_REQUEST = 22
     private var filePath: Uri? = null
     private lateinit var produk: Produk
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,14 +78,13 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         spin_regencies.setOnItemSelectedListener(this)
         spin_districts.setOnItemSelectedListener(this)
 
-        edt_nama_produk.setText(produk?.nama)
-        edt_alamat_produk.setText(produk?.alamat)
-        edt_alamat_nowa.setText(produk?.wa)
-        edt_alamat_harga.setText(produk?.harga.toString())
-        edt_alamat_deskripsi.setText(produk?.deskripsi)
+        edt_nama_produk.setText(produk.nama)
+        edt_alamat_produk.setText(produk.alamat)
+        edt_alamat_nowa.setText(produk.wa)
+        edt_alamat_harga.setText(produk.harga.toString())
+        edt_alamat_deskripsi.setText(produk.deskripsi)
 
-
-        var kategori = produk.kategori
+        val kategori = produk.kategori
         var select = 0
 
         when (kategori) {
@@ -101,13 +98,11 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         spinner_kategori.setSelection(select)
 
         Picasso.get()
-                .load(produk?.photo)
+                .load(produk.photo)
                 .fit()
                 .centerCrop()
                 .placeholder(R.drawable.image_empty)
                 .into(img_upload_result)
-
-
 
         btn_upload_image.setOnClickListener {
             selectImage()
@@ -117,18 +112,13 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             val builder = AlertDialog.Builder(this)
             builder.setTitle("Hapus produk")
             builder.setMessage("Apakah kamu yakin ingin menghapus ?")
-
             builder.setPositiveButton("Ya") { dialog, which ->
                 produkViewModel!!.deteteProduk(produk.id.toString())
                 Toast.makeText(this, "Berhasil Menghapus Produk", Toast.LENGTH_SHORT).show()
                 finish()
             }
-
-            builder.setNegativeButton("Tidak") { dialog, which ->
-            }
-
+            builder.setNegativeButton("Tidak") { dialog, which -> }
             builder.show()
-
         }
 
         btn_tambah_produk.setText(R.string.update_produk)
@@ -204,7 +194,7 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 Toast.makeText(this, "Upload foto dulu", Toast.LENGTH_SHORT).show()
                 cek = false
             }
-            assert(email != null)
+
             val p = Produk(produk.id, email!!, nama, kategori, alamat, kecamatan,
                     kabupaten, prov, wa, hargaInt, deskripsi, produk.photo)
 
@@ -213,9 +203,7 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 Toast.makeText(this, "Update Berhasil", Toast.LENGTH_SHORT).show()
                 finish()
             }
-
         })
-
     }
 
     private fun selectImage() {
@@ -236,19 +224,17 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 val idProvince: Int = listProvinces?.get(i)!!.getId()
                 loadRegencies(idProvince)
             }
+
             R.id.spin_regencies -> {
                 val idRegency: Int = listRegencies?.get(i)!!.getId()
                 loadDistricts(idRegency)
             }
-            R.id.spin_districts -> {
-            }
+
+            R.id.spin_districts -> {}
         }
     }
 
-    override fun onNothingSelected(parent: AdapterView<*>?) {
-        TODO("Not yet implemented")
-    }
-
+    override fun onNothingSelected(parent: AdapterView<*>?) {}
 
     private fun loadProvinces() {
         lvm?.loadProvinces()
@@ -266,7 +252,6 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 if (produk.provinsi != "-"){
                     spin_provinces.setSelection(adapter.getPosition(produk.provinsi))
                 }
-
             }
         })
     }
@@ -306,7 +291,6 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             }
         })
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -412,7 +396,7 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                             Toast.makeText(this, "Upload foto dulu", Toast.LENGTH_SHORT).show()
                             cek = false
                         }
-                        assert(email != null)
+
                         val p = Produk(produk.id, email!!, nama, kategori, alamat, kecamatan,
                                 kabupaten, prov, wa, hargaInt, deskripsi, photo)
 
@@ -440,10 +424,7 @@ class EditProduk : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         return null
     }
 
-
     companion object {
         private const val TAG = "EditProduk"
     }
-
-
 }

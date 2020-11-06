@@ -75,7 +75,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         return listItemFiltered.size();
     }
 
-    public class SearchViewHolder extends RecyclerView.ViewHolder {
+    public static class SearchViewHolder extends RecyclerView.ViewHolder {
         private final ImageView imgPhoto;
         private final TextView tvName, tvAddress, tvPrice;
 

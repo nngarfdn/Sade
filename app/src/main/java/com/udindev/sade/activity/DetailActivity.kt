@@ -18,21 +18,16 @@ import com.udindev.sade.viewmodel.FavoriteViewModel
 import com.udindev.sade.viewmodel.ProdukViewModel
 import kotlinx.android.synthetic.main.activity_detail.*
 
-
 class DetailActivity : AppCompatActivity() {
-
     private lateinit var favoriteViewModel: FavoriteViewModel
     private lateinit var produkViewModel: ProdukViewModel
     val firebaseAuth = FirebaseAuth.getInstance()
     val firebaseUser = firebaseAuth.getCurrentUser()
     var isFavorite: Boolean = false
 
-
     companion object {
         const val EXTRA_PRODUK = "extra_produk"
-        private const val TAG = "DetailActivity"
     }
-
 
     @SuppressLint("SetTextI18n", "QueryPermissionsNeeded")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,8 +43,6 @@ class DetailActivity : AppCompatActivity() {
             isFavorite = favorite.listProductId.contains(produk!!.id)
             if (isFavorite) img_favorite.setImageResource(R.drawable.ic_baseline_favorite_24_red) else img_favorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
         })
-
-
             img_favorite.setOnClickListener {
                 val userId = firebaseUser!!.uid
                 if (isFavorite) {
@@ -63,7 +56,6 @@ class DetailActivity : AppCompatActivity() {
                 }
                 isFavorite = !isFavorite
             }
-
 
         Picasso.get()
                 .load(produk?.photo)
@@ -109,6 +101,4 @@ class DetailActivity : AppCompatActivity() {
         super.onStart()
         favoriteViewModel.loadData(firebaseUser!!.uid)
     }
-
-
 }

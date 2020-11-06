@@ -66,7 +66,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
                 .build();
         googleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
 
-
         // Initialize view
         edtEmail = view.findViewById(R.id.edt_email_login);
         edtPassword = view.findViewById(R.id.edt_password_login);

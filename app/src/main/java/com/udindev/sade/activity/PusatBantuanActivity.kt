@@ -9,9 +9,7 @@ import com.udindev.sade.adapter.PusatBantuanAdapter
 import com.udindev.sade.model.PusatBantuan
 import kotlinx.android.synthetic.main.activity_pusat_bantuan.*
 
-
 class PusatBantuanActivity : AppCompatActivity() {
-
     private lateinit var adapter : PusatBantuanAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {

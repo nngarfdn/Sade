@@ -2,7 +2,6 @@ package com.udindev.sade.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -31,7 +30,6 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -54,7 +52,6 @@ import static com.udindev.sade.utils.AppUtils.isValidPhone;
 
 
 public class TambahProdukFragment extends Fragment implements AdapterView.OnItemSelectedListener {
-
     private static final String TAG = "TambahProdukFragment";
     private final int PICK_IMAGE_REQUEST = 22;
     private Uri filePath;
@@ -66,15 +63,14 @@ public class TambahProdukFragment extends Fragment implements AdapterView.OnItem
     private Spinner spinRegencies;
     private Spinner spinDistricts;
     private ProdukViewModel produkViewModel;
-    TextView txtUploading;
-    Spinner kategoriSpinner;
+    private TextView txtUploading;
+    private Spinner kategoriSpinner;
     private ArrayList<Location> listProvinces, listRegencies, listDistricts;
     private LocationViewModel lvm;
     private EditText edtNamaProduk, edtAlamatProduk, edtNoWA, edtHarga, edtDeskripsi;
     private OnProductAddCallback callback;
 
-    StorageReference objectStorageReference;
-    FirebaseFirestore objectFirebaseFirestore;
+    private StorageReference objectStorageReference;
 
     public TambahProdukFragment(){}
 
@@ -90,7 +86,6 @@ public class TambahProdukFragment extends Fragment implements AdapterView.OnItem
         produkViewModel = ViewModelProviders.of(this).get(ProdukViewModel.class);
 
         objectStorageReference = FirebaseStorage.getInstance().getReference("imageFolder"); // Create folder to Firebase Storage
-        objectFirebaseFirestore = FirebaseFirestore.getInstance();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.udindev.sade.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -21,16 +22,16 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.udindev.sade.R;
 
-public class Welcome extends AppCompatActivity {
+import org.jetbrains.annotations.NotNull;
 
+public class Welcome extends AppCompatActivity {
     private ViewPager viewPager;
-    private MyViewPagerAdapter myViewPagerAdapter;
     private LinearLayout dotsLayout;
-    private TextView[] dots;
     private int[] layouts;
     private Button btnSkip, btnNext;
     private PrefManager prefManager;
 
+    @SuppressLint("ObsoleteSdkInt")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +55,6 @@ public class Welcome extends AppCompatActivity {
         btnSkip = (Button) findViewById(R.id.btn_skip);
         btnNext = (Button) findViewById(R.id.btn_next);
 
-
         // layout xml slide 1 sampai 4
         // add few more layouts if you want
         layouts = new int[]{
@@ -68,7 +68,7 @@ public class Welcome extends AppCompatActivity {
         // membuat transparan notifikasi
         changeStatusBarColor();
 
-        myViewPagerAdapter = new MyViewPagerAdapter();
+        MyViewPagerAdapter myViewPagerAdapter = new MyViewPagerAdapter();
         viewPager.setAdapter(myViewPagerAdapter);
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
 
@@ -84,7 +84,7 @@ public class Welcome extends AppCompatActivity {
             public void onClick(View v) {
                 // mengecek page terakhir (slide 4)
                 // jika activity home sudah tampil
-                int current = getItem(+1);
+                int current = getItem();
                 if (current < layouts.length) {
                     // move to next screen
                     viewPager.setCurrentItem(current);
@@ -96,7 +96,7 @@ public class Welcome extends AppCompatActivity {
     }
 
     private void addBottomDots(int currentPage) {
-        dots = new TextView[layouts.length];
+        TextView[] dots = new TextView[layouts.length];
 
         int[] colorsActive = getResources().getIntArray(R.array.array_dot_active);
         int[] colorsInactive = getResources().getIntArray(R.array.array_dot_inactive);
@@ -116,8 +116,8 @@ public class Welcome extends AppCompatActivity {
             dots[currentPage].setTextColor(colorsActive[currentPage]);
     }
 
-    private int getItem(int i) {
-        return viewPager.getCurrentItem() + i;
+    private int getItem() {
+        return viewPager.getCurrentItem() + 1;
     }
 
     private void launchHomeScreen() {
@@ -128,11 +128,9 @@ public class Welcome extends AppCompatActivity {
 
     //  viewpager change listener
     ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
-
         @Override
         public void onPageSelected(int position) {
             addBottomDots(position);
-
 
             // mengubah button lanjut 'NEXT' / 'GOT IT'
             if (position == layouts.length - 1) {
@@ -147,14 +145,10 @@ public class Welcome extends AppCompatActivity {
         }
 
         @Override
-        public void onPageScrolled(int arg0, float arg1, int arg2) {
-
-        }
+        public void onPageScrolled(int arg0, float arg1, int arg2) {}
 
         @Override
-        public void onPageScrollStateChanged(int arg0) {
-
-        }
+        public void onPageScrollStateChanged(int arg0) {}
     };
 
     /**
@@ -170,14 +164,14 @@ public class Welcome extends AppCompatActivity {
      * View pager adapter
      */
     public class MyViewPagerAdapter extends PagerAdapter {
-        private LayoutInflater layoutInflater;
 
         public MyViewPagerAdapter() {
         }
 
+        @NotNull
         @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        public Object instantiateItem(@NotNull ViewGroup container, int position) {
+            LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
             View view = layoutInflater.inflate(layouts[position], container, false);
             container.addView(view);
@@ -191,13 +185,12 @@ public class Welcome extends AppCompatActivity {
         }
 
         @Override
-        public boolean isViewFromObject(View view, Object obj) {
+        public boolean isViewFromObject(@NotNull View view, @NotNull Object obj) {
             return view == obj;
         }
 
-
         @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
+        public void destroyItem(ViewGroup container, int position, @NotNull Object object) {
             View view = (View) object;
             container.removeView(view);
         }

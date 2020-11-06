@@ -5,7 +5,6 @@ import com.udindev.sade.model.Produk
 import com.udindev.sade.repository.ProdukRepository
 
 class ProdukViewModel : ViewModel() {
-
     private var produkRepository = ProdukRepository()
 
     fun getResult() =  produkRepository.getResults()

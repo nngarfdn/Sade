@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import com.udindev.sade.R;
 
 public class LoadingDialog {
-    private AlertDialog dialog;
+    private final AlertDialog dialog;
 
     public LoadingDialog(Activity activity){
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);

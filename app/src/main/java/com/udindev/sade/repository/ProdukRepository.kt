@@ -8,7 +8,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.udindev.sade.model.Produk
 
 class ProdukRepository {
-
     private var resultData: MutableLiveData<List<Produk>> = MutableLiveData()
     private var resultDataHargaRendahKeTinggi: MutableLiveData<List<Produk>> = MutableLiveData()
     private var resultDataHargaTinggiKeRendah: MutableLiveData<List<Produk>> = MutableLiveData()
@@ -91,7 +90,6 @@ class ProdukRepository {
                     Log.e(TAG, "Error getting documents.", exception)
                 }
     }
-
 
     fun getDataProvinsi(provinsi: String) {
         val produkData: MutableList<Produk> = ArrayList()
@@ -293,7 +291,6 @@ class ProdukRepository {
                     Log.e(TAG, "Error getting documents.", exception)
                 }
     }
-
 
     fun getData() {
         val produkData: MutableList<Produk> = ArrayList()

@@ -38,7 +38,6 @@ import co.mobiwise.materialintro.view.MaterialIntroView;
 import static com.udindev.sade.utils.AppUtils.getDefaultFilter;
 
 public class DashboardFragment extends Fragment implements OnProductAddCallback {
-
     private static final String TAG = "DashboardFragment";
     private EditDrawableText search;
     private ShimmerFrameLayout shimmerFrameLayoutProduk, shimmerFrameLayoutJasa;
@@ -56,9 +55,7 @@ public class DashboardFragment extends Fragment implements OnProductAddCallback 
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_dashboard, container, false);
     }
 
