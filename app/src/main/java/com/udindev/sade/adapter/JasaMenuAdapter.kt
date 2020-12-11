@@ -21,7 +21,7 @@ class JasaMenuAdapter (private val list: List<Produk>?) :
             LayoutInflater.from(parent.context).inflate(R.layout.item_produk_vertical, parent, false)
     )
 
-    override fun getItemCount(): Int = list?.size!!
+    override fun getItemCount(): Int = 5
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
